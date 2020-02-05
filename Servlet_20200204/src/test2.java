@@ -21,7 +21,7 @@ public class test2 extends HttpServlet {
 	 * @see HttpServlet#HttpServlet()
 	 */
 	public test2() {
-		super();//HttpServlet에있는 값을 상속받음s
+		super();//HttpServlet에있는 값을 상속받음
 		// TODO Auto-generated constructor stub
 	}
 

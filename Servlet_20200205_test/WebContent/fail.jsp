@@ -7,6 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-<h2>저장실패d</h2>
+<h2>저장실패</h2>
 </body>
 </html>

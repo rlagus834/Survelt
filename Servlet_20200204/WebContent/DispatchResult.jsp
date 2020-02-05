@@ -19,7 +19,7 @@ reqdata2에저장된값:${requestScope.reqData3}<br>
 seData1에 저장된값${sessionScope.seData1 }<br>
 seData2에 저장된값${sessionScope.seData2 }<br>
 seData3에 저장된값${sessionScope.seData3 }<br>
-<br>
+
 
 
 </body>

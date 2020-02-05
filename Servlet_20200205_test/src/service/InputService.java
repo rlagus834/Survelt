@@ -21,7 +21,7 @@ if(var>0) {
 	rollback(con);
 	return false;	
 }
-		//
+		
 	}
 	
 	

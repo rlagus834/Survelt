@@ -16,7 +16,7 @@ location.href="select";
 
 </head>
 <body>
-<h2>저장성공.</h2>
+<h2>저장성공</h2>
 <button onclick="selectDB()">조회</button>
 
 
