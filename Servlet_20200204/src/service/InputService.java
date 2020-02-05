@@ -14,7 +14,7 @@ List<String> list=new ArrayList<String>();
 		/*
 		 * 1.DAO 클래스에 대한 객체를 getInstance() 메소드를 호출하여 받아옴
 		 *2.jdbcutil로 부터 connection 객체를 받아옴.
-		 *3.DAO 클래스에 접속완료된 정보를 전달
+		 *3.DAO 클래스에 접속완료된 정보를 전달s
 		 *4.DAO클래스이 insert 수행 메소드 호출하여 DB연동 작업수행
 		 */
 		

@@ -6,7 +6,7 @@ import javax.naming.*;
 
 public class JdbcUtil {
 	
-	public static Connection getConnection(){//DB접속을 위한메소드
+	public static Connection getConnection(){//DB접속을 위한메소드s
 		Connection con = null;
 		try {
 			Context initCtx = new InitialContext();

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Context>
-<Resource
+<Resource  
 name="jdbc/OracleDB"
-auth="Container"
+auth="Container" 
 type="javax.sql.DataSource"
 username="HN20200204"
 password="1234"

@@ -120,7 +120,7 @@ public class test extends HttpServlet {
  * 5. Service, DAO클래스 생성
  * -Service 클래스:controller에서 넘겨받은 내용에 대한 처리및
  *  DB연동을위한 DAO 클래스호출
- * -DAO 클래스:DB와 CRUD 작업을 수행 
+ * -DAO 클래스:DB와 CRUD 작업을 수행 c
  */
 	
 	}

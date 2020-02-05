@@ -14,7 +14,7 @@
 <body>
 <form action="inputs"> 
 
-이름입력:<input type="text" name="na1">
+이름.입력:<input type="text" name="na1">
 
 
 <button type="submit">완료</button>

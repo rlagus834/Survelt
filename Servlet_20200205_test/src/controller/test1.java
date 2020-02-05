@@ -22,7 +22,7 @@ public class test1 extends HttpServlet {
      * @see HttpServlet#HttpServlet()
      */
 	protected void doProcess(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		// TODO Auto-generated method stubs
 		request.setCharacterEncoding("UTF-8");
 		List<String> list= new ArrayList<String>();
 		InputService service=new InputService();

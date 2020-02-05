@@ -17,6 +17,7 @@ reqdata2에저장된값:${requestScope.reqData2}<br>
 <!-- EL태그를ㄹ 이용하여 session 영역에 저장된 값 출력 -->
 seData1에 저장된값${sessionScope.seData1 }<br>
 seData2에 저장된값${sessionScope.seData2 }<br>
+<br>
 
 </body>
 </html>

@@ -14,7 +14,7 @@ Connection con;
 PreparedStatement pstmt;
 ResultSet rs;
 
-public static DAO getInstance() {//싱글톤=new 여러번 쓰지않고 한번만 객체선언해서 그 객체만 쓰게끔하고싶을때 쓰는기능
+public static DAO getInstance() {//싱글톤=new 여러번 쓰지않고 한번만 객체선언해서 그 객체만 쓰게끔하고싶을때 쓰는기능s
 	if(dao==null) {       
 		dao= new DAO(); //DAO(Data Access Object)는 메소드(주요기능)들을 전담(갖고있도록)하도록 만든 클래스(오브젝트).
 	}
