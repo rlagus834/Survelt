@@ -6,24 +6,16 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 
-
-
-
-
-
-
-
 <script>
-alert("아이디 또는 비밀번호가 틀립니다.");
+
+alert("정보가없습니다.");
 location.href="Login.jsp";
 
 </script>
 
+
 </head>
 <body>
-
-
-
 
 </body>
 </html>

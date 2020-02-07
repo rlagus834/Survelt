@@ -120,7 +120,93 @@ public class MemberDAO {
 		return list; //list리턴
 
 	}
+	public List<MemberDTO> clientSelect(String id) {
+		String sql = "SELECT * FROM MEMBER WHERE ID=?";//조회 쿼리문작성후 sql에 대입
+		List<MemberDTO> list = new ArrayList<MemberDTO>(); //list생성
+		try {
+			pstmt = con.prepareStatement(sql); //시작멘트를 pstmt에대입
+			pstmt.setString(1, id);
+			rs = pstmt.executeQuery();//시작멘트 실행명령을 rs에대입
+			while (rs.next()) {	//rs가 가지고있는 값이있으면(true) 모든값 뱉음 없으면(false) while 작동안함
+				MemberDTO dto=new MemberDTO(); //반복할때마다 새로운 객체 생성하게 하기위해
+		 dto.setId(rs.getString("id"));    //테이블정보 다 dto의 필드에 세팅후
+			dto.setPassword(rs.getString("password"));
+			dto.setName(rs.getString("name"));
+			dto.setGender(rs.getString("gender"));
+			dto.setEmail(rs.getString("email"));
+			
+			list.add(dto); //클래스타입의 list에추가
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally{
+			close(pstmt); //다쓴 기능들을 close하여 꺼버림 @안끄면 에러나는경우가 가끔있어서그럼
+			close(rs);
+			
+		}
+
+
+		return list; //list리턴
+
+	}
+
+	public int check(MemberDTO md) {
+		String sql="SELECT * FROM MEMBER WHERE ID=? AND PASSWORD=?";
+		 int result=0;
+
+		try {			
+			pstmt=con.prepareStatement(sql);
+			pstmt.setString(1, md.getId());
+			pstmt.setString(2, md.getPassword());
+			rs=pstmt.executeQuery();
+			while(rs.next()) {								
+				md.setId(rs.getString("id"));
+				md.setPassword(rs.getString("Password"));				
+				result=1;
+			}
 
 	
-
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally{
+			close(pstmt); //다쓴 기능들을 close하여 꺼버림 @안끄면 에러나는경우가 가끔있어서그럼
+			close(rs);
+			
+		}
+	
+		return result;
+	}
+	public int update(MemberDTO dto) {
+		String sql="UPDATE MEMBER SET PASSWORD=?, NAME=? , EMAIL=? WHERE ID=?";
+		int result=0;
+		try {
+			pstmt=con.prepareStatement(sql);
+			pstmt.setString(1, dto.getPassword());
+			pstmt.setString(2, dto.getName());
+			pstmt.setString(3, dto.getEmail());
+			pstmt.setString(4, dto.getId());
+			result=pstmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
+public void deleteClient(String id) {
+	String sql="DELETE FROM MEMBER WHERE ID=?";
+	try {
+		pstmt=con.prepareStatement(sql);
+		pstmt.setString(1, id);
+		pstmt.executeUpdate();
+		commit(con);
+	} catch (SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	
+	
+}
 }

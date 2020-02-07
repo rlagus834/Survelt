@@ -48,10 +48,10 @@ ${member.gender};
 ${member.email};
 </td>
 <td>
-<a href="clientSelect">조회</a>
+<a href="clientSelect?resultParam=${member.id}">조회</a>
 </td>
 <td>
-<a href="delete">조회</a>
+<a href="DeleteClient?resultParam=${member.id}">삭제</a>
 </td>
 </tr>
 <br>

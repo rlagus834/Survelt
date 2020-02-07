@@ -32,6 +32,7 @@ MemberDTO dto=new MemberDTO();
 String id,password;
 id=request.getParameter("id");
 password=request.getParameter("password");
+
 dto.setId(id);
 dto.setPassword(password);
 InputService service=new InputService();

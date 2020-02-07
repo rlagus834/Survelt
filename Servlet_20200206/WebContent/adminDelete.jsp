@@ -5,25 +5,14 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-
-
-
-
-
-
-
-
 <script>
-alert("아이디 또는 비밀번호가 틀립니다.");
-location.href="Login.jsp";
+alert("관리자 계정은 삭제가 불가능합니다.");
+location.href="MemberMain.jsp";
 
 </script>
 
 </head>
 <body>
-
-
-
 
 </body>
 </html>

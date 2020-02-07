@@ -51,6 +51,51 @@ public class InputService {
 		return list;  //list리턴
 	
 	}
+
+	public List<MemberDTO> clientSelect(String id) {
+		MemberDAO dao=MemberDAO.getInstance();
+		Connection con=getConnection();
+		dao.setConnection(con);
+		List<MemberDTO> list = new ArrayList<MemberDTO>();
+		return list=dao.clientSelect(id);		
+	
+	}
+	public boolean check(MemberDTO md) {
+		MemberDAO dao=MemberDAO.getInstance();
+		Connection con=getConnection();
+		dao.setConnection(con);
+	int result=dao.login(md);		
+		if (result > 0) {			
+			return true;
+		} else {
+			return false;
+		}
+	}
+	public boolean update(MemberDTO dto) {		
+		MemberDAO dao=MemberDAO.getInstance();
+		Connection con=getConnection();
+		dao.setConnection(con);
+		int result=dao.update(dto);
+		if(result>0) {
+			commit(con);
+			return true;
+		}else {
+			rollback(con);
+			return false;
+		}
+
+	}
+	
+	public void deleteCilent(String id) {
+		MemberDAO dao=MemberDAO.getInstance();
+		Connection con=getConnection();
+		dao.setConnection(con);
+		dao.deleteClient(id);		
+	}	
+	
+	
+	
+	
 	
 	
 	

@@ -10,11 +10,11 @@ uri="http://java.sun.com/jsp/jstl/core"%>
 <title>Insert title here</title>
 <script>
 function update(){
-		
+	location.href="check.jsp";
+	
 }
 function logout(){
-	
-	location.href="Login.jsp";
+	location.href="Logout";
 }
 
 </script>
