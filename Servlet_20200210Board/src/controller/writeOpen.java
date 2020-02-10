@@ -8,33 +8,37 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import dto.MemberDTO;
-
 import java.util.*;
-import service.InputService;
+import dto.BoardDTO;
+import service.MemberWritingSelectService;
 
-@WebServlet("/memberList")// memberList주소값 받기 받을떈/
-public class test3 extends HttpServlet {
-	private static final long serialVersionUID = 1L;//노란warring오류안뜨게
+
+/**
+ * Servlet implementation class Board
+ */
+@WebServlet("/writeOpen")
+public class writeOpen extends HttpServlet {
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public test3() {
-		super(); //HttpServlet의 기능,값들을 상속받기
+	public writeOpen() {
+		super();
 		// TODO Auto-generated constructor stub
 	}
 
 	protected void doProcess(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		request.setCharacterEncoding("UTF-8"); //한글 깨짐방지
-		InputService service = new InputService(); //service안 메소드 이용하기위해 객체선언
-		List<MemberDTO> list = new ArrayList<MemberDTO>();//select라 리턴으로 List를 받을꺼라 list(List) 생성
-		list = service.adminSelect();//service.adminSelect()메소드호출
-		request.setAttribute("select", list); //jsp에서이용할 매개변수생성및세팅
-		RequestDispatcher dispatcher = request.getRequestDispatcher("select.jsp");//페이지전환기능중 dispatch를 이용하여
-		dispatcher.forward(request, response); //값을가지고 select.jsp로 페이지전환
+		// TODO Auto-generated method stub
+		request.setCharacterEncoding("UTF-8");
+		MemberWritingSelectService service = new MemberWritingSelectService();
+		List<BoardDTO> list = new ArrayList<BoardDTO>();
+		String id = request.getParameter("resultParam");
+		list=service.MemberWritingSelect(id);
+		request.setAttribute("select", list);
+		RequestDispatcher dispatcher = request.getRequestDispatcher("WriteOpen.jsp");
+		dispatcher.forward(request, response);
 
 	}
 

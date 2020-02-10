@@ -33,8 +33,15 @@ ${member.birth};
 ${member.gender};
 </td>
 <td>
+${member.address};
+</td>
+<td>
 ${member.email};
 </td>
+<td>
+${member.phone};
+</td>
+
 </tr>
 <br>
 </c:forEach>

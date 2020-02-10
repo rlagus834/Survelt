@@ -93,8 +93,14 @@ public class InputService {
 		dao.deleteClient(id);		
 	}	
 	
-	
-	
+//	
+//	public boolean idCheck(String id) {
+//		MemberDAO dao=MemberDAO.getInstance();
+//		Connection con=getConnection();
+//		dao.setConnection(con);
+//		boolean result=dao.idCheck(id);
+//		
+//	}
 	
 	
 	

@@ -24,7 +24,8 @@ border:1px solid black;
 
 <table border="1">
 <tr>
-<th>ID</th><th>PASSWORD</th><th>NAME</th><th>BIRTH</th><th>GENDER</th><th>EMAIL</th>
+<th>ID</th><th>PASSWORD</th><th>NAME</th><th>BIRTH</th><th>GENDER</th><th>ADDRESS</th><th>EMAIL</th>
+<th>PHONE</th>
 </tr>
 <c:forEach var="member" items="${select}">
 
@@ -45,7 +46,13 @@ ${member.birth};
 ${member.gender};
 </td>
 <td>
+${member.address};
+</td>
+<td>
 ${member.email};
+</td>
+<td>
+${member.phone};
 </td>
 <td>
 <a href="clientSelect?resultParam=${member.id}">조회</a>

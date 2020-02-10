@@ -17,13 +17,13 @@ import service.InputService;
  * Servlet implementation class test3
  */
 @WebServlet("/join")
-public class test1 extends HttpServlet {
+public class Join extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public test1() {
+    public Join() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -34,14 +34,23 @@ public class test1 extends HttpServlet {
 
 InputService survice=new InputService();
 
-String id,password,name,birth,gender,email;
+String id,password,name,birth,gender,address1,address2,address3,address4,address5,
+email1,email2,email3,phone;
 id=request.getParameter("id");
 password=request.getParameter("password");
 name=request.getParameter("name");
 birth=request.getParameter("birth");
 gender=request.getParameter("gender");
-email=request.getParameter("email");
+address1=request.getParameter("address1");
+address2=request.getParameter("address2");
+address3=request.getParameter("address3");
+address4=request.getParameter("address4");
+address5=address1+address2+address3+address4;
+email1=request.getParameter("email1");
+email2=request.getParameter("email2");
+email3=email1+email2;
 
+phone=request.getParameter("phone");
 MemberDTO member=new MemberDTO();
 
 member.setId(id);
@@ -49,7 +58,9 @@ member.setPassword(password);
 member.setName(name);
 member.setBirth(birth);
 member.setGender(gender);
-member.setEmail(email);
+member.setAddress(address5);
+member.setEmail(email3);
+member.setPhone(phone);
 
 result=survice.inserts(member);
 

@@ -31,21 +31,22 @@ public class infoUpdate extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		List<MemberDTO> list = new ArrayList<MemberDTO>();
 		MemberDTO dto = new MemberDTO();
-		String id,password, name, gender, email;
+		String id,password, address1="",address2="",address3="",address4="",
+				address5, email,phone;
 		id=request.getParameter("id");
 		System.out.println(id);
 		password = request.getParameter("password");
-		System.out.println(password);
-		
-		name = request.getParameter("name");		
-		System.out.println(name);
-		
-		email = request.getParameter("email");
-		System.out.println(email);
-		
+		phone=request.getParameter("phone");
+		address1=request.getParameter("address1");
+		address2=request.getParameter("address2");
+		address3=request.getParameter("address3");
+		address4=request.getParameter("address4");
+		address5=address1+address2+address3+address4;
+		email = request.getParameter("email");			
+		dto.setAddress(address5);
+		dto.setPhone(phone);
 		dto.setId(id);
 		dto.setPassword(password);
-		dto.setName(name);
 		dto.setEmail(email);
 InputService service=new InputService();
 boolean result=service.update(dto);

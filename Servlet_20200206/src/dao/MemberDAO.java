@@ -31,7 +31,7 @@ public class MemberDAO {
 
 
 	public int inserts(MemberDTO md) {
-		String sql = "INSERT INTO MEMBER VALUES(?,?,?,?,?,?)";
+		String sql = "INSERT INTO MEMBER VALUES(?,?,?,?,?,?,?,?)";
 		int num = 0;
 
 		try {
@@ -41,7 +41,9 @@ public class MemberDAO {
 			pstmt.setString(3, md.getName());
 			pstmt.setString(4, md.getBirth());
 			pstmt.setString(5, md.getGender());
-			pstmt.setString(6, md.getEmail());
+			pstmt.setString(6, md.getAddress());			
+			pstmt.setString(7, md.getEmail());
+			pstmt.setString(8, md.getPhone());			
 			num = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -103,8 +105,9 @@ public class MemberDAO {
 			dto.setName(rs.getString("name"));
 			dto.setBirth(rs.getString("birth"));
 			dto.setGender(rs.getString("gender"));
+			dto.setAddress(rs.getString("address"));			
 			dto.setEmail(rs.getString("email"));
-			
+			dto.setPhone(rs.getString("phone"));			
 			list.add(dto); //클래스타입의 list에추가
 			}
 		} catch (SQLException e) {
@@ -132,9 +135,11 @@ public class MemberDAO {
 		 dto.setId(rs.getString("id"));    //테이블정보 다 dto의 필드에 세팅후
 			dto.setPassword(rs.getString("password"));
 			dto.setName(rs.getString("name"));
+			dto.setBirth(rs.getString("birth"));			
 			dto.setGender(rs.getString("gender"));
+			dto.setAddress(rs.getString("address"));			
 			dto.setEmail(rs.getString("email"));
-			
+			dto.setPhone(rs.getString("phone"));			
 			list.add(dto); //클래스타입의 list에추가
 			}
 		} catch (SQLException e) {
@@ -179,14 +184,15 @@ public class MemberDAO {
 		return result;
 	}
 	public int update(MemberDTO dto) {
-		String sql="UPDATE MEMBER SET PASSWORD=?, NAME=? , EMAIL=? WHERE ID=?";
+		String sql="UPDATE MEMBER SET PASSWORD=?, EMAIL=?, ADDRESS=?,PHONE=?  WHERE ID=?";
 		int result=0;
 		try {
 			pstmt=con.prepareStatement(sql);
-			pstmt.setString(1, dto.getPassword());
-			pstmt.setString(2, dto.getName());
-			pstmt.setString(3, dto.getEmail());
-			pstmt.setString(4, dto.getId());
+			pstmt.setString(1, dto.getPassword());			
+			pstmt.setString(2, dto.getEmail());
+			pstmt.setString(3, dto.getAddress());
+			pstmt.setString(4, dto.getPhone());			
+			pstmt.setString(5, dto.getId());			
 			result=pstmt.executeUpdate();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -209,4 +215,32 @@ public void deleteClient(String id) {
 	
 	
 }
+
+public boolean idCheck(String id) {
+String sql="SELECT * FROM MEMBER WHERE ID=?";	
+boolean result=true;
+try {
+	pstmt=con.prepareStatement(sql);
+	pstmt.setString(1, id);
+	rs=pstmt.executeQuery();
+	if(rs.next()) {
+		result=true;
+	}else {
+		result=false;			
+	}
+} catch (SQLException e) {
+	// TODO Auto-generated catch block
+	e.printStackTrace();
+}
+return result;	
+	
+	
+	
+	
+	
+}
+
+
+
+
 }

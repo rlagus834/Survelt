@@ -1,25 +1,24 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<script>
-function join(){
-location.href="test.jsp";	
-}
-
-</script>
 </head>
 <body>
-<form action="login">
-ID: <input type="text" name="id">
-<br>
-password: <input type="password" name="password">
+<form action="board">
+글제목:<input type="text" name="boardTitle"><br>
+작성자:<input type="text" name="id"><br>
+내용:<input type="text" name="text"><br>
+비밀번호:<input type="password" name="password">
 <input type="submit">
 </form>
-<button onclick="join()">회원가입</button>
+
+
+
+
+
+
 </body>
 </html>
