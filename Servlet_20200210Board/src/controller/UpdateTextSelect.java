@@ -8,22 +8,22 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-import dto.MemberDTO;
-import service.InputService;
+import dto.BoardDTO;
+import service.UpdateTextSelectService;
 
+import java.util.*;
 /**
- * Servlet implementation class PasswordCheck
+ * Servlet implementation class UpdateText
  */
-@WebServlet("/PasswordCheck")
-public class PasswordCheck extends HttpServlet {
+@WebServlet("/UpdateTextSelect")
+public class UpdateTextSelect extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public PasswordCheck() {
+    public UpdateTextSelect() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -31,28 +31,19 @@ public class PasswordCheck extends HttpServlet {
 	protected void doProcess(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		request.setCharacterEncoding("UTF-8");
-		MemberDTO dto=new MemberDTO();
-		String id,password;
-		HttpSession session=request.getSession();
-		id=(String)session.getAttribute("select");
-		password=request.getParameter("password");
-		dto.setId(id);
-		dto.setPassword(password);
-		InputService service=new InputService();
-		boolean result=service.login(dto);
-		if (result) {
-			RequestDispatcher dispatcher = request.getRequestDispatcher("clientUpdate");
-			dispatcher.forward(request, response);
-		} else {
-			response.sendRedirect("checkFail");
+		//int sum = Integer.parseInt(i); 형변환하는법 파라미터는 다 String 그러므로 int로쓸거면 형변환해줘야함
+		int boardnumber=Integer.parseInt(request.getParameter("resultParam2"));
+		System.out.println(boardnumber);
+		UpdateTextSelectService service=new UpdateTextSelectService();		
+		List<BoardDTO> list=new ArrayList<BoardDTO>();
+		list=service.UpdateText(boardnumber);
+		request.setAttribute("select", list);
+		RequestDispatcher dispatcher = request.getRequestDispatcher("UpdateTextSelect.jsp");
+		dispatcher.forward(request, response);
 		}
-	
-	
-	
-	}
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		doProcess(request, response);	
+		doProcess(request, response);
 		}
 
 	/**
@@ -60,7 +51,7 @@ public class PasswordCheck extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		doProcess(request, response);	
-		}
+		doProcess(request, response);
+	}
 
 }

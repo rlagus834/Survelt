@@ -17,9 +17,12 @@ public List<BoardDTO> MemberWritingSelect(String id) {
 BoardDAO dao=BoardDAO.getInstance();	
 Connection con=getConnection();
 dao.setConnection(con);
-List<BoardDTO> list=new ArrayList<BoardDTO>();
- return list=dao.MemberWritingSelect(id);
 
+List<BoardDTO> list=new ArrayList<BoardDTO>();
+  list=dao.MemberWritingSelect(id);
+  close(con);
+return list;
+	
 
 	
 	

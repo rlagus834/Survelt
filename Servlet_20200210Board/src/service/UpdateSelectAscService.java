@@ -11,24 +11,19 @@ import java.sql.*;
 
 import static db.JdbcUtil.*;
 
-public class BoardService {
+public class UpdateSelectAscService {
 
-public boolean Board(BoardDTO dto) {
+public List<BoardDTO> UpdateSelectService() {
 BoardDAO dao=BoardDAO.getInstance();	
 Connection con=getConnection();
 dao.setConnection(con);
-int result=dao.Board(dto);
-if(result>0) {
-	commit(con);
-	close(con);
+
+List<BoardDTO> list=new ArrayList<BoardDTO>();
+  list=dao.updateSelectServiceAsc();
+  close(con);
+return list;
 	
-	return true;
-}else {
-	rollback(con);
-	close(con);
-	
-	return false;
-}
+
 	
 	
 	

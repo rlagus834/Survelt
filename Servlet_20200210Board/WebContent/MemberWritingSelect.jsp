@@ -61,7 +61,7 @@ height: 300px;
   
   <caption><h1>게시글목록</h1></caption>      
 <tr>
-<th>글번호</th><th>제목</th><th>조회수</th>
+<th>글번호</th><th>제목</th><th><a href="UpdateSelectAsc">조회수</a></th>
 <th>작성자</th><th>작성일</th>
 </tr>
 <c:forEach var="member" items="${select}">
@@ -77,7 +77,7 @@ height: 300px;
 </c:forEach>
 </table>
 </div>
-<button onclick="writes()">작성하기</button>
+<a href="">작성하기</button>
 <button onclick="selectUpdate()">업데이트</button>
 
 </body>

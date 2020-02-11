@@ -37,7 +37,7 @@ public class MemberWritingSelect extends HttpServlet {
 	String id=request.getParameter("resultParam");
 	list=service.MemberWritingSelect(id);
 	request.setAttribute("select", list);
-	RequestDispatcher dispatcher = request.getRequestDispatcher("MemberWritingSelect.jsp");
+	RequestDispatcher dispatcher = request.getRequestDispatcher("UpdateTextSelect.jsp");
 	dispatcher.forward(request, response);
 
 	

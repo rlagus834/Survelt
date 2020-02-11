@@ -8,23 +8,21 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.*;
+
 import dto.BoardDTO;
-import service.writeOpens;
-
-
+import service.UpdateTextService;
 
 /**
- * Servlet implementation class Board
+ * Servlet implementation class UpdateText
  */
-@WebServlet("/writeOpen")
-public class writeOpen extends HttpServlet {
+@WebServlet("/UpdateText")
+public class UpdateText extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public writeOpen() {
+	public UpdateText() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
@@ -33,14 +31,29 @@ public class writeOpen extends HttpServlet {
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		request.setCharacterEncoding("UTF-8");
-        writeOpens service = new writeOpens();
-		List<BoardDTO> list = new ArrayList<BoardDTO>();
-		String id = request.getParameter("resultParam");
-		list=service.writeOpenService(id);
-		request.setAttribute("select", list);
-		RequestDispatcher dispatcher = request.getRequestDispatcher("WriteOpen.jsp");
-		dispatcher.forward(request, response);
-
+		// int sum = Integer.parseInt(i); 형변환하는법 파라미터는 다 String 그러므로 int로쓸거면 형변환해줘야함
+		String boardtitle, text, password;		
+		int boardnumber=Integer.parseInt(request.getParameter("boardnumber"));
+		System.out.println(boardnumber);
+		boardtitle = request.getParameter("boardtitle");
+		System.out.println(boardtitle);
+		text = request.getParameter("text");
+		System.out.println(text);
+		password = request.getParameter("password");
+		System.out.println(password);
+		BoardDTO dto=new BoardDTO();
+		dto.setBoardnumber(boardnumber);
+		dto.setBoardtitle(boardtitle);
+		dto.setText(text);
+		dto.setPassword(password);
+		UpdateTextService service = new UpdateTextService();
+    boolean result=service.UpdateText(dto);
+    if(result) {
+    	response.sendRedirect("UpdateSelect");
+    }else {
+     	response.sendRedirect("BoardWriteFail.jsp");
+        	
+    }
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)

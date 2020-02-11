@@ -8,51 +8,40 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import java.util.*;
+import dto.BoardDTO;
+import service.UpdateSelectAscService;
 
-import dto.MemberDTO;
-import service.InputService;
 
 /**
- * Servlet implementation class PasswordCheck
+ * Servlet implementation class Board
  */
-@WebServlet("/PasswordCheck")
-public class PasswordCheck extends HttpServlet {
+@WebServlet("/UpdateSelectAsc")
+public class UpdateSelectAsc extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public PasswordCheck() {
+    public UpdateSelectAsc() {
         super();
         // TODO Auto-generated constructor stub
     }
 
 	protected void doProcess(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		request.setCharacterEncoding("UTF-8");
-		MemberDTO dto=new MemberDTO();
-		String id,password;
-		HttpSession session=request.getSession();
-		id=(String)session.getAttribute("select");
-		password=request.getParameter("password");
-		dto.setId(id);
-		dto.setPassword(password);
-		InputService service=new InputService();
-		boolean result=service.login(dto);
-		if (result) {
-			RequestDispatcher dispatcher = request.getRequestDispatcher("clientUpdate");
-			dispatcher.forward(request, response);
-		} else {
-			response.sendRedirect("checkFail");
-		}
-	
-	
-	
+		request.setCharacterEncoding("UTF-8");		
+		UpdateSelectAscService service=new UpdateSelectAscService();
+		List<BoardDTO> list=new ArrayList<BoardDTO>();
+		list=service.UpdateSelectService();
+		request.setAttribute("select", list);
+		RequestDispatcher dispatcher = request.getRequestDispatcher("NoticeBoard.jsp");
+		dispatcher.forward(request, response);
+
 	}
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		doProcess(request, response);	
+		doProcess(request, response);
 		}
 
 	/**
@@ -60,7 +49,7 @@ public class PasswordCheck extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		doProcess(request, response);	
-		}
+		doProcess(request, response);
+	}
 
 }

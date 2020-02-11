@@ -11,25 +11,19 @@ import java.sql.*;
 
 import static db.JdbcUtil.*;
 
-public class BoardService {
+public class writeOpens {
 
-public boolean Board(BoardDTO dto) {
+public List<BoardDTO> writeOpenService(String id) {
 BoardDAO dao=BoardDAO.getInstance();	
 Connection con=getConnection();
 dao.setConnection(con);
-int result=dao.Board(dto);
-if(result>0) {
-	commit(con);
-	close(con);
-	
-	return true;
-}else {
-	rollback(con);
-	close(con);
-	
-	return false;
-}
-	
+List<BoardDTO> list=new ArrayList<BoardDTO>();
+
+list=dao.writeOpen(id);
+close(con);
+return list;
+
+
 	
 	
 	

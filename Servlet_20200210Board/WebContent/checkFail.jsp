@@ -10,7 +10,6 @@ alert('실패');
 location.href="UpdateSelect";
 </script>
 </head>
-
 <body>
 
 </body>
