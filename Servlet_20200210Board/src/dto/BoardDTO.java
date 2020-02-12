@@ -8,14 +8,26 @@ private String text;
 private String dateofissue;
 private String password;
 private int count;
+private String bFile; //파일이름을 세팅하는용도
+
+public String getbFile() {
+	return bFile;
+}
+
+
+public void setbFile(String bFile) {
+	this.bFile = bFile;
+}
+
 
 public BoardDTO() {
 	
 }
 
 
-public BoardDTO(int boardNumber, String boardTitle, String id, String text, String dateOfIssue, String password,
-		int count) {
+
+public BoardDTO(int boardnumber, String boardtitle, String id, String text, String dateofissue, String password,
+		int count, String bFile) {
 	super();
 	this.boardnumber = boardnumber;
 	this.boardtitle = boardtitle;
@@ -24,6 +36,7 @@ public BoardDTO(int boardNumber, String boardTitle, String id, String text, Stri
 	this.dateofissue = dateofissue;
 	this.password = password;
 	this.count = count;
+	this.bFile = bFile;
 }
 
 

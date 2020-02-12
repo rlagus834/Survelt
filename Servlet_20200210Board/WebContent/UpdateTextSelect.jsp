@@ -19,6 +19,8 @@ uri="http://java.sun.com/jsp/jstl/core"%>
 작성일자:${member.dateofissue}<br>
 글내용:<textarea name="text" cols="40" rows="20">${member.text}</textarea>
 비밀번호:<input type="password" name="password" value="${member.password}"><br>
+파일:<img src="fileUpload/${member.bfile}" width="200px" >
+파일명${member.bfile}
 <input type="submit">
 </form>
 

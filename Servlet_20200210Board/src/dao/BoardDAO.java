@@ -56,6 +56,37 @@ public class BoardDAO {
 		
 	}
 
+	public int Boards(BoardDTO dto) {
+		String sql="INSERT INTO BOARD VALUES(BOARD_SEQ.NEXTVAL,?,?,?,SYSDATE,?,0,?)";	
+		int result=0;
+		try {
+		pstmt=con.prepareStatement(sql);
+		pstmt.setString(1, dto.getBoardtitle());
+		pstmt.setString(2, dto.getId());
+		pstmt.setString(3, dto.getText());
+		pstmt.setString(4, dto.getPassword());
+		pstmt.setString(5, dto.getbFile());		
+		
+		result=pstmt.executeUpdate();
+		
+	
+		} catch (SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}finally{
+		close(pstmt); //다쓴 기능들을 close하여 꺼버림 @안끄면 에러나는경우가 가끔있어서그럼
+		
+		
+	}
+		return result;
+		
+		
+		
+		
+	}
+
+	
+	
 public List<BoardDTO> updateSelectService(){
 	String sql="SELECT * FROM BOARD";
 	List<BoardDTO> list=new ArrayList<BoardDTO>();
@@ -69,6 +100,7 @@ public List<BoardDTO> updateSelectService(){
 			dto.setDateofissue(rs.getString("dateofissue"));			
 			dto.setId(rs.getString("id"));
 			dto.setCount(rs.getInt("count"));
+			dto.setbFile(rs.getString("files"));
 		list.add(dto);
 		}
 	} catch (SQLException e) {
@@ -161,6 +193,7 @@ public List<BoardDTO> writeOpen(String id){
 			dto.setId(rs.getString("id"));
 			dto.setCount(rs.getInt("count"));
 			dto.setText(rs.getString("text"));
+			dto.setbFile(rs.getString("files"));
 		list.add(dto);		
 		}
 		sql="UPDATE BOARD SET COUNT=COUNT+1 WHERE ID=?";
@@ -197,7 +230,8 @@ public List<BoardDTO> BorderNumberTextSelect(int bordernum) {
 			dto.setId(rs.getString("id"));
 			dto.setCount(rs.getInt("count"));
 			dto.setText(rs.getString("text"));
-			dto.setPassword(rs.getString("password"));		
+			dto.setPassword(rs.getString("password"));
+			dto.setbFile(rs.getString("files"));
 		list.add(dto);	
 		}
 		

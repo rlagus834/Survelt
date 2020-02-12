@@ -16,7 +16,7 @@ location.href="write.jsp";
     }
     function writes(){
         
-    	location.href="write.jsp";   	
+    	location.href="writeFile.jsp";   	
     	    }
     	     
 function selectUpdate(){

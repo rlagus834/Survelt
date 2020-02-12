@@ -36,9 +36,11 @@
 				<br>
 작성일자:${member.dateofissue}<br>
 작성글:${member.text}<br>
+파일:<img src="fileUpload/${member.bFile}" ><br>
+파일명${member.bFile}<br>
 				<button onclick="NoticeBoard()">나가기</button>				
-				<a href="PasswordCheck?resultParam2=${member.boardnumber}">수정하기</button>				
-				<a href="BoardTextDelete?resultParam2=${member.boardnumber}">삭제하기</button>				
+				<a href="PasswordCheck?resultParam2=${member.boardnumber}">수정하기</a>				
+				<a href="deletepasswordCheck?resultParam2=${member.boardnumber}">삭제하기</a>				
 			</c:forEach>
 		</table>
 	</div>
