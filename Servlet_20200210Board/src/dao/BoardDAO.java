@@ -301,6 +301,127 @@ public String PasswordCheck(int boardnumber) {
 	
 }
 
+public int CountSelectService(){
+	String sql="SELECT COUNT(*) FROM BOARD"; //
+int count=0;
+	try {
+		pstmt=con.prepareStatement(sql);
+		rs=pstmt.executeQuery();
+		while(rs.next()) {
+	count=rs.getInt(1);
+		}
+	} catch (SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}finally{
+		close(pstmt); //다쓴 기능들을 close하여 꺼버림 @안끄면 에러나는경우가 가끔있어서그럼
+		close(rs);
+		
+	}
+	return count;
+
+	
+	
+	
+}
+
+public int memberCountSelectService(String id){
+	String sql="SELECT COUNT(*) FROM BOARD WHERE ID=?"; //
+int count=0;
+	try {		
+		pstmt=con.prepareStatement(sql);
+		pstmt.setString(1, id);
+		rs=pstmt.executeQuery();
+		while(rs.next()) {
+	count=rs.getInt(1);
+		}
+	} catch (SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}finally{
+		close(pstmt); //다쓴 기능들을 close하여 꺼버림 @안끄면 에러나는경우가 가끔있어서그럼
+		close(rs);
+		
+	}
+	return count;
+
+	
+	
+	
+}
+
+public List<BoardDTO> CountSelectService2(int startRow,int endRow){
+	String sql="SELECT * FROM BOARDLIST WHERE RN BETWEEN ? AND ?"; //뷰 조회
+	List<BoardDTO> list=new ArrayList<BoardDTO>();
+
+	try {
+		pstmt=con.prepareStatement(sql);
+		pstmt.setInt(1, startRow);
+		pstmt.setInt(2, endRow);
+		
+		rs=pstmt.executeQuery();
+		while(rs.next()) {
+	BoardDTO dto=new BoardDTO();
+			dto.setBoardnumber(rs.getInt("boardnumber"));
+			dto.setBoardtitle(rs.getString("boardtitle"));
+			dto.setDateofissue(rs.getString("dateofissue"));			
+			dto.setId(rs.getString("id"));
+			dto.setCount(rs.getInt("count"));
+			dto.setText(rs.getString("text"));
+			dto.setPassword(rs.getString("password"));
+	list.add(dto);
+		}
+	} catch (SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}finally{
+		close(pstmt); //다쓴 기능들을 close하여 꺼버림 @안끄면 에러나는경우가 가끔있어서그럼
+		close(rs);
+		
+	}
+	return list;
+
+	
+	
+	
+}
+
+public List<BoardDTO> CountSelectServiceid(int startRow,int endRow,String id){
+	String sql="SELECT * FROM BOARDLIST WHERE ID=? AND RN BETWEEN ? AND ?"; //뷰 조회
+	List<BoardDTO> list=new ArrayList<BoardDTO>();
+
+	try {
+		pstmt=con.prepareStatement(sql);
+		pstmt.setString(1, id);
+		pstmt.setInt(2, startRow);
+		pstmt.setInt(3, endRow);
+		
+		rs=pstmt.executeQuery();
+		while(rs.next()) {
+	BoardDTO dto=new BoardDTO();
+			dto.setBoardnumber(rs.getInt("boardnumber"));
+			dto.setBoardtitle(rs.getString("boardtitle"));
+			dto.setDateofissue(rs.getString("dateofissue"));			
+			dto.setId(rs.getString("id"));
+			dto.setCount(rs.getInt("count"));
+			dto.setText(rs.getString("text"));
+			dto.setPassword(rs.getString("password"));
+	list.add(dto);
+		}
+	} catch (SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}finally{
+		close(pstmt); //다쓴 기능들을 close하여 꺼버림 @안끄면 에러나는경우가 가끔있어서그럼
+		close(rs);
+		
+	}
+	return list;
+
+	
+	
+	
+}
 
 
 }

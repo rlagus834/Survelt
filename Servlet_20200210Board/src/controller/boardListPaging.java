@@ -12,33 +12,25 @@ import javax.servlet.http.HttpServletResponse;
 import dto.BoardDTO;
 import dto.PageingDTO;
 import service.BoardListPagingService;
-import service.MemberWritingSelectService;
-
 import java.util.*;
-
 /**
- * Servlet implementation class MemberWritingSelect
+ * Servlet implementation class boardListPaging
  */
-@WebServlet("/MemberWritingSelect")
-public class MemberWritingSelect extends HttpServlet {
+@WebServlet("/boardListPaging")
+public class boardListPaging extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public MemberWritingSelect() {
+    public boardListPaging() {
         super();
         // TODO Auto-generated constructor stub
     }
 
 	protected void doProcess(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-	request.setCharacterEncoding("UTF-8");
-	MemberWritingSelectService service=new MemberWritingSelectService();
-	
-	String id=request.getParameter("resultParam");
-
-	BoardListPagingService boardListPagingService=new BoardListPagingService(); 
+BoardListPagingService boardListPagingService=new BoardListPagingService(); 
 	int page=1; //처음 시작할때 1페이지로 시작하니까 응용해서 쓰려고
     int limit=3; //보여줄 페이지당 글갯수
     //page파라미터값검사  왜 사용하나?어느페이지로 갈지 알기위해  
@@ -46,15 +38,19 @@ public class MemberWritingSelect extends HttpServlet {
     	page=Integer.parseInt(request.getParameter("page"));
     }
     
+    //전체글갯수를 가져오기위한 ListService 클래스 메소드호출   왜가져오나? 전체글갯수가 파악이되야 내가 나누고싶은 페이지당 글갯수대로 나눠서 몇페이지만들어야하는지 연산해야해서 
+	int listCount=boardListPagingService.boardListPagingService();
 // limit값을 걸어놓은 만큼 범위에 해당하는 글만 가져오는 방법
 	int startRow=(page-1) *limit+1;  //범위계산  startRow는 a~b 범위 일때 a  endRow는b
 	int endRow=page*limit;
-
-	//전체글갯수를 가져오기위한 ListService 클래스 메소드호출   왜가져오나? 전체글갯수가 파악이되야 내가 나누고싶은 페이지당 글갯수대로 나눠서 몇페이지만들어야하는지 연산해야해서 
-	int listCount=boardListPagingService.MemberboardListPagingService(id);
 	
-
-int maxPage=(int)((double)listCount/limit+0.9);
+	//한페이지에 3개씩 보여줄때 1페이지에 보여줘야하는글번호(RN기준)
+	//시작글은 1번글 마지막글은 3번글
+	List<BoardDTO> boardList=boardListPagingService.boardListPagingService2(startRow,endRow);//범위에맞는 데이터 list가져오기
+	
+//페이지 계산을 위한 부분
+	//최대로 필요한 페이지 갯수 계산
+	int maxPage=(int)((double)listCount/limit+0.9);
 	//현재 페이지에 보여줄 시작 페이지 번호(1,11,21,31~~)
 	int startPage=(((int)((double)page/10+0.9))-1)*10+1;
 	int endPage=startPage+10-1;
@@ -69,22 +65,20 @@ paging.setStartPage(startPage);
 paging.setEndPage(endPage);
 paging.setMaxPage(maxPage);
 paging.setListCount(listCount);
-
-List<BoardDTO> list=boardListPagingService.MemberWritingSelectId(startRow, endRow, id);//범위에맞는 데이터 list가져오기
-
-request.setAttribute("select", list);
 request.setAttribute("paging", paging);
-	
-	
-	RequestDispatcher dispatcher = request.getRequestDispatcher("MemberWritingSelect.jsp");
-	dispatcher.forward(request, response);
+request.setAttribute("select", boardList);
+
+RequestDispatcher dispatcher = request.getRequestDispatcher("BoardListPaging.jsp");
+dispatcher.forward(request, response);
+
 
 	
 	}
+
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doProcess(request, response);
-		}
+	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)

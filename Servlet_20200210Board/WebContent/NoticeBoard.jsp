@@ -79,6 +79,7 @@ height: 300px;
 </div>
 <button onclick="writes()">작성하기</button>
 <button onclick="selectUpdate()">업데이트</button>
+<button onclick="location.href='boardListPaging'">페이징목록</button>
 
 </body>
 </html>

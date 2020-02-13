@@ -23,12 +23,9 @@ List<BoardDTO> list=new ArrayList<BoardDTO>();
   close(con);
 return list;
 	
-
-	
-	
-	
 	
 }
+
 
 
 

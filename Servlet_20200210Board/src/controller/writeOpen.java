@@ -36,8 +36,10 @@ public class writeOpen extends HttpServlet {
         writeOpens service = new writeOpens();
 		List<BoardDTO> list = new ArrayList<BoardDTO>();
 		String id = request.getParameter("resultParam");
+		int paging=Integer.parseInt(request.getParameter("page"));
 		list=service.writeOpenService(id);
 		request.setAttribute("select", list);
+		request.setAttribute("paging", paging);
 		RequestDispatcher dispatcher = request.getRequestDispatcher("WriteOpen.jsp");
 		dispatcher.forward(request, response);
 

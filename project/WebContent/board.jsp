@@ -27,7 +27,10 @@ function selectUpdate(){
     </script>
     <style>
         div{
-float: left;
+        width:100%;
+      
+float:left;
+   display:auto;
         }
         td{
 width:150px;
@@ -36,8 +39,8 @@ border:1px solid black;
 }
 
 #table{
-    background-color: aqua;
-height: 300px;    
+   
+height: 700px;    
 }
 #button{
     background-color: aqua;
@@ -67,16 +70,19 @@ height: 300px;
 <c:forEach var="member" items="${select}">
 
 <tr>
+
 <td>${member.boardnumber}</td>
 <td>${member.boardtitle}</td>
 <td>${member.count}</td>
-<td><a href="MemberWritingSelect?resultParam=${member.id}&page=${paging.page}">${member.id}</a></td>
+<td><a href="MemberWritingSelect?resultParam=${member.id}">${member.id}</a></td>
 <td>${member.dateofissue}</td>
-<td><a href="writeOpen?resultParam=${member.id}">작성글보기</a></td>
+<td><a href="writeOpen?resultParam=${member.id}&page=${paging.page}">작성글보기</a></td>
 </tr>
 </c:forEach>
 </table>
 </div>
+<br>
+<div>
 	<!-- 페이징 처리 -->
 	<c:if test="${paging.page<=1}">
 	[이전]&nbsp;
@@ -101,6 +107,7 @@ height: 300px;
 	<c:if test="${paging.page<paging.maxPage}">
 		<a href="boardListPaging?page=${paging.page+1}">[다음]</a>
 	</c:if>
-	
+	</div>
+</div>	
 </body>
 </html>

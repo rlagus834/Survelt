@@ -10,12 +10,7 @@
 <title>Document</title>
 
 <script>
-	function NoticeBoard() {
-
-		location.href = "UpdateSelect";
-
-	}
-
+	
 	
 </script>
 
@@ -38,7 +33,7 @@
 작성글:${member.text}<br>
 파일:<img src="fileUpload/${member.bFile}" ><br>
 파일명${member.bFile}<br>
-				<button onclick="NoticeBoard()">나가기</button>				
+				<button onclick="location.href = 'boardListPaging?page=${requestScope.paging}'">나가기</button>				
 				<a href="PasswordCheck?resultParam2=${member.boardnumber}">수정하기</a>				
 				<a href="deletepasswordCheck?resultParam2=${member.boardnumber}">삭제하기</a>				
 			</c:forEach>

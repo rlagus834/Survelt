@@ -67,12 +67,13 @@ height: 300px;
 <c:forEach var="member" items="${select}">
 
 <tr>
+
 <td>${member.boardnumber}</td>
 <td>${member.boardtitle}</td>
 <td>${member.count}</td>
-<td><a href="MemberWritingSelect?resultParam=${member.id}&page=${paging.page}">${member.id}</a></td>
+<td><a href="MemberWritingSelect?resultParam=${member.id}">${member.id}</a></td>
 <td>${member.dateofissue}</td>
-<td><a href="writeOpen?resultParam=${member.id}">작성글보기</a></td>
+<td><a href="writeOpen?resultParam=${member.id}&page=${paging.page}">작성글보기</a></td>
 </tr>
 </c:forEach>
 </table>
