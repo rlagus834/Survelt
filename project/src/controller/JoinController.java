@@ -29,7 +29,7 @@ public class JoinController extends HttpServlet {
 	JoinService service=new JoinService();
 	TestDTO dto=new TestDTO();
 	int size = 10 * 1024 * 1024;
-	String savePath = "C://Users//6//Desktop//develoment//source//SERVLET//project//WebContent//fileUpload";
+	String savePath = "C://Users//6//git//repository//project//WebContent//fileUpload";
 	MultipartRequest multi = new MultipartRequest(request, // request임
 					savePath, // 값저장한 savePath 변수
 					size, // 업로드제한값 저장한 size변수
@@ -42,7 +42,7 @@ public class JoinController extends HttpServlet {
 			dto.setBirth(multi.getParameter("birth"));
 			dto.setGender(multi.getParameter("gender"));
 			dto.setEmail(multi.getParameter("email1")+multi.getParameter("email2"));
-			dto.setAddress(multi.getParameter("address1")+multi.getParameter("address2")+multi.getParameter("address3")+multi.getParameter("address4"));
+			dto.setAddress(multi.getParameter("address"));
 			dto.setPhone(multi.getParameter("phone"));
 			dto.setPhoto(multi.getOriginalFileName((String) multi.getFileNames().nextElement()));
  boolean result=service.joinService(dto);	

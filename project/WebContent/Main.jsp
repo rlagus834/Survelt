@@ -10,14 +10,7 @@ uri="http://java.sun.com/jsp/jstl/core"%>
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
     <script>
-    function write(){
-    
-location.href="write.jsp";   	
-    }
-    function writes(){
-        
-    	location.href="writeFile.jsp";   	
-    	    }
+
     	     
 function selectUpdate(){
 	
@@ -27,10 +20,7 @@ function selectUpdate(){
     </script>
     <style>
         div{
-        width:100%;
-      
-float:left;
-   display:auto;
+float: left;
         }
         td{
 width:150px;
@@ -39,8 +29,8 @@ border:1px solid black;
 }
 
 #table{
-   
-height: 700px;    
+    background-color: aqua;
+height: 300px;    
 }
 #button{
     background-color: aqua;
@@ -72,16 +62,14 @@ height: 700px;
 <tr>
 
 <td>${member.boardnumber}</td>
-<td>${member.boardtitle}</td>
+<td><a href="writeOpen?resultParam=${member.id}&page=${paging.page}&boardnumber=${member.boardnumber}">${member.boardtitle}</a></td>
 <td>${member.count}</td>
 <td><a href="MemberWritingSelect?resultParam=${member.id}">${member.id}</a></td>
 <td>${member.dateofissue}</td>
-<td><a href="writeOpen?resultParam=${member.id}&page=${paging.page}">작성글보기</a></td>
 </tr>
 </c:forEach>
 </table>
 </div>
-<br>
 <div>
 	<!-- 페이징 처리 -->
 	<c:if test="${paging.page<=1}">
@@ -106,8 +94,24 @@ height: 700px;
 </c:if>
 	<c:if test="${paging.page<paging.maxPage}">
 		<a href="boardListPaging?page=${paging.page+1}">[다음]</a>
-	</c:if>
-	</div>
-</div>	
+</c:if>
+<button onclick="location.href='boardListPaging'">업데이트</button>
+
+<br>
+<c:if test="${empty sessionScope.id}">
+<button onclick="location.href='Login.jsp'">로그인</button>
+</c:if>
+<c:if test="${!empty sessionScope.id}">
+<button onclick="location.href='BoardFileLoad'">작성하기</button>	
+	<div>${sessionScope.id}님 환영합니다
+프로필:<img src="fileUpload/${sessionScope.photo}" >
+
+<c:if test="${sessionScope.id eq 'admin'}">
+<button onclick="location.href='SelectClient'">고객목록조회</button>
+
+</c:if>
+</div>
+</c:if>
+	
 </body>
 </html>

@@ -1,5 +1,3 @@
 /controller/
-/dao/
-/db/
-/dto/
 /service/
+/dao/

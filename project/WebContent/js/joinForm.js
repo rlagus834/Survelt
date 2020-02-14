@@ -56,7 +56,7 @@ if(ps1==ps2){
     }
 function email(){
     
-    document.getElementById("emails").value=document.getElementById("emailSe").value;
+    document.getElementById("emails").value+=document.getElementById("emailSe").value;
     
 }
 //본 예제에서는 도로명 주소 표기 방식에 대한 법령에 따라, 내려오는 데이터를 조합하여 올바른 주소를 구성하는 방법을 설명합니다.
@@ -64,7 +64,6 @@ function sample4_execDaumPostcode() {
     new daum.Postcode({
         oncomplete: function(data) {
             // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
-
             // 도로명 주소의 노출 규칙에 따라 주소를 표시한다.
             // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
             var roadAddr = data.roadAddress; // 도로명 주소 변수
@@ -85,16 +84,10 @@ function sample4_execDaumPostcode() {
             }
 
             // 우편번호와 주소 정보를 해당 필드에 넣는다.
-            document.getElementById('sample4_postcode').value = data.zonecode;
-            document.getElementById("sample4_roadAddress").value = roadAddr;
-            document.getElementById("sample4_jibunAddress").value = data.jibunAddress;
+         
+            document.getElementById("sample4_roadAddress").value = data.zonecode+roadAddr+data.jibunAddress+extraRoadAddr;
             
-            // 참고항목 문자열이 있을 경우 해당 필드에 넣는다.
-            if(roadAddr !== ''){
-                document.getElementById("sample4_extraAddress").value = extraRoadAddr;
-            } else {
-                document.getElementById("sample4_extraAddress").value = '';
-            }
+        
 
             var guideTextBox = document.getElementById("guide");
             // 사용자가 '선택 안함'을 클릭한 경우, 예상 주소라는 표시를 해준다.

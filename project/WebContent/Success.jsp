@@ -11,15 +11,6 @@ uri="http://java.sun.com/jsp/jstl/core"%>
 </head>
 <body>
 
-${sessionScope.id}님 환영합니다
-
-프로필:<img src="fileUpload/${sessionScope.photo}" >
-
-<c:if test="${sessionScope.id eq 'admin'}">
-<button onclick="">고객목록조회</button>
-
-</c:if>
-
 
 
 

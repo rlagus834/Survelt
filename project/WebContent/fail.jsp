@@ -5,8 +5,16 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+
+<script>
+alert('실패');
+location.href="Main.jsp";
+</script>
+
+
+
+
 </head>
 <body>
-<h2>>실패</h2>
 </body>
 </html>

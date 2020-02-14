@@ -6,15 +6,7 @@ private int maxPage;
 private int startPage;
 private int endPage;
 private int listCount;
-private int joinnumber;
 
-
-public int getJoinnumber() {
-	return joinnumber;
-}
-public void setJoinnumber(int joinnumber) {
-	this.joinnumber = joinnumber;
-}
 public int getPage() {
 	return page;
 }

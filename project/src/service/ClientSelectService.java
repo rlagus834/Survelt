@@ -20,5 +20,21 @@ public int CountService() {
 	close(con);
 	return result;		
 	}
-	
+
+public List<TestDTO> ClientSelectService(int startRow,int endRow) {
+	TestDAO dao=TestDAO.getInstance();
+	Connection con=getConnection();
+	dao.setConnection(con);
+	List<TestDTO> list=new ArrayList<TestDTO>();
+	list=dao.ClientSelect(startRow,endRow);	
+	close(con);
+	return list;
+			
+	}
+
+
+
+
+
+
 }
