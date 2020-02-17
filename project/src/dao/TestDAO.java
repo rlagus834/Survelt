@@ -125,15 +125,14 @@ public class TestDAO {
 
 	}
 
-	
 	public int DeleteClient(String id) {
 		String sql = "DELETE FROM TESTS WHERE ID=?";
-		int result=0;
+		int result = 0;
 		try {
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, id);
-			result=pstmt.executeUpdate();
-		
+			result = pstmt.executeUpdate();
+
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -144,20 +143,21 @@ public class TestDAO {
 		return result;
 
 	}
+
 	public int UpdateClient(TestDTO dto) {
 		String sql = "UPDATE TESTS SET PASSWORD=?,EMAIL=?,ADDRESS=?,PHONE=?,PHOTO=? WHERE ID=?";
-		List<TestDTO> list=new ArrayList<TestDTO>();		
-		int result=0;
+		List<TestDTO> list = new ArrayList<TestDTO>();
+		int result = 0;
 		try {
 			pstmt = con.prepareStatement(sql);
-			pstmt.setString(1, dto.getPassword());			
+			pstmt.setString(1, dto.getPassword());
 			pstmt.setString(2, dto.getEmail());
 			pstmt.setString(3, dto.getAddress());
 			pstmt.setString(4, dto.getPhone());
 			pstmt.setString(5, dto.getPhoto());
 			pstmt.setString(6, dto.getId());
-			
-			result=pstmt.executeUpdate();
+
+			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block=
 			e.printStackTrace();
@@ -168,24 +168,24 @@ public class TestDAO {
 		return result;
 
 	}
-	
+
 	public TestDTO UpdateClientSelect(String id) {
 		String sql = "SELECT * FROM TESTS WHERE ID=?";
-		TestDTO dto=new TestDTO();
+		TestDTO dto = new TestDTO();
 		try {
 			pstmt = con.prepareStatement(sql);
-			pstmt.setString(1,id);
-			rs=pstmt.executeQuery();
-			while(rs.next()) {
-			dto.setId(rs.getString("id"));	
-			dto.setPassword(rs.getString("password"));	
-			dto.setName(rs.getString("name"));	
-			dto.setBirth(rs.getString("birth"));	
-			dto.setGender(rs.getString("gender"));	
-			dto.setEmail(rs.getString("email"));	
-			dto.setAddress(rs.getString("address"));	
-			dto.setPhone(rs.getString("phone"));	
-			dto.setPhoto(rs.getString("photo"));	
+			pstmt.setString(1, id);
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				dto.setId(rs.getString("id"));
+				dto.setPassword(rs.getString("password"));
+				dto.setName(rs.getString("name"));
+				dto.setBirth(rs.getString("birth"));
+				dto.setGender(rs.getString("gender"));
+				dto.setEmail(rs.getString("email"));
+				dto.setAddress(rs.getString("address"));
+				dto.setPhone(rs.getString("phone"));
+				dto.setPhoto(rs.getString("photo"));
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block=
@@ -197,5 +197,5 @@ public class TestDAO {
 		return dto;
 
 	}
-	
+
 }

@@ -244,13 +244,13 @@ public List<BoardDTO> BorderNumberTextSelect(int bordernum) {
 }
 
 public int UpdateText(BoardDTO dto) {
-	String sql="UPDATE BOARD SET TEXT=?,BOARDTITLE=?,PASSWORD=? WHERE BOARDNUMBER=?";
+	String sql="UPDATE BOARD SET TEXT=?,BOARDTITLE=?,FILES=? WHERE BOARDNUMBER=?";
 int result=0;
 	try {
 	pstmt=con.prepareStatement(sql);
 	pstmt.setString(1, dto.getText());
-	pstmt.setInt(2, dto.getBoardnumber());
-	pstmt.setString(3, dto.getPassword());
+	pstmt.setString(2, dto.getBoardtitle());
+	pstmt.setString(3, dto.getbFile());
 	pstmt.setInt(4, dto.getBoardnumber());
 	result=pstmt.executeUpdate();
 	

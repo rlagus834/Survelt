@@ -34,7 +34,7 @@ public class UpdateSelect extends HttpServlet {
 		List<BoardDTO> list=new ArrayList<BoardDTO>();
 		list=service.UpdateSelectService();
 		request.setAttribute("select", list);
-		RequestDispatcher dispatcher = request.getRequestDispatcher("NoticeBoard.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("BoardListPaging.jsp");
 		dispatcher.forward(request, response);
 
 	}

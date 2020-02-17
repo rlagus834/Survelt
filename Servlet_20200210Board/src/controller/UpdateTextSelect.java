@@ -38,6 +38,7 @@ public class UpdateTextSelect extends HttpServlet {
 		List<BoardDTO> list=new ArrayList<BoardDTO>();
 		list=service.UpdateText(boardnumber);
 		request.setAttribute("select", list);
+		request.setAttribute("paging", request.getParameter("page"));
 		RequestDispatcher dispatcher = request.getRequestDispatcher("UpdateTextSelect.jsp");
 		dispatcher.forward(request, response);
 		}

@@ -34,8 +34,8 @@
 파일:<img src="fileUpload/${member.bFile}" ><br>
 파일명${member.bFile}<br>
 				<button onclick="location.href = 'boardListPaging?page=${requestScope.paging}'">나가기</button>				
-				<a href="PasswordCheck?resultParam2=${member.boardnumber}">수정하기</a>				
-				<a href="deletepasswordCheck?resultParam2=${member.boardnumber}">삭제하기</a>				
+				<a href="UpdateTextSelect?resultParam2=${member.boardnumber}&page=${requestScope.paging}">수정하기</a>				
+				<a href="?resultParam2=${member.boardnumber}&page=${requestScope.paging}">삭제하기</a>				
 			</c:forEach>
 		</table>
 	</div>

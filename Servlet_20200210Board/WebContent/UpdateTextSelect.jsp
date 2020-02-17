@@ -12,13 +12,13 @@ uri="http://java.sun.com/jsp/jstl/core"%>
 
 <c:forEach var="member" items="${select}">
 
-<form action="UpdateText">
+<form action="UpdateText?page=${requestScope.paging}">
 글번호:<input type="text" name="boardnumber" value="${member.boardnumber}" readonly><br>
 글제목:<input type="text" name="boardTitle" value="${member.boardtitle}"><br>
 작성자:${member.id}<br>
 작성일자:${member.dateofissue}<br>
-글내용:<textarea name="text" cols="40" rows="20">${member.text}</textarea>
-비밀번호:<input type="password" name="password" value="${member.password}"><br>
+글내용:<textarea name="text" cols="40" rows="20">${member.text}</textarea><br>
+첨부파일:<input type="file" name="bFile" value="${member.bFile}">
 <input type="submit">
 </form>
 

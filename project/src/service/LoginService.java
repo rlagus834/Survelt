@@ -11,15 +11,13 @@ import static db.JdbcUtil.*;
 
 public class LoginService {
 
-	
-public boolean loginService(TestDTO dto) {
-	TestDAO dao=TestDAO.getInstance();
-	Connection con=getConnection();
-	dao.setConnection(con);
-	boolean result=dao.LoginSelect(dto);	
-	close(con);
-	return result;		
+	public boolean loginService(TestDTO dto) {
+		TestDAO dao = TestDAO.getInstance();
+		Connection con = getConnection();
+		dao.setConnection(con);
+		boolean result = dao.LoginSelect(dto);
+		close(con);
+		return result;
 	}
 
-	
 }

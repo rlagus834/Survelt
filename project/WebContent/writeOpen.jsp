@@ -34,13 +34,17 @@
 파일:<img src="fileUpload/${member.bFile}" ><br>
 파일명${member.bFile}<br>
 				<button onclick="location.href = 'boardListPaging?page=${requestScope.paging}'">나가기</button>				
-		
+<c:if test="${sessionScope.id eq '${member.id}' || sessionScope.id eq 'admin'}">				
+
 				<a href="BoardTextDelete?resultParam2=${member.boardnumber}">삭제하기</a>				
-		
+<c:if test="${sessionScope.id eq '${member.id}'}">
+						<a href="UpdateTextload?boardnumber=${member.boardnumber}">수정하기</a>
+					</c:if>					
+</c:if>					
 				
-				<a href="UpdateTextLoad?id=${member.id}">수정하기</a>				
-			
-			
+		
+
+
 			</c:forEach>
 		</table>
 	</div>

@@ -27,7 +27,7 @@ public class DeleteClient extends HttpServlet {
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		request.setCharacterEncoding("UTF-8");
-		DeleteClientService service = new DeleteClientService();		
+		DeleteClientService service = new DeleteClientService();
 		String id = request.getParameter("id");
 		boolean result = service.DeleteClient(id);
 		if (result) {

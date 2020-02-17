@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,8 +7,8 @@
 <title>Insert title here</title>
 
 <script>
-alert('실패');
-location.href="Main.jsp";
+	alert('실패');
+	location.href = "Main.jsp";
 </script>
 
 

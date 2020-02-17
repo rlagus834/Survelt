@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-               <%@ taglib prefix="c" 
-uri="http://java.sun.com/jsp/jstl/core"%>
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,18 +9,18 @@ uri="http://java.sun.com/jsp/jstl/core"%>
 </head>
 <body>
 
-<c:forEach var="member" items="${select}">
+	<c:forEach var="member" items="${select}">
 
-<form action="UpdateText">
-글번호:<input type="text" name="boardnumber" value="${member.boardnumber}" readonly><br>
-글제목:<input type="text" name="boardTitle" value="${member.boardtitle}"><br>
-작성일자:${member.dateofissue}<br>
-글내용:<textarea name="text" cols="40" rows="20">${member.text}</textarea>
+		<form action="UpdateText">
+			글번호:<input type="text" name="boardnumber"
+				value="${member.boardnumber}" readonly><br> 글제목:<input
+				type="text" name="boardTitle" value="${member.boardtitle}"><br>
+			작성일자:${member.dateofissue}<br> 글내용:
+			<textarea name="text" cols="40" rows="20">${member.text}</textarea>
+			파일:<img src="fileUpload/${member.bFile}"> <input type="submit">
+		</form>
 
-<input type="submit">
-</form>
-
-</c:forEach>
+	</c:forEach>
 
 
 

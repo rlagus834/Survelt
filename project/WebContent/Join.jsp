@@ -24,7 +24,7 @@
 </script>
 </head>
 <body>
-<form action="join" enctype="multipart/form-data" method="Post">
+<form action="join" id="joinForm" enctype="multipart/form-data" method="Post">
     <table>
  <caption>회원가입</caption>
  
@@ -33,6 +33,9 @@
  <td>
 <i class="fas fa-id-card"></i>아이디 
 <br><input type="text" id="idForm" minlength="6" maxlength="10" name="id" onkeyup="id1()" onblur="checkreset('idSelect')">
+<button type="button" onclick="window.open('CheckId',
+        'childForm', 'width=570, height=350, resizable = no, scrollbars = no');    
+        ">
 <br> 
 <span id="idSelect">
     <br>  
@@ -81,15 +84,15 @@
 </tr>
 <tr><td>
 <i class="far fa-envelope"></i>이메일<br>
-<input type="text" id="email" name="email1">
-<input type="text" id="emails" name="email2" placeholder="                     직접입력">
-<select  id="emailSe" onchange="email()" >
-    <option value="">직접입력</option>
-    <option value="@naver.com" >@naver.com</option>
-<option value="@daum.com">@daum.com</option>
-<option value="@gmail.com">@gmail.com</option>
-</select>
-</td></tr>
+<input type="text" id="email1" name="email1">
+<input type="text" id="email2" name="email2" placeholder="                     직접입력">
+<select id="emailSe" onchange="emailSelect()">
+						<option value="">직접입력</option>
+						<option value="@naver.com">@naver.com</option>
+						<option value="@daum.com">@daum.com</option>
+						<option value="@gmail.com">@gmail.com</option>
+				</select>
+				</td></tr>
 <tr><td><i class="fas fa-mobile-alt"></i>휴대폰번호<br><input type="text" name="phone" id="phone" onkeyup="phoneCheck()"onblur="checkreset('phoneCh')" ><br><span id="phoneCh"></span>
 <br></td>
 <tr>
@@ -100,10 +103,11 @@
 </tr>
  <tr>
  <td>
-<input type="submit" id="join" value="가입하기">
 </td>
 </tr>
 </table>
 </form>
+<input type="button" onclick="checkSign()" id="join" value="가입하기">
+
 </body>
 </html>

@@ -39,7 +39,7 @@ public class login extends HttpServlet {
 	LoginService service=new LoginService();
 	boolean result=service.loginService(dto);
 	if(result) {
-		HttpSession session=request.getSession();
+			HttpSession session = request.getSession();
 		session.setAttribute("id",dto.getId());
 		session.setAttribute("photo",dto.getPhoto());
 

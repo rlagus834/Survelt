@@ -12,8 +12,6 @@ import java.util.*;
 import dto.BoardDTO;
 import service.writeOpens;
 
-
-
 /**
  * Servlet implementation class Board
  */
@@ -33,12 +31,12 @@ public class writeOpen extends HttpServlet {
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		request.setCharacterEncoding("UTF-8");
-        writeOpens service = new writeOpens();
+		writeOpens service = new writeOpens();
 		List<BoardDTO> list = new ArrayList<BoardDTO>();
 		String id = request.getParameter("resultParam");
-		int paging=Integer.parseInt(request.getParameter("page"));
-		int boardnumber=Integer.parseInt(request.getParameter("boardnumber"));
-		list=service.writeOpenService(id,boardnumber);
+		int paging = Integer.parseInt(request.getParameter("page"));
+		int boardnumber = Integer.parseInt(request.getParameter("boardnumber"));
+		list = service.writeOpenService(boardnumber);
 		request.setAttribute("select", list);
 		request.setAttribute("paging", paging);
 		RequestDispatcher dispatcher = request.getRequestDispatcher("writeOpen.jsp");
