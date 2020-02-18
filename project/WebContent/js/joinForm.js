@@ -1,3 +1,7 @@
+var idChecksave;
+
+
+
 function id1() {
 
 	var exp = /^(?=.*[a-z])(?=.*\d)[a-z\d]{6,10}$/;
@@ -121,13 +125,40 @@ function checkSign() {
 	
 	if (saveId.value.match(exp1)&& pass.value.match(exp2) && ps1 == ps2 &&phoneSave.value.match(exp3)
 			&& address1 !=null) {
+		if(idChecksave!=null){
 					document.getElementById("joinForm").submit();
+		}else{
+			alert('아이디중복되있는지 확인해주세요.');
+		}
 				}else{
-			alert('표시형식에 맞게 작성하여 주십시오.');
-			}	
+					alert('표시형식에 맞게 작성하여 주십시오.');
+					
+				}	
+}
+
+function idCheckHide(save){
+	idChecksave=save;	
 }
 
 
+
+
+
+function idCheck(){
+	var exp1 = /^(?=.*[a-z])(?=.*\d)[a-z\d]{6,10}$/;
+	var saveId = document.getElementById("idForm");
+	if(saveId.value.match(exp1)){
+var url="CheckId?id="+document.getElementById("idForm").value;
+		console.log(url);
+		window.open(url,
+		        'childForm', 'width=570, height=350, resizable = no, scrollbars = no');    
+	}else{
+		alert('표시형식에 맞게 작성하여 주십시오.');
+		
+	}	        
+	
+	
+}
 	
 
 

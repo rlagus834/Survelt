@@ -8,26 +8,22 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-import dto.BoardDTO;
-import dto.PageDTO;
 
-import service.BoardListPagingService;
-import service.MemberWritingSelectService;
-
-import java.util.*;
+import service.PasswordCheckService;
 
 /**
- * Servlet implementation class MemberWritingSelect
+ * Servlet implementation class BoardTextDelete
  */
-@WebServlet("/CheckId")
-public class CheckId extends HttpServlet {
+@WebServlet("/PasswordCheck")
+public class PasswordCheck extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public CheckId() {
+	public PasswordCheck() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
@@ -36,21 +32,14 @@ public class CheckId extends HttpServlet {
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		request.setCharacterEncoding("UTF-8");
-		MemberWritingSelectService service = new MemberWritingSelectService();
-		String id = request.getParameter("id");
-		System.out.println(id);
-		String list =service.MemberSelect(id);
-		if(list!=null) {
-request.setAttribute("result", "중복");
-			RequestDispatcher dispatcher = request.getRequestDispatcher("CheckId.jsp");
-			dispatcher.forward(request, response);       	
-        }else {
-        	request.setAttribute("result", null);        	
-    		RequestDispatcher dispatcher = request.getRequestDispatcher("CheckId.jsp");
-    		dispatcher.forward(request, response);
-        	
-        }
+		String id=request.getParameter("id");
 		
+		PasswordCheckService service=new PasswordCheckService();
+		String password=service.PasswordCheck(id);
+		request.setAttribute("password", password);
+		RequestDispatcher dispatcher = request.getRequestDispatcher("passwordCheck.jsp");
+		dispatcher.forward(request, response);
+
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)

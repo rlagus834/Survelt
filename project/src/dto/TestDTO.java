@@ -6,8 +6,26 @@ public class TestDTO {
 	private String name;
 	private String birth;
 	private String gender;
-	private String email;
+	private String email;	
 	private String address;
+	private String email1;	
+	private String address1;	
+	public String getEmail1() {
+		return email1;
+	}
+
+	public void setEmail1(String email1) {
+		this.email1 = email1;
+	}
+
+	public String getAddress1() {
+		return address1;
+	}
+
+	public void setAddress1(String address1) {
+		this.address1 = address1;
+	}
+
 	private String phone;
 	private String photo;
 

@@ -67,14 +67,15 @@
 						value="우편번호 찾기"><br> <input type="text"
 						id="sample4_roadAddress" placeholder="주소" name="address"
 						value="${member.address}"> <span id="guide"
-						style="color: #999; display: none"></span></td>
+						style="color: #999; display: none"></span>
+						<input type="text" name="address1" value="${member.address1}" placeholder="상세주소"></td>
 				</tr>
 				<tr>
 					<td><i class="far fa-envelope"></i>이메일<br> <input
 						type="text" id="email" name="email1" value="${member.email}">
-						<input type="text" id="emails" name="email2"
+						<input type="text" id="emails" name="email2" value="${member.email1}
 						placeholder="                     직접입력"> <select
-						id="emailSe" onchange="email()">
+						id="emailSe" onchange="email()" >
 							<option value="">직접입력</option>
 							<option value="@naver.com">@naver.com</option>
 							<option value="@daum.com">@daum.com</option>
@@ -93,7 +94,7 @@
 				</tr>
 				</tr>
 				<tr>
-					<td><input type="submit" id="join" value="가입하기"></td>
+					<td><input type="submit" id="join" value="정보수정"></td>
 				</tr>
 			</table>
 		</form>

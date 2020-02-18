@@ -23,4 +23,16 @@ public class MemberWritingSelectService {
 
 	}
 
+	
+	public String MemberSelect(String id) {
+		BoardDAO dao = BoardDAO.getInstance();
+		Connection con = getConnection();
+		dao.setConnection(con);
+
+		String list  = dao.MemberWriting(id);
+		close(con);
+		return list;
+
+	}
+	
 }

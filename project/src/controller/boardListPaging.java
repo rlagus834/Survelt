@@ -48,12 +48,15 @@ public class boardListPaging extends HttpServlet {
 		int listCount = 0;
 		// 한페이지에 3개씩 보여줄때 1페이지에 보여줘야하는글번호(RN기준)
 		// 시작글은 1번글 마지막글은 3번글
+		String filters = request.getParameter("filters");
+		String search = request.getParameter("search");
 		if (request.getParameter("search") != null) {
-			String search = request.getParameter("search");
-			listCount = boardListPagingService.SelectCountService(search);
-			List<BoardDTO> boardList = boardListPagingService.boardListPagingServiceSearch(startRow, endRow, search);// 범위에맞는
-																														// 데이터
-																														// list가져오기
+		
+			listCount = boardListPagingService.SelectCountService(search, filters);
+			List<BoardDTO> boardList = boardListPagingService.boardListPagingServiceSearch(startRow, endRow, search,
+					filters);// 범위에맞는
+			// 데이터
+			// list가져오기
 			request.setAttribute("select", boardList);
 		} else {
 			listCount = boardListPagingService.boardListPagingService();
@@ -79,7 +82,10 @@ public class boardListPaging extends HttpServlet {
 		paging.setMaxPage(maxPage);
 		paging.setListCount(listCount);
 		request.setAttribute("paging", paging);
+		request.setAttribute("filters", filters);
+		request.setAttribute("search", search);
 
+		
 		RequestDispatcher dispatcher = request.getRequestDispatcher("Main.jsp");
 		dispatcher.forward(request, response);
 

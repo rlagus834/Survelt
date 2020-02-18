@@ -99,6 +99,32 @@ public class BoardDAO {
 		return list;
 
 	}
+	
+	
+	public String PasswordCheck(String id) {
+		String sql = "SELECT * FROM TESTS WHERE ID=?";
+		List<BoardDTO> list = new ArrayList<BoardDTO>();
+		String result=null;		
+		try {
+			pstmt = con.prepareStatement(sql);
+	pstmt.setString(1, id);	
+	rs = pstmt.executeQuery();
+			while (rs.next()) {
+       result=rs.getString("password");
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(pstmt); // 다쓴 기능들을 close하여 꺼버림 @안끄면 에러나는경우가 가끔있어서그럼
+			close(rs);
+
+		}
+		return result;
+
+	}
+	
+	
 
 	public List<BoardDTO> updateSelectServiceAsc(int startRow, int endRow) {
 		String sql = "SELECT * FROM BOARDLISTS WHERE RN BETWEEN ? AND ? ORDER BY COUNT DESC";
@@ -131,11 +157,12 @@ public class BoardDAO {
 
 	public List<BoardDTO> MemberWritingSelect(String id) {
 		String sql = "SELECT * FROM BOARDS WHERE ID=?";
-		List<BoardDTO> list = new ArrayList<BoardDTO>();
+		List<BoardDTO> list = null;
 		try {
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, id);
 			rs = pstmt.executeQuery();
+			list = new ArrayList<BoardDTO>();
 			while (rs.next()) {
 				BoardDTO dto = new BoardDTO();
 				dto.setBoardnumber(rs.getInt("boardnumber"));
@@ -155,6 +182,28 @@ public class BoardDAO {
 
 		}
 		return list;
+
+	}
+
+	public String MemberWriting(String id) {
+		String sql = "SELECT * FROM BOARDS WHERE ID=?";
+		String result = null;
+		try {
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, id);
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				result = "중복";
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(pstmt); // 다쓴 기능들을 close하여 꺼버림 @안끄면 에러나는경우가 가끔있어서그럼
+			close(rs);
+
+		}
+		return result;
 
 	}
 
@@ -274,13 +323,20 @@ public class BoardDAO {
 
 	}
 
-	public int SelectCount(String id) {
-		String sql = "SELECT COUNT(*) FROM BOARDS WHERE ID LIKE ? OR BOARDTITLE LIKE ?"; //
+	public int SelectCount(String select,String filters) {
+		String sql = null; //
+		if (filters.equals("제목")) {
+			sql ="SELECT COUNT(*) FROM BOARDS WHERE BOARDTITLE LIKE ? "; // 뷰 조회
+		} else if (filters.equals("작성자")) {
+			sql = "SELECT COUNT(*) FROM BOARDS WHERE ID LIKE ? "; // 뷰 조회
+		} else if (filters.equals("글내용")) {
+			sql="SELECT COUNT(*) FROM BOARDS WHERE TEXT LIKE ? ";
+			}
 		int count = 0;
 		try {
 			pstmt = con.prepareStatement(sql);
-			pstmt.setString(1, "%" + id + "%");
-			pstmt.setString(2, "%" + id + "%");
+			pstmt.setString(1, "%" + select+ "%");
+			
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
 				count = rs.getInt(1);
@@ -299,6 +355,7 @@ public class BoardDAO {
 
 	public int memberCountSelectService(String id) {
 		String sql = "SELECT COUNT(*) FROM BOARDS WHERE ID=?"; //
+		
 		int count = 0;
 		try {
 			pstmt = con.prepareStatement(sql);
@@ -350,16 +407,22 @@ public class BoardDAO {
 
 	}
 
-	public List<BoardDTO> CountSelectServiceSearch(int startRow, int endRow, String search) {
-		String sql = "SELECT * FROM BOARDLISTS WHERE ID LIKE ? OR BOARDTITLE LIKE ? AND RN BETWEEN ? AND ?"; // 뷰 조회
+	public List<BoardDTO> CountSelectServiceSearch(int startRow, int endRow, String search, String filters) {
+		String sql = null;
+		if (filters.equals("제목")) {
+			sql = "SELECT * FROM BOARDLISTS WHERE BOARDTITLE LIKE ? AND RN BETWEEN ? AND ?"; // 뷰 조회
+		} else if (filters.equals("작성자")) {
+			sql = "SELECT * FROM BOARDLISTS WHERE ID LIKE ? AND RN BETWEEN ? AND ?"; // 뷰 조회
+		} else if (filters.equals("글내용")) {
+			sql = "SELECT * FROM BOARDLISTS WHERE TEXT LIKE ? AND RN BETWEEN ? AND ?"; // 뷰 조회
+		}
 		List<BoardDTO> list = new ArrayList<BoardDTO>();
 
 		try {
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, "%" + search + "%");
-			pstmt.setString(2, "%" + search + "%");
-			pstmt.setInt(3, startRow);
-			pstmt.setInt(4, endRow);
+			pstmt.setInt(2, startRow);
+			pstmt.setInt(3, endRow);
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
 				BoardDTO dto = new BoardDTO();

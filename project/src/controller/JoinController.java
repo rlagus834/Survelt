@@ -42,8 +42,8 @@ public class JoinController extends HttpServlet {
 		dto.setName(multi.getParameter("name"));
 		dto.setBirth(multi.getParameter("birth"));
 		dto.setGender(multi.getParameter("gender"));
-		dto.setEmail(multi.getParameter("email1") + multi.getParameter("email2"));
-		dto.setAddress(multi.getParameter("address"));
+		dto.setEmail(multi.getParameter("email1")+"/"+multi.getParameter("email2"));
+		dto.setAddress(multi.getParameter("address")+"/"+multi.getParameter("address1"));
 		dto.setPhone(multi.getParameter("phone"));
 		dto.setPhoto(multi.getOriginalFileName((String) multi.getFileNames().nextElement()));
 		boolean result = service.joinService(dto);

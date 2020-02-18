@@ -38,8 +38,11 @@ public class TestDAO {
 			pstmt.setString(3, dto.getName());
 			pstmt.setString(4, dto.getBirth());
 			pstmt.setString(5, dto.getGender());
+			
 			pstmt.setString(6, dto.getEmail());
+			
 			pstmt.setString(7, dto.getAddress());
+			
 			pstmt.setString(8, dto.getPhone());
 			pstmt.setString(9, dto.getPhoto());
 
@@ -182,8 +185,16 @@ public class TestDAO {
 				dto.setName(rs.getString("name"));
 				dto.setBirth(rs.getString("birth"));
 				dto.setGender(rs.getString("gender"));
-				dto.setEmail(rs.getString("email"));
-				dto.setAddress(rs.getString("address"));
+				String save = rs.getString("email");
+				String[] array = save.split("/");				
+				dto.setEmail(array[0]);
+				dto.setEmail1(array[1]);
+				save = rs.getString("address");
+				array = save.split("/");
+				dto.setAddress(array[0]);				
+				dto.setAddress1(array[1]);
+				
+				
 				dto.setPhone(rs.getString("phone"));
 				dto.setPhoto(rs.getString("photo"));
 			}

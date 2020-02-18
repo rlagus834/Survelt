@@ -33,11 +33,9 @@
  <td>
 <i class="fas fa-id-card"></i>아이디 
 <br><input type="text" id="idForm" minlength="6" maxlength="10" name="id" onkeyup="id1()" onblur="checkreset('idSelect')">
-<button type="button" onclick="window.open('CheckId',
-        'childForm', 'width=570, height=350, resizable = no, scrollbars = no');    
-        ">
+<button type="button" onclick="idCheck()">중복확인</button>
 <br> 
-<span id="idSelect">
+<span id="idSelect"></span>
     <br>  
 </td>
 </tr>
@@ -77,7 +75,7 @@
 
 <input type="button" onclick="sample4_execDaumPostcode()" value="우편번호 찾기"><br>
 <input type="text" id="sample4_roadAddress" placeholder="주소" name="address">
-
+<input type="text" name="address1" placeholder="상세주소">
 <span id="guide" style="color:#999;display:none"></span>
 
     </td>

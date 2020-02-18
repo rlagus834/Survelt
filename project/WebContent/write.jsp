@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,6 +13,7 @@
 		작성자<input type="text" name="id" value="${sessionScope.id}" readonly><br>
 		글제목:<input type="text" name="boardTitle"><br> 내용:
 		<textarea name="text" cols="40" rows="20"></textarea>
+
 		<br> 첨부파일:<input type="file" name="bFile"><br> <input
 			type="submit">
 	</form>

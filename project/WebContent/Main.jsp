@@ -74,13 +74,13 @@ td {
 			</c:forEach>
 		</table>
 	</div>
-	<div>
+	<div id="pageOrder">
 		<!-- 페이징 처리 -->
 		<c:if test="${paging.page<=1}">
 	[이전]&nbsp;
 	</c:if>
 		<c:if test="${paging.page>1}">
-			<a href="boardListPaging?page=${paging.page-1}">[이전]</a>&nbsp;
+			<a href="boardListPaging?page=${paging.page-1}&filters=${requestScope.filters}&search=${requestScope.search}">[이전]</a>&nbsp;
 	</c:if>
 		<c:forEach begin="${paging.startPage}" end="${paging.endPage}" var="i"
 			step="1">
@@ -89,7 +89,7 @@ td {
 			${i}
 		</c:when>
 				<c:otherwise>
-					<a href="boardListPaging?page=${i}">${i}</a>
+					<a href="boardListPaging?page=${i}&filters=${requestScope.filters}&search=${requestScope.search}">${i}</a>
 				</c:otherwise>
 			</c:choose>
 		</c:forEach>
@@ -97,11 +97,14 @@ td {
 [다음]
 </c:if>
 		<c:if test="${paging.page<paging.maxPage}">
-			<a href="boardListPaging?page=${paging.page+1}">[다음]</a>
+			<a href="boardListPaging?page=${paging.page+1}&filters=${requestScope.filters}&search=${requestScope.search}">[다음]</a>
 		</c:if>
 		<form action="boardListPaging">
-			제목/작성자검색:<input type="text" name="search"> <input
-				type="submit">
+			<select name="filters">
+				<option value="제목">제목</option>
+				<option value="작성자">작성자</option>
+				<option value="글내용">글내용</option>
+			</select><input type="text" name="search"> <input type="submit">
 		</form>
 		<br>
 		<button onclick="location.href='boardListPaging'">업데이트</button>
@@ -113,9 +116,9 @@ td {
 		<c:if test="${!empty sessionScope.id}">
 			<button onclick="location.href='BoardFileLoad'">작성하기</button>
 			<div>${sessionScope.id}님
-				환영합니다 <a href="UpdateClientLoad?id=${sessionScope.id}">개인정보수정</a>
-				프로필:<img src="fileUpload/${sessionScope.photo}"> 정보수정:<a
-					href="UpdateClientLoad?id=${sessionScope.id}">수정</a>
+				환영합니다. 
+				프로필:<img src="fileUpload/${sessionScope.photo}"> 
+				<a href="PasswordCheck?id=${sessionScope.id}">정보수정</a>
 				<button onclick="location.href='Logout'">로그아웃</button>
 				<c:if test="${sessionScope.id eq 'admin'}">
 					<button onclick="location.href='SelectClient'">고객목록조회</button>

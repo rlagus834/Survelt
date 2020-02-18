@@ -18,6 +18,7 @@
 			작성일자:${member.dateofissue}<br> 글내용:
 			<textarea name="text" cols="40" rows="20">${member.text}</textarea>
 			파일:<img src="fileUpload/${member.bFile}"> <input type="submit">
+			
 		</form>
 
 	</c:forEach>

@@ -38,7 +38,8 @@ public class SelectCount extends HttpServlet {
 		System.out.println(id);
 //HttpSession session=request.getSession();
 //String id=(String)session.getAttribute("id");
-		int SelectCount = boardListPagingService.SelectCountService(id);
+		String filters="작성자";
+		int SelectCount = boardListPagingService.SelectCountService(id,filters);
 		request.setAttribute("listCount", SelectCount);
 		request.setAttribute("id", id);
 		RequestDispatcher dispatcher = request.getRequestDispatcher("profile.jsp");

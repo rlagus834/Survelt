@@ -21,11 +21,11 @@ public class BoardListPagingService {
 
 	}
 
-	public int SelectCountService(String id) {
+	public int SelectCountService(String select,String filters) {
 		BoardDAO dao = BoardDAO.getInstance();
 		Connection con = getConnection();
 		dao.setConnection(con);
-		int count = dao.SelectCount(id);
+		int count = dao.SelectCount(select,filters);
 		close(con);
 		return count;
 
@@ -42,12 +42,12 @@ public class BoardListPagingService {
 
 	}
 
-	public List<BoardDTO> boardListPagingServiceSearch(int startRow, int endRow, String search) {
+	public List<BoardDTO> boardListPagingServiceSearch(int startRow, int endRow, String search,String filters) {
 		BoardDAO dao = BoardDAO.getInstance();
 		Connection con = getConnection();
 		dao.setConnection(con);
 		List<BoardDTO> list = new ArrayList<BoardDTO>();
-		list = dao.CountSelectServiceSearch(startRow, endRow, search);
+		list = dao.CountSelectServiceSearch(startRow, endRow, search,filters);
 		close(con);
 		return list;
 

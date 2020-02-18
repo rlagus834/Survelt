@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
@@ -32,7 +33,8 @@ public class UpdateClientLoad extends HttpServlet {
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		request.setCharacterEncoding("UTF-8");
-		String id = request.getParameter("id");
+		HttpSession session=request.getSession();
+		String id=(String)session.getAttribute("id");
 		TestDTO dto = new TestDTO();
 		UpdateClientService service = new UpdateClientService();
 		dto = service.updateClientService(id);

@@ -41,8 +41,8 @@ public class UpdateClient  extends HttpServlet {
 				dto.setId(multi.getParameter("id"));
 				dto.setPassword(multi.getParameter("password"));
 				dto.setName(multi.getParameter("name"));
-				dto.setEmail(multi.getParameter("email1")+multi.getParameter("email2"));
-				dto.setAddress(multi.getParameter("address"));
+				dto.setEmail(multi.getParameter("email1")+"/"+multi.getParameter("email2"));
+				dto.setAddress(multi.getParameter("address")+"/"+multi.getParameter("address"));
 				dto.setPhone(multi.getParameter("phone"));
 				dto.setPhoto(multi.getOriginalFileName((String) multi.getFileNames().nextElement()));
 		boolean result = service.updateClientService(dto);

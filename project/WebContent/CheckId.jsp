@@ -7,21 +7,25 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script>
+function idCheck(){
+	
+	window.opener.idCheckHide('hallow');
+	
+	self.close()	
+}
 
-location.href="CheckId?id=opener.document.getElementById("idForm").value";
 
 </script>
 </head>
 <body>
 <c:choose>
-<c:when test="${result eq null}"> 
+<c:when test="${requestScope.result eq null}"> 
 사용가능 아이디입니다.
-<input type="button" value="창닫기" onclick="window.close()">
-
+<input type="button" value="창닫기" onclick="idCheck()">
  </c:when>
 <c:otherwise>
 중복입니다.
-<input type="button" value="창닫기" onclick="window.close()">
+<input type="button" value="창닫기" onclick="idCheck()">
 
 </c:otherwise>
 
