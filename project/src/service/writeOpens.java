@@ -17,7 +17,7 @@ public class writeOpens {
 		dao.setConnection(con);
 		List<BoardDTO> list = new ArrayList<BoardDTO>();
 
-		list = dao.writeOpen(boardnumber);
+//		list = dao.writeOpen(boardnumber);
 		close(con);
 		return list;
 
