@@ -49,7 +49,7 @@ public class BoardFile extends HttpServlet {
 		boardDTO.setId(multi.getParameter("id")); // 작성자 multi쓴이유:보낼때 form에 enctype="multipart/form-data"추가되서 세팅
 		boardDTO.setBoardtitle(multi.getParameter("boardTitle")); // 글제목
 		boardDTO.setText(multi.getParameter("text"));// 글내용
-		
+//		System.out.println((String)multi.getFileNames().nextElement());
 		boardDTO.setbFile(multi.getOriginalFileName((String) multi.getFileNames().nextElement()));// 파일이름
 		// 저장하기위한 공식같은것 파일이름이담긴 값을 불러들여 세팅할수있게 공식적으로 한것^
 		BoardService boardWriteService = new BoardService();

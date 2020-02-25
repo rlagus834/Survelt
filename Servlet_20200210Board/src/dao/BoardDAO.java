@@ -10,7 +10,7 @@ import dto.BoardDTO;
 //import javax.sql.*;
 //import javax.xml.ws.Response;
 
-public class BoardDAO {
+public class MoviesDAO {
 	private static BoardDAO dao;
 	Connection con;
 	PreparedStatement pstmt;

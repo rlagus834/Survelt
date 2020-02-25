@@ -42,6 +42,7 @@ public class SelectCount extends HttpServlet {
 		int SelectCount = boardListPagingService.SelectCountService(id,filters);
 		request.setAttribute("listCount", SelectCount);
 		request.setAttribute("id", id);
+		
 		RequestDispatcher dispatcher = request.getRequestDispatcher("profile.jsp");
 		dispatcher.forward(request, response);
 

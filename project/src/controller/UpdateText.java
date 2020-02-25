@@ -36,11 +36,10 @@ public class UpdateText extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		int size = 10 * 1024 * 1024; // 파일업로드할떄 파일크기제한주기위해서 현재작성한건 10메가라는뜻
 //		String savePath="C:\\Users\\6\\git\\repository\\Servlet_20200210Board\\WebContent\\fileUpload";
-		// ^ /모양으로 바꿔야함
-		String savePath = "C://Users//6//git//repository//Servlet_20200210Board//WebContent//fileUpload";
+		// ^ /모양으로 바꿔야함C:\Users\6\git\repository\project\WebContent\fileUpload
+		String savePath = "C://Users//6//git//repository//project//WebContent//fileUpload";
 
 		// int sum = Integer.parseInt(i); 형변환하는법 파라미터는 다 String 그러므로 int로쓸거면 형변환해줘야함
-		int boardnumber = Integer.parseInt(request.getParameter("boardnumber"));
 		MultipartRequest multi = new MultipartRequest(request, // request임
 				savePath, // 값저장한 savePath 변수
 				size, // 업로드제한값 저장한 size변수
@@ -54,10 +53,11 @@ public class UpdateText extends HttpServlet {
 		boardDTO.setbFile(multi.getOriginalFileName((String) multi.getFileNames().nextElement()));// 파일이름
 		UpdateTextService service = new UpdateTextService();
 		boolean result = service.UpdateText(boardDTO);
+		
 		if (result) {
 			response.sendRedirect("boardListPaging");
 		} else {
-			response.sendRedirect("BoardWriteFail.jsp");
+			response.sendRedirect("boardListPaging");
 
 		}
 	}

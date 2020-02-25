@@ -39,6 +39,8 @@ public class writeOpen extends HttpServlet {
 		list = service.writeOpenService(boardnumber);
 		request.setAttribute("select", list);
 		request.setAttribute("paging", paging);
+	
+		
 		RequestDispatcher dispatcher = request.getRequestDispatcher("writeOpen.jsp");
 		dispatcher.forward(request, response);
 

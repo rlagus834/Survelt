@@ -34,7 +34,7 @@ public class UpdateTextLoad extends HttpServlet {
 		// TODO Auto-generated method stub
 		request.setCharacterEncoding("UTF-8");
 		// int sum = Integer.parseInt(i); 형변환하는법 파라미터는 다 String 그러므로 int로쓸거면 형변환해줘야함
-		int boardnumber = Integer.parseInt(request.getParameter("resultParam2"));
+		int boardnumber = Integer.parseInt(request.getParameter("boardnumber"));
 		System.out.println(boardnumber);
 		UpdateTextSelectService service = new UpdateTextSelectService();
 		List<BoardDTO> list = new ArrayList<BoardDTO>();

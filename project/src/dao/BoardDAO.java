@@ -275,7 +275,7 @@ public class BoardDAO {
 		try {
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, dto.getText());
-			pstmt.setInt(2, dto.getBoardnumber());
+			pstmt.setString(2, dto.getBoardtitle());
 			pstmt.setInt(3, dto.getBoardnumber());
 			result = pstmt.executeUpdate();
 
@@ -329,7 +329,8 @@ public class BoardDAO {
 			sql ="SELECT COUNT(*) FROM BOARDS WHERE BOARDTITLE LIKE ? "; // 뷰 조회
 		} else if (filters.equals("작성자")) {
 			sql = "SELECT COUNT(*) FROM BOARDS WHERE ID LIKE ? "; // 뷰 조회
-		} else if (filters.equals("글내용")) {
+		}
+		else if (filters.equals("글내용")) {
 			sql="SELECT COUNT(*) FROM BOARDS WHERE TEXT LIKE ? ";
 			}
 		int count = 0;
@@ -478,5 +479,8 @@ public class BoardDAO {
 		return list;
 
 	}
+	
+	
+
 
 }

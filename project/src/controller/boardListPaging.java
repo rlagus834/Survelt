@@ -50,7 +50,7 @@ public class boardListPaging extends HttpServlet {
 		// 시작글은 1번글 마지막글은 3번글
 		String filters = request.getParameter("filters");
 		String search = request.getParameter("search");
-		if (request.getParameter("search") != null) {
+		
 		
 			listCount = boardListPagingService.SelectCountService(search, filters);
 			List<BoardDTO> boardList = boardListPagingService.boardListPagingServiceSearch(startRow, endRow, search,
@@ -58,12 +58,7 @@ public class boardListPaging extends HttpServlet {
 			// 데이터
 			// list가져오기
 			request.setAttribute("select", boardList);
-		} else {
-			listCount = boardListPagingService.boardListPagingService();
-			List<BoardDTO> boardList = boardListPagingService.boardListPagingService2(startRow, endRow);// 범위에맞는 데이터
-																										// list가져오기
-			request.setAttribute("select", boardList);
-		}
+		
 //페이지 계산을 위한 부분
 		// 최대로 필요한 페이지 갯수 계산
 		int maxPage = (int) ((double) listCount / limit + 0.9);
