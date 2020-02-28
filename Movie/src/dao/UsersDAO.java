@@ -234,27 +234,28 @@ public class UsersDAO {
 
 	}
 
-	public List<MoviesDTO> MovieSelect(String mname) {
+	public List<MoviesDTO> MovieSelect(MoviesDTO dto) {
 		String sql = "SELECT * FROM MOVIES WHERE MNAME=?";		
 		List<MoviesDTO> list=new ArrayList<MoviesDTO>();
 		try {
 			pstmt = con.prepareStatement(sql);
-			pstmt.setString(1, mname);
+			pstmt.setString(1, dto.getBoardtitle());
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
-				MoviesDTO dto=new MoviesDTO();
+				MoviesDTO dto1=new MoviesDTO();
+				dto1.setBoardnumber(rs.getInt("mnum"));
 				dto.setBoardnumber(rs.getInt("mnum"));
-				dto.setBoardtitle(rs.getString("mname"));
-			 String save=rs.getString("text");
-			
+				dto1.setBoardtitle(rs.getString("mname"));
+				dto1.setText(rs.getString("text"));
+			 String save=rs.getString("photo");
 			String[] array = save.split("&");
-			dto.setPhoto(array[0]);
-			dto.setPhoto1(array[1]);
-			dto.setPhoto2(array[2]);
-			dto.setPhoto3(array[3]);
-			dto.setPhoto4(array[4]);
-			dto.setPhoto5(array[5]);			
-				list.add(dto);
+			dto1.setPhoto(array[0]);
+			dto1.setPhoto1(array[1]);
+			dto1.setPhoto2(array[2]);
+			dto1.setPhoto3(array[3]);
+			dto1.setPhoto4(array[4]);
+			dto1.setPhoto5(array[5]);			
+				list.add(dto1);
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block=

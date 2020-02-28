@@ -27,11 +27,11 @@ public class BoardTextDelete extends HttpServlet {
 	protected void doProcess(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 	request.setCharacterEncoding("UTF-8");
-	int boardnumber=Integer.parseInt(request.getParameter("resultParam2"));
+	int boardnumber=Integer.parseInt(request.getParameter("mnum"));
 	BoardTextDeleteService service=new BoardTextDeleteService();
 	boolean result=service.BoardTextDelete(boardnumber);
 	if(result) {
-		response.sendRedirect("boardListPaging?page=${requestScope.paging}");
+		response.sendRedirect("search.jsp");
 		
 	}else {
 		response.sendRedirect("fail.jsp");

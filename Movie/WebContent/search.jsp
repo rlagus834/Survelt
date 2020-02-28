@@ -189,10 +189,13 @@ var countries = ["admin"];
 countries.push("${member.boardtitle}");
 	</c:forEach>
 
-function select(){
-location.href="MovieSearch";	
-}
-
+	function select(){
+		if(!'${requestScope.select}'){
+			location.href="MovieSearch";					
+		}else{
+			
+		}
+		}
 /*initiate the autocomplete function on the "myInput" element, and pass along the countries array as possible autocomplete values:*/
 autocomplete(document.getElementById("myInput"), countries);
 </script>

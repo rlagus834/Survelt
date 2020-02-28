@@ -5,10 +5,10 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-
+<script src="https://kit.fontawesome.com/bad24df0ae.js"
+	crossorigin="anonymous"></script>
 <script>
-	alert('실패');
-	location.href = "Main.jsp";
+
 </script>
 
 
@@ -16,5 +16,8 @@
 
 </head>
 <body>
+
+<i class="fas fa-heart"></i>
+			
 </body>
 </html>

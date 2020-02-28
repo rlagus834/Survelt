@@ -14,6 +14,8 @@ import dto.MoviesDTO;
 import dto.PageDTO;
 import service.BoardListPagingService;
 import service.MovieSelectService;
+import service.ScoreService;
+import service.SympathyService;
 
 import java.util.*;
 
@@ -36,10 +38,29 @@ public class MovieSelect extends HttpServlet {
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		request.setCharacterEncoding("UTF-8");
-		String mname = (String) request.getParameter("mname");
+		MoviesDTO dto = new MoviesDTO();
+		dto.setBoardtitle((String) request.getParameter("mname"));
 		MovieSelectService service = new MovieSelectService();
-		List<MoviesDTO> list = service.MovieSelect(mname);
+		List<MoviesDTO> list = service.MovieSelect(dto);
+		int mnum = dto.getBoardnumber();
+		HttpSession session = request.getSession();
+		String id = (String) session.getAttribute("id");
 		request.setAttribute("select", list);
+		SympathyService SymService = new SympathyService();
+		int Sympathy = SymService.SympathySelect(mnum);
+		String chance = SymService.SympathyCheck(id);
+		ScoreService ScoService = new ScoreService();
+		int score = ScoService.ScoreService(mnum);
+		if (chance == null) {
+			chance = "no";
+		} else {
+			chance = "yes";
+		}
+		request.setAttribute("Sympathy", Sympathy);
+		request.setAttribute("mname", dto.getBoardtitle());
+		request.setAttribute("mnum", dto.getBoardnumber());
+		request.setAttribute("Chance", chance);
+		request.setAttribute("score", score);
 		RequestDispatcher dispatcher = request.getRequestDispatcher("slide.jsp");
 		dispatcher.forward(request, response);
 

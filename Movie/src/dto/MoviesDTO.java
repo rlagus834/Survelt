@@ -11,9 +11,25 @@ public class MoviesDTO {
 	private String photo3;
 	private String photo4;
 	private String photo5;
+	private String id;
+	private int sympathy;
 	
-	
-	
+	public int getSympathy() {
+		return sympathy;
+	}
+
+	public void setSympathy(int sympathy) {
+		this.sympathy = sympathy;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
 	public String getPhoto1() {
 		return photo1;
 	}

@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import dto.CommentDTO;
 import dto.MoviesDTO;
 import dto.PageDTO;
 import service.BoardListPagingService;
@@ -48,13 +49,22 @@ public class boardListPaging extends HttpServlet {
 		int listCount = 0;
 		// 한페이지에 3개씩 보여줄때 1페이지에 보여줘야하는글번호(RN기준)
 		// 시작글은 1번글 마지막글은 3번글
-		String filters = request.getParameter("filters");
-		String search = request.getParameter("search");
+		String filters="작성자";
+		String search="";
+		if (request.getParameter("filters") != null) {// 클릭을 안해서 가져온값이 null이면 작동안하고 page는 1그대로 누르면 그 페이지순번값을 가져와서 대입
+			 filters = request.getParameter("filters");					
+		}
+		
+		if (request.getParameter("search") != null) {// 클릭을 안해서 가져온값이 null이면 작동안하고 page는 1그대로 누르면 그 페이지순번값을 가져와서 대입
+			 search = request.getParameter("search");			
+		}
+	
+		 int mnum=Integer.parseInt(request.getParameter("mnum"));
 		
 		
-			listCount = boardListPagingService.SelectCountService(search, filters);
-			List<MoviesDTO> boardList = boardListPagingService.boardListPagingServiceSearch(startRow, endRow, search,
-					filters);// 범위에맞는
+			listCount = boardListPagingService.SelectCountService(search, filters,mnum);
+			List<CommentDTO> boardList = boardListPagingService.boardListPagingServiceSearch(startRow, endRow, search,
+					filters,mnum);// 범위에맞는
 			// 데이터
 			// list가져오기
 			request.setAttribute("select", boardList);
@@ -79,9 +89,9 @@ public class boardListPaging extends HttpServlet {
 		request.setAttribute("paging", paging);
 		request.setAttribute("filters", filters);
 		request.setAttribute("search", search);
-
+request.setAttribute("mnum", mnum);
 		
-		RequestDispatcher dispatcher = request.getRequestDispatcher("Main.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("Comment.jsp");
 		dispatcher.forward(request, response);
 
 	}

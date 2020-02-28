@@ -4,7 +4,7 @@ import java.util.*;
 
 
 import dao.MoviesDAO;
-
+import dto.CommentDTO;
 import dto.MoviesDTO;
 
 import java.sql.*;
@@ -23,11 +23,11 @@ public class BoardListPagingService {
 
 	}
 
-	public int SelectCountService(String select,String filters) {
+	public int SelectCountService(String select,String filters,int mnum) {
 		MoviesDAO dao = MoviesDAO.getInstance();
 		Connection con = getConnection();
 		dao.setConnection(con);
-		int count = dao.SelectCount(select,filters);
+		int count = dao.SelectCount(select,filters,mnum);
 		close(con);
 		return count;
 
@@ -44,12 +44,12 @@ public class BoardListPagingService {
 
 	}
 
-	public List<MoviesDTO> boardListPagingServiceSearch(int startRow, int endRow, String search,String filters) {
+	public List<CommentDTO> boardListPagingServiceSearch(int startRow, int endRow, String search,String filters,int mnum) {
 		MoviesDAO dao = MoviesDAO.getInstance();
 		Connection con = getConnection();
 		dao.setConnection(con);
-		List<MoviesDTO> list = new ArrayList<MoviesDTO>();
-		list = dao.CountSelectServiceSearch(startRow, endRow, search,filters);
+		List<CommentDTO> list = new ArrayList<CommentDTO>();
+		list = dao.CountSelectServiceSearch(startRow, endRow, search,filters,mnum);
 		close(con);
 		return list;
 

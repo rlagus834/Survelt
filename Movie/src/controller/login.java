@@ -43,7 +43,7 @@ public class login extends HttpServlet {
 		session.setAttribute("id",dto.getId());
 	
 
-		RequestDispatcher dispatcher = request.getRequestDispatcher("Main.jsp");//페이지전환기능중 dispatch를 이용하여
+		RequestDispatcher dispatcher = request.getRequestDispatcher("search.jsp");//페이지전환기능중 dispatch를 이용하여
 		dispatcher.forward(request, response); //값을가지고 clientSelect.jsp로 페이지전환
 
 	}else {

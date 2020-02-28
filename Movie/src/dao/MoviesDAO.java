@@ -5,6 +5,7 @@ import static db.JdbcUtil.*;
 import java.sql.*;
 import java.util.*;
 
+import dto.CommentDTO;
 import dto.MoviesDTO;
 
 //import javax.sql.*;
@@ -180,7 +181,7 @@ public class MoviesDAO {
 	}
 
 	public String MemberWriting(String id) {
-		String sql = "SELECT * FROM BOARDS WHERE ID=?";
+		String sql = "SELECT * FROM USERS WHERE ID=?";
 		String result = null;
 		try {
 			pstmt = con.prepareStatement(sql);
@@ -237,7 +238,7 @@ public class MoviesDAO {
 	}
 
 	public List<MoviesDTO> BorderNumberTextSelect(int bordernum) {
-		String sql = "SELECT * FROM BOARDS WHERE BOARDNUMBER=?";
+		String sql = "SELECT * FROM MOVIES WHERE MNUM=?";
 		List<MoviesDTO> list = new ArrayList<MoviesDTO>();
 		try {
 			pstmt = con.prepareStatement(sql);
@@ -245,12 +246,19 @@ public class MoviesDAO {
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
 				MoviesDTO dto = new MoviesDTO();
-				dto.setBoardnumber(rs.getInt("boardnumber"));
-				dto.setBoardtitle(rs.getString("boardtitle"));
-				dto.setDateofissue(rs.getString("dateofissue"));
-				dto.setCount(rs.getInt("count"));
+				dto.setBoardnumber(rs.getInt("mnum"));
+				dto.setBoardtitle(rs.getString("mname"));
+//				dto.setDateofissue(rs.getString("dateofissue"));
+				dto.setPrice(rs.getInt("price"));
 				dto.setText(rs.getString("text"));
-				dto.setbFile(rs.getString("files"));
+				String save = rs.getString("photo");
+				String[] array = save.split("&");
+				dto.setPhoto(array[0]);
+				dto.setPhoto1(array[1]);
+				dto.setPhoto2(array[2]);
+				dto.setPhoto3(array[3]);
+				dto.setPhoto4(array[4]);
+				dto.setPhoto5(array[5]);
 				list.add(dto);
 			}
 
@@ -263,13 +271,15 @@ public class MoviesDAO {
 	}
 
 	public int UpdateText(MoviesDTO dto) {
-		String sql = "UPDATE BOARDS SET TEXT=?,BOARDTITLE=? WHERE BOARDNUMBER=?";
+		String sql = "UPDATE MOVIES SET MNAME=?,PRICE=?,TEXT=?,PHOTO=? WHERE MNUM=?";
 		int result = 0;
 		try {
 			pstmt = con.prepareStatement(sql);
-			pstmt.setString(1, dto.getText());
-			pstmt.setString(2, dto.getBoardtitle());
-			pstmt.setInt(3, dto.getBoardnumber());
+pstmt.setString(1, dto.getBoardtitle());
+pstmt.setInt(2, dto.getPrice());
+pstmt.setString(3, dto.getText());
+pstmt.setString(4, dto.getPhoto());
+pstmt.setInt(5, dto.getBoardnumber());
 			result = pstmt.executeUpdate();
 
 		} catch (SQLException e) {
@@ -281,7 +291,7 @@ public class MoviesDAO {
 	}
 
 	public int BoardTextDelete(int boardnumber) {
-		String sql = "DELETE FROM BOARDS WHERE BOARDNUMBER=?";
+		String sql = "DELETE FROM MOVIES WHERE MNUM=?";
 		int result = 0;
 		try {
 			pstmt = con.prepareStatement(sql);
@@ -316,19 +326,18 @@ public class MoviesDAO {
 
 	}
 
-	public int SelectCount(String select, String filters) {
+	public int SelectCount(String select, String filters, int mnum) {
 		String sql = null; //
-		if (filters.equals("제목")) {
-			sql = "SELECT COUNT(*) FROM BOARDS WHERE BOARDTITLE LIKE ? "; // 뷰 조회
-		} else if (filters.equals("작성자")) {
-			sql = "SELECT COUNT(*) FROM BOARDS WHERE ID LIKE ? "; // 뷰 조회
+		if (filters.equals("작성자")) {
+			sql = "SELECT COUNT(*) FROM SYMPATHYVIEW WHERE MNUM=? AND ID LIKE ? "; // 뷰 조회
 		} else if (filters.equals("글내용")) {
-			sql = "SELECT COUNT(*) FROM BOARDS WHERE TEXT LIKE ? ";
+			sql = "SELECT COUNT(*) FROM SYMPATHYVIEW WHERE MNUM=? AND TEXT LIKE ? ";
 		}
 		int count = 0;
 		try {
 			pstmt = con.prepareStatement(sql);
-			pstmt.setString(1, "%" + select + "%");
+			pstmt.setInt(1, mnum);
+			pstmt.setString(2, "%" + select + "%");
 
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
@@ -399,30 +408,36 @@ public class MoviesDAO {
 
 	}
 
-	public List<MoviesDTO> CountSelectServiceSearch(int startRow, int endRow, String search, String filters) {
+	public List<CommentDTO> CountSelectServiceSearch(int startRow, int endRow, String search, String filters,
+			int mnum) {
 		String sql = null;
-		if (filters.equals("제목")) {
-			sql = "SELECT * FROM BOARDLISTS WHERE BOARDTITLE LIKE ? AND RN BETWEEN ? AND ?"; // 뷰 조회
-		} else if (filters.equals("작성자")) {
-			sql = "SELECT * FROM BOARDLISTS WHERE ID LIKE ? AND RN BETWEEN ? AND ?"; // 뷰 조회
+		if (filters.equals("작성자")) {
+			sql = "SELECT * FROM SYMPATHYVIEW WHERE MNUM=? AND ID LIKE ? AND RN BETWEEN ? AND ?"; // 뷰 조회
 		} else if (filters.equals("글내용")) {
-			sql = "SELECT * FROM BOARDLISTS WHERE TEXT LIKE ? AND RN BETWEEN ? AND ?"; // 뷰 조회
+			sql = "SELECT * FROM SYMPATHYVIEW WHERE MNUM=? AND TEXT LIKE ? AND RN BETWEEN ? AND ?"; // 뷰 조회
 		}
-		List<MoviesDTO> list = new ArrayList<MoviesDTO>();
+		List<CommentDTO> list = new ArrayList<CommentDTO>();
 
 		try {
 			pstmt = con.prepareStatement(sql);
-			pstmt.setString(1, "%" + search + "%");
-			pstmt.setInt(2, startRow);
-			pstmt.setInt(3, endRow);
+			System.out.println(sql);
+			System.out.println(mnum);
+			pstmt.setInt(1, mnum);
+			System.out.println(search);
+			pstmt.setString(2, "%" + search + "%");
+			pstmt.setInt(3, startRow);
+			System.out.println(startRow);
+			pstmt.setInt(4, endRow);
+			System.out.println(endRow);
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
-				MoviesDTO dto = new MoviesDTO();
-				dto.setBoardnumber(rs.getInt("boardnumber"));
-				dto.setBoardtitle(rs.getString("boardtitle"));
-				dto.setDateofissue(rs.getString("dateofissue"));
-
-				dto.setCount(rs.getInt("count"));
+				CommentDTO dto = new CommentDTO();
+				dto.setBnum(rs.getInt("bnum"));
+				System.out.println(rs.getInt("bnum"));
+				dto.setCdate(rs.getString("cdate"));
+				dto.setId(rs.getString("id"));
+				dto.setMnum(rs.getInt("mnum"));
+				dto.setScore(rs.getInt("score"));
 				dto.setText(rs.getString("text"));
 				list.add(dto);
 			}
@@ -450,6 +465,7 @@ public class MoviesDAO {
 
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
+
 				MoviesDTO dto = new MoviesDTO();
 				dto.setBoardnumber(rs.getInt("boardnumber"));
 				dto.setBoardtitle(rs.getString("boardtitle"));
@@ -471,4 +487,88 @@ public class MoviesDAO {
 
 	}
 
+	public int SympathyPlus(MoviesDTO dto) {
+		String sql = "INSERT INTO SYMPATHY VALUES(?,?,?)"; // 뷰 조회
+		int result = 0;
+		try {
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, dto.getBoardnumber());
+			pstmt.setString(2, dto.getId());
+			pstmt.setString(3, "YES");
+			result = pstmt.executeUpdate();
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(pstmt); // 다쓴 기능들을 close하여 꺼버림 @안끄면 에러나는경우가 가끔있어서그럼
+
+		}
+		return result;
+
+	}
+
+	public int SympathyMinus(int mnum, String id) {
+		String sql = "DELETE FROM SYMPATHY WHERE MNUM=? AND ID=?"; // 뷰 조회
+		int result = 0;
+		try {
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, mnum);
+			pstmt.setString(2, id);
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(pstmt); // 다쓴 기능들을 close하여 꺼버림 @안끄면 에러나는경우가 가끔있어서그럼
+
+		}
+		return result;
+
+	}
+
+	public int SympathySelect(int mnum) {
+		String sql = "SELECT COUNT(*) FROM SYMPATHY WHERE MNUM=? "; // 뷰 조회
+		int result = 0;
+		try {
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, mnum);
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				result = rs.getInt(1);
+
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(pstmt); // 다쓴 기능들을 close하여 꺼버림 @안끄면 에러나는경우가 가끔있어서그럼
+
+		}
+		return result;
+
+	}
+
+	public String SympathyCheck(String id) {
+		String sql = "SELECT CHANCE FROM SYMPATHY WHERE ID=? "; // 뷰 조회
+		String result = null;
+		try {
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, id);
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				result = rs.getString("chance");
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(pstmt); // 다쓴 기능들을 close하여 꺼버림 @안끄면 에러나는경우가 가끔있어서그럼
+
+		}
+		return result;
+
+	}
+	
+	
 }

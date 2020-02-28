@@ -2,7 +2,6 @@ package controller;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Enumeration;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -37,37 +36,37 @@ public class BoardFile extends HttpServlet {
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		request.setCharacterEncoding("UTF-8");
-		String savePath = "C://Users//6//git//repository//project//WebContent//fileUpload";
-
-	    int size=10*1024*1024;
-		MultipartRequest multiRequest = new MultipartRequest(
-				request,savePath,size,"UTF-8",new DefaultFileRenamePolicy()
-				);
+		String savePath = "C://Users//6//git//repository//Movie//WebContent//fileUpload";
+		int size = 10 * 1024 * 1024;
+		MultipartRequest multiRequest = new MultipartRequest(request, savePath, size, "UTF-8",
+				new DefaultFileRenamePolicy());
 		String fileName = "";
-        File file = null;
-        Enumeration efiles = multiRequest.getFileNames();
-            while(efiles.hasMoreElements()){
-                String name = (String)efiles.nextElement(); 
-                file = multiRequest.getFile(name);
-                if(file==null) {
-                	
-                }
-                else {
-                    String str = file.getName();
-                    fileName += "&fileName"+str;  
-                } 
-        } 
-	
-		BoardService service=new BoardService();
-		MoviesDTO dto=new MoviesDTO();
+		File file = null;
+
+		Enumeration efiles = multiRequest.getFileNames();
+		while (efiles.hasMoreElements()) {
+			String name = (String) efiles.nextElement();
+			System.out.println(name);
+			file =multiRequest.getFile(name);
+		fileName+=file.getName();
+		if(fileName!=null) {
+			fileName+="&";
+			System.out.println(fileName);
+		}else {
+			
+		}
+		
+		}
+		BoardService service = new BoardService();
+		MoviesDTO dto = new MoviesDTO();
 		dto.setbFile(fileName);
 		dto.setPrice(Integer.parseInt(multiRequest.getParameter("price")));
-		dto.setBoardtitle((String)multiRequest.getParameter("mname"));
+		dto.setBoardtitle(multiRequest.getParameter("mname"));
 		dto.setText(multiRequest.getParameter("text"));
-		boolean result=service.Boards(dto);
-		
+		boolean result = service.Boards(dto);
+
 		if (result) {
-			response.sendRedirect("boardListPaging");
+			response.sendRedirect("search.jsp");
 		} else {
 			response.sendRedirect("fail.jsp");
 		}

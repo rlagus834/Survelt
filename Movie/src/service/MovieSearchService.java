@@ -18,7 +18,8 @@ public class MovieSearchService {
 		dao.setConnection(con);
 		List<MoviesDTO> list=new ArrayList<MoviesDTO>();
 	list=dao.MovieSearch();
-		return list;
+	close(con);
+	return list;
 	
 	
 	}

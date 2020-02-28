@@ -51,6 +51,7 @@ public class BoardFile extends HttpServlet {
 		boardDTO.setText(multi.getParameter("text"));// 글내용
 //		System.out.println((String)multi.getFileNames().nextElement());
 		boardDTO.setbFile(multi.getOriginalFileName((String) multi.getFileNames().nextElement()));// 파일이름
+		System.out.println(multi.getOriginalFileName((String) multi.getFileNames().nextElement()));
 		// 저장하기위한 공식같은것 파일이름이담긴 값을 불러들여 세팅할수있게 공식적으로 한것^
 		BoardService boardWriteService = new BoardService();
 		boolean result = boardWriteService.Boards(boardDTO);

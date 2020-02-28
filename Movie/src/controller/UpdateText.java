@@ -1,6 +1,8 @@
 package controller;
 
+import java.io.File;
 import java.io.IOException;
+import java.util.Enumeration;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -13,6 +15,7 @@ import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
 import dto.MoviesDTO;
+import service.BoardService;
 import service.UpdateTextService;
 
 /**
@@ -34,32 +37,44 @@ public class UpdateText extends HttpServlet {
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		request.setCharacterEncoding("UTF-8");
-		int size = 10 * 1024 * 1024; // 파일업로드할떄 파일크기제한주기위해서 현재작성한건 10메가라는뜻
-//		String savePath="C:\\Users\\6\\git\\repository\\Servlet_20200210Board\\WebContent\\fileUpload";
-		// ^ /모양으로 바꿔야함C:\Users\6\git\repository\project\WebContent\fileUpload
-		String savePath = "C://Users//6//git//repository//project//WebContent//fileUpload";
+		String savePath = "C://Users//6//git//repository//Movie//WebContent//fileUpload";
+		int size = 10 * 1024 * 1024;
+		MultipartRequest multiRequest = new MultipartRequest(request, savePath, size, "UTF-8",
+				new DefaultFileRenamePolicy());
+		String fileName = "";
+		File file = null;
 
-		// int sum = Integer.parseInt(i); 형변환하는법 파라미터는 다 String 그러므로 int로쓸거면 형변환해줘야함
-		MultipartRequest multi = new MultipartRequest(request, // request임
-				savePath, // 값저장한 savePath 변수
-				size, // 업로드제한값 저장한 size변수
-				"UTF-8", // 언어
-				new DefaultFileRenamePolicy()// 파일중복방지
-		);
-		MoviesDTO boardDTO = new MoviesDTO();// 값저장할 클래스 객체선언
-		boardDTO.setBoardnumber(Integer.parseInt(multi.getParameter("boardnumber")));
-		boardDTO.setBoardtitle(multi.getParameter("boardtitle")); // 글제목
-		boardDTO.setText(multi.getParameter("text"));// 글내용
-		boardDTO.setbFile(multi.getOriginalFileName((String) multi.getFileNames().nextElement()));// 파일이름
-		UpdateTextService service = new UpdateTextService();
-		boolean result = service.UpdateText(boardDTO);
-		
-		if (result) {
-			response.sendRedirect("boardListPaging");
-		} else {
-			response.sendRedirect("boardListPaging");
-
+		Enumeration efiles = multiRequest.getFileNames();
+		while (efiles.hasMoreElements()) {
+			String name = (String) efiles.nextElement();
+			System.out.println(name);
+			file =multiRequest.getFile(name);
+		fileName+=file.getName();
+		if(fileName!=null) {
+			fileName+="&";
+			System.out.println(fileName);
+		}else {
+			
 		}
+		
+		}
+		UpdateTextService service = new UpdateTextService();
+		MoviesDTO dto = new MoviesDTO();
+		dto.setbFile(fileName);
+		dto.setPrice(Integer.parseInt(multiRequest.getParameter("price")));
+		dto.setBoardtitle((String) multiRequest.getParameter("mname"));
+		dto.setText(multiRequest.getParameter("text"));
+		dto.setBoardnumber(Integer.parseInt(multiRequest.getParameter("mnum")));
+		dto.setPhoto(fileName);
+
+		boolean result = service.UpdateText(dto);
+
+		if (result) {
+			response.sendRedirect("search.jsp");
+		} else {
+			response.sendRedirect("fail.jsp");
+		}
+
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
