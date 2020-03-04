@@ -144,19 +144,175 @@ public class CommentDAO {
 
 	public int CommentsUpdate(CommentDTO dto) {
 		String sql = "UPDATE COMMENTS SET SCORE=?,TEXT=? WHERE BNUM=?"; //
-		int result=0;
+		int result = 0;
 		try {
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, dto.getScore());
-		pstmt.setString(2, dto.getText());
-		pstmt.setInt(3, dto.getBnum());
-		result=pstmt.executeUpdate();	
+			pstmt.setString(2, dto.getText());
+			pstmt.setInt(3, dto.getBnum());
+			result = pstmt.executeUpdate();
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(pstmt); // 다쓴 기능들을 close하여 꺼버림 @안끄면 에러나는경우가 가끔있어서그럼
+		}
+		return result;
+
+	}
+
+	public int GoodPlus(String id, int bnum) {
+		String sql = "INSERT INTO GOODLIMIT VALUES(?,?,?)"; // 뷰 조회
+		int result = 0;
+		try {
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, id);
+			pstmt.setString(2, "YES");
+			pstmt.setInt(3, bnum);
+			result = pstmt.executeUpdate();
+		
+			sql = "UPDATE COMMENTS SET GOODS=GOODS+1 WHERE BNUM=?";
+				pstmt = con.prepareStatement(sql);
+				pstmt.setInt(1, bnum);
+			
+				pstmt.executeUpdate();
+	
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(pstmt); // 다쓴 기능들을 close하여 꺼버림 @안끄면 에러나는경우가 가끔있어서그럼
+
+		}
+		return result;
+
+	}
+
+	public int MinusPlus(String id, int bnum) {
+		String sql = "INSERT INTO MINUSLIMIT VALUES(?,?,?)"; // 뷰 조회
+		int result = 0;
+		try {
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, id);
+			pstmt.setString(2, "YES");
+			pstmt.setInt(3, bnum);
+			result = pstmt.executeUpdate();
+	
+			sql = "UPDATE COMMENTS SET MINUSS=MINUSS+1 WHERE BNUM=?";
+				pstmt = con.prepareStatement(sql);
+				pstmt.setInt(1, bnum);
+			
+				pstmt.executeUpdate();
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
 			close(pstmt); // 다쓴 기능들을 close하여 꺼버림 @안끄면 에러나는경우가 가끔있어서그럼
+
+		}
+		return result;
+
+	}
+
+	private int getBnum() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	public int GoodMinus(String id, int bnum) {
+		String sql = "DELETE FROM GOODLIMIT WHERE BNUM=? AND ID=?"; // 뷰 조회
+		int result = 0;
+		try {
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, bnum);
+			pstmt.setString(2, id);
+			result = pstmt.executeUpdate();		
+			sql = "UPDATE COMMENTS SET GOODS=GOODS-1 WHERE BNUM=?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, bnum);
+
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(pstmt); // 다쓴 기능들을 close하여 꺼버림 @안끄면 에러나는경우가 가끔있어서그럼
+
+		}
+		return result;
+
+	}
+
+	public int MinusMinus(String id, int bnum) {
+		String sql = "DELETE FROM MINUSLIMIT WHERE BNUM=? AND ID=?"; // 뷰 조회
+		int result = 0;
+		try {
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, bnum);
+			pstmt.setString(2, id);
+			result = pstmt.executeUpdate();
+			sql = "UPDATE COMMENTS SET MINUSS=MINUSS-1 WHERE BNUM=?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, bnum);
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(pstmt); // 다쓴 기능들을 close하여 꺼버림 @안끄면 에러나는경우가 가끔있어서그럼
+
+		}
+		return result;
+
+	}
+
+	public int GoodSelect(int bnum, String id) {
+		String sql = "SELECT * FROM GOODLIMIT WHERE BNUM=? AND ID=?"; // 뷰 조회
+		int result = 0;
+		try {
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, bnum);
+			pstmt.setString(2, id);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				result=1;
+			}else {
+				result = 0;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(pstmt); // 다쓴 기능들을 close하여 꺼버림 @안끄면 에러나는경우가 가끔있어서그럼
+			close(rs);
+		}
+		return result;
+
+	}
+
+	public int MinusSelect(int bnum, String id) {
+		String sql = "SELECT * FROM MINUSLIMIT WHERE BNUM=? AND ID=?"; // 뷰 조회
+		int result = 0;
+		try {
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, bnum);
+			pstmt.setString(2, id);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				result=1;
+			}else {
+				result = 0;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(pstmt); // 다쓴 기능들을 close하여 꺼버림 @안끄면 에러나는경우가 가끔있어서그럼
+			close(rs);
 		}
 		return result;
 

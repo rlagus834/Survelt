@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import dto.CommentDTO;
 import dto.MoviesDTO;
@@ -41,6 +42,7 @@ public class boardListPaging extends HttpServlet {
 			page = Integer.parseInt(request.getParameter("page"));
 		}
 
+		
 		// 전체글갯수를 가져오기위한 ListService 클래스 메소드호출 왜가져오나? 전체글갯수가 파악이되야 내가 나누고싶은 페이지당 글갯수대로
 		// 나눠서 몇페이지만들어야하는지 연산해야해서
 // limit값을 걸어놓은 만큼 범위에 해당하는 글만 가져오는 방법
@@ -49,7 +51,7 @@ public class boardListPaging extends HttpServlet {
 		int listCount = 0;
 		// 한페이지에 3개씩 보여줄때 1페이지에 보여줘야하는글번호(RN기준)
 		// 시작글은 1번글 마지막글은 3번글
-		String filters="작성자";
+		String filters="베댓순";
 		String search="";
 		if (request.getParameter("filters") != null) {// 클릭을 안해서 가져온값이 null이면 작동안하고 page는 1그대로 누르면 그 페이지순번값을 가져와서 대입
 			 filters = request.getParameter("filters");					
@@ -61,7 +63,8 @@ public class boardListPaging extends HttpServlet {
 	
 		 int mnum=Integer.parseInt(request.getParameter("mnum"));
 		
-		
+		HttpSession session=request.getSession();
+		String id=(String)session.getAttribute("id");
 			listCount = boardListPagingService.SelectCountService(search, filters,mnum);
 			List<CommentDTO> boardList = boardListPagingService.boardListPagingServiceSearch(startRow, endRow, search,
 					filters,mnum);// 범위에맞는

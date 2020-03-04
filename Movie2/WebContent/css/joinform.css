@@ -1,0 +1,25 @@
+@charset "UTF-8";
+*{
+    font-family: 'Jua', sans-serif;
+    background-color:whitesmoke;
+}
+
+table{
+    margin: auto;
+    position: relative;
+    bottom: -100px;
+}
+caption{
+    position: relative;
+    bottom: 50px;
+    font-size: 50px;
+    color:rgb(28, 158, 28);
+}
+tr{
+    position: relative;
+   
+}
+td{
+    font-size: 20px;
+
+}

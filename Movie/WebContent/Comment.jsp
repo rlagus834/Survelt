@@ -7,7 +7,8 @@
 
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<script src="https://kit.fontawesome.com/bad24df0ae.js" crossorigin="anonymous"></script>    
+<script src="https://kit.fontawesome.com/bad24df0ae.js"
+	crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-3.4.1.js"
 	integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
 	crossorigin="anonymous"></script>
@@ -24,23 +25,35 @@
 
 </head>
 <body>
-
+	<form action="boardListPaging">
+		<input type="hidden" value="${requestScope.mnum}" name="mnum">
+		<input type="hidden" value="베댓순" name="filters">
+		<input type="submit" value="베댓">
+	</form>
+	<form action="boardListPaging">
+		<input type="hidden" value="${requestScope.mnum}" name="mnum">
+		<input type="hidden" value="최신순" name="filters">
+		<input type="submit" value="최신순">
+	</form>
+	<br>
 	<table>
 		<c:if test="${!empty sessionScope.id}">
-			<tr> 
+			<tr>
 				<td>
 					<form action="CommentWrite">
-					평점:<input id="id1" name="score" readonly>	
-		<input type="hidden" value="${requestScope.mnum}" name="save">
-			
+						평점:<input id="id1" name="score" readonly> <input
+							type="hidden" value="${requestScope.mnum}" name="save">
+
 						<p id="star_grade">
-							<a href="#" onclick="stars('1')">★</a> <a href="#" onclick="stars('2')">★</a> <a href="#" onclick="stars('3')">★</a> <a href="#" onclick="stars('4')">★</a>
-							<a href="#" onclick="stars('5')">★</a>
+							<a href="#" onclick="stars('1')">★</a> <a href="#"
+								onclick="stars('2')">★</a> <a href="#" onclick="stars('3')">★</a>
+							<a href="#" onclick="stars('4')">★</a> <a href="#"
+								onclick="stars('5')">★</a>
 						</p>
 						<br>
 						<textarea name="text" cols="40" rows="20" value="${member.text}"></textarea>
-						<input type="submit">						
-						</form>
+						<input type="submit">
+					</form>
 				</td>
 
 			</tr>
@@ -52,10 +65,19 @@
 				<td>${member.text}</td>
 				<td>${member.score}</td>
 				<td>${member.cdate}</td>
+				<td><a
+					href="GoodPlus?bnum=${member.bnum}&page=${paging.page}&mnum=${requestScope.mnum}">좋아요${member.gcnum}</a>
+					<a
+					href="MinusPlus?bnum=${member.bnum}&page=${paging.page}&mnum=${requestScope.mnum}">싫어요${member.mcnum}</a>
+
+				</td>
 				<c:if test="${sessionScope.id eq member.id}">
-		<td><a href="">수정하기</a></td>
+				<td>
+					<a
+					href="CommentDelete?bnum=${member.bnum}&page=${paging.page}&mnum=${requestScope.mnum}">삭제</a>				
+				</td>
 		</c:if>
-				</tr>
+			</tr>
 		</c:forEach>
 	</table>
 
@@ -93,30 +115,28 @@
 			<select name="filters">
 				<option value="작성자">작성자</option>
 				<option value="글내용">글내용</option>
-			</select><input type="text" name="search"> 
-			<input type="hidden" name="mnum" value="${requestScope.mnum}" readonly>
-			<input type="submit">
+			</select><input type="text" name="search"> <input type="hidden"
+				name="mnum" value="${requestScope.mnum}" readonly> <input
+				type="submit">
 		</form>
 
 
 
 
 
-	<script>
-	var save=0;
-	function stars(s){
-		save=s;
-		document.getElementById("id1").value =save;
-	}
+		<script>
+			var save = 0;
+			function stars(s) {
+				save = s;
+				document.getElementById("id1").value = save;
+			}
 
-	
-	
-		$('#star_grade a').click(function() {
-			
-			$(this).parent().children("a").removeClass("on"); /* 별점의 on 클래스 전부 제거 */
-			$(this).addClass("on").prevAll("a").addClass("on"); /* 클릭한 별과, 그 앞 까지 별점에 on 클래스 추가 */
-			return false;
-		});
-	</script>
+			$('#star_grade a').click(function() {
+
+				$(this).parent().children("a").removeClass("on"); /* 별점의 on 클래스 전부 제거 */
+				$(this).addClass("on").prevAll("a").addClass("on"); /* 클릭한 별과, 그 앞 까지 별점에 on 클래스 추가 */
+				return false;
+			});
+		</script>
 </body>
 </html>
