@@ -178,7 +178,16 @@ height:100px;
 	
 		
 	</c:forEach>
-
+<br>
+<h1>평점:${requestScope.score}</h1>
+		<c:if test="${requestScope.Chance eq 'no'}">
+				<i class="far fa-heart" 
+					onclick="location.href='SympathyPlus?mnum=${requestScope.mnum}&mname=${requestScope.mname}'">${requestScope.Sympathy}</i>
+			</c:if>
+			<c:if test="${requestScope.Chance eq 'yes'}">
+				<i class="fas fa-heart"
+					onclick="location.href='SympathyMinus?mnum=${requestScope.mnum}&mname=${requestScope.mname}'">${requestScope.Sympathy}</i>
+			</c:if>
 
 
 

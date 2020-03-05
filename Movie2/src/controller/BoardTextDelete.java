@@ -31,7 +31,7 @@ public class BoardTextDelete extends HttpServlet {
 	BoardTextDeleteService service=new BoardTextDeleteService();
 	boolean result=service.BoardTextDelete(boardnumber);
 	if(result) {
-		response.sendRedirect("search.jsp");
+		response.sendRedirect("MovieSelect.jsp");
 		
 	}else {
 		response.sendRedirect("fail.jsp");

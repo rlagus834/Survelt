@@ -34,38 +34,16 @@ public class SelectClient extends HttpServlet {
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		request.setCharacterEncoding("UTF-8");
-		PageDTO pto = new PageDTO();
-		int page = 1;// 현재 페이지 저장할공간 왜1을 줬느냐 초기값이 1이라서
-		int limit = 3; // 내가 페이지당 배치할 작성글수제한
-		if (request.getParameter("page") != null) {
-			page = Integer.parseInt(request.getParameter("page"));
-		}
 
 		ClientSelectService service = new ClientSelectService();
-		int listCount = service.CountService(); // 전체회원수
-		int startRow = (page - 1) * limit + 1; // 범위계산 startRow는 a~b 범위 일때 a endRow는b
-		int endRow = page * limit;
-
-		int maxPage = (int) ((double) listCount / limit + 0.9);
-		// 현재 페이지에 보여줄 시작 페이지 번호(1,11,21,31~~)
-		int startPage = (((int) ((double) page / 10 + 0.9)) - 1) * 10 + 1;
-		int endPage = startPage + 10 - 1;
-
-		if (endPage > maxPage) { // 글페이지가 7개정도만있어서 10이상 필요없을때
-			endPage = maxPage;
-		}
+		String filters=request.getParameter("filters");
+		String search=request.getParameter("search");
+				
 		List<UsersDTO> list = new ArrayList<UsersDTO>();
-		list = service.ClientSelectService(startRow, endRow);
+		list = service.ClientSelectService(filters,search);
 
-		PageDTO paging = new PageDTO();
-		paging.setPage(page);
-		paging.setStartPage(startPage);
-		paging.setEndPage(endPage);
-		paging.setMaxPage(maxPage);
-		paging.setListCount(listCount);
-		request.setAttribute("paging", paging);
 		request.setAttribute("select", list);
-		RequestDispatcher dispatcher = request.getRequestDispatcher("MemberSelectboard.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("ClientSelect.jsp");
 		dispatcher.forward(request, response);
 
 	}

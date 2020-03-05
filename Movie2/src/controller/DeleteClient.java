@@ -31,7 +31,7 @@ public class DeleteClient extends HttpServlet {
 		String id = request.getParameter("id");
 		boolean result = service.DeleteClient(id);
 		if (result) {
-			response.sendRedirect("SelectClient");
+			response.sendRedirect("ClientSelect");
 		} else {
 			response.sendRedirect("SelectClient");
 		}

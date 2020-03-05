@@ -20,12 +20,12 @@ public class ClientSelectService {
 		return result;
 	}
 
-	public List<UsersDTO> ClientSelectService(int startRow, int endRow) {
+	public List<UsersDTO> ClientSelectService(String filters, String search) {
 		UsersDAO dao = UsersDAO.getInstance();
 		Connection con = getConnection();
 		dao.setConnection(con);
 		List<UsersDTO> list = new ArrayList<UsersDTO>();
-		list = dao.ClientSelect(startRow, endRow);
+		list = dao.ClientSelect(filters,search);
 		close(con);
 		return list;
 

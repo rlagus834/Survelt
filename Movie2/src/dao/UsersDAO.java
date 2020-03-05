@@ -105,17 +105,29 @@ public class UsersDAO {
 
 	}
 
-	public List<UsersDTO> ClientSelect(int startRow, int endRow) {
-		String sql = "SELECT * FROM TESTSLIST WHERE RN BETWEEN ? AND ?";
+	public List<UsersDTO> ClientSelect(String filters, String search) {
+		String sql = null;
+		if (filters.equals("주민번호")) {
+			sql = "SELECT * FROM USERS WHERE ACNUM=?";
+		} else if (filters.equals("아이디")) {
+			sql = "SELECT * FROM USERS WHERE ID=?";
+		}
+
 		List<UsersDTO> list = new ArrayList<UsersDTO>();
 		try {
 			pstmt = con.prepareStatement(sql);
-			pstmt.setInt(1, startRow);
-			pstmt.setInt(2, endRow);
+			pstmt.setString(1, search);
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
 				UsersDTO dto = new UsersDTO();
 				dto.setId(rs.getString("id"));
+				dto.setPassword(rs.getString("pw"));
+				dto.setBirth(rs.getString("birth"));
+				dto.setPhone(rs.getString("phone"));
+				dto.setAcnum(rs.getString("acnum"));
+				dto.setAddress(rs.getString("id"));
+				dto.setEmail(rs.getString("id"));
+				dto.setGender(rs.getString("gender"));
 				list.add(dto);
 			}
 		} catch (SQLException e) {
@@ -257,17 +269,17 @@ public class UsersDAO {
 		String sql = "select * from(select count(*),mnum from sympathy group by mnum order by count(*) desc) where rownum<=2";
 		List<MoviesDTO> list = new ArrayList<MoviesDTO>();
 		List<Integer> save = new ArrayList<Integer>();
-int count=1;
+		int count = 1;
 		try {
 			pstmt = con.prepareStatement(sql);
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
 				save.add(rs.getInt("mnum"));
-System.out.println(rs.getInt("mnum"));
+				System.out.println(rs.getInt("mnum"));
 			}
-		
+
 			sql = "SELECT * FROM MOVIES WHERE MNUM IN(?,?)";
-		pstmt=con.prepareStatement(sql);
+			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, save.get(0));
 			pstmt.setInt(2, save.get(1));
 //			pstmt.setInt(3, save.get(2));
@@ -315,6 +327,7 @@ System.out.println(rs.getInt("mnum"));
 				dto1.setText(rs.getString("text"));
 				String save = rs.getString("photo");
 				String[] array = save.split("&");
+				System.out.println(save);
 				dto1.setPhoto(array[0]);
 				dto1.setPhoto1(array[1]);
 				dto1.setPhoto2(array[2]);

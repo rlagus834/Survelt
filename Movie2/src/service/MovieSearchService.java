@@ -2,6 +2,7 @@ package service;
 
 import java.util.*;
 
+import dao.MoviesDAO;
 import dao.UsersDAO;
 import dto.MoviesDTO;
 import dto.UsersDTO;
@@ -35,4 +36,18 @@ public class MovieSearchService {
 	
 	}
 
+	public List<MoviesDTO> MovieList(String search) {
+		MoviesDAO dao = MoviesDAO.getInstance();
+		Connection con = getConnection();
+		dao.setConnection(con);
+		List<MoviesDTO> list=new ArrayList<MoviesDTO>();
+	list=dao.MovieList(search);
+	close(con);
+	return list;
+	
+	
+	}
+	
+	
+	
 }

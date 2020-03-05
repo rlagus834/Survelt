@@ -36,7 +36,8 @@ public class BoardFile extends HttpServlet {
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		request.setCharacterEncoding("UTF-8");
-		String savePath = "C://Users//6//git//repository//Movie//WebContent//fileUpload";
+		String savePath = "C://Users//6//git//repository//Movie2//WebContent//fileUpload";
+	
 		int size = 10 * 1024 * 1024;
 		MultipartRequest multiRequest = new MultipartRequest(request, savePath, size, "UTF-8",
 				new DefaultFileRenamePolicy());
@@ -46,7 +47,6 @@ public class BoardFile extends HttpServlet {
 		Enumeration efiles = multiRequest.getFileNames();
 		while (efiles.hasMoreElements()) {
 			String name = (String) efiles.nextElement();
-			System.out.println(name);
 			file =multiRequest.getFile(name);
 		fileName+=file.getName();
 		if(fileName!=null) {
@@ -66,7 +66,7 @@ public class BoardFile extends HttpServlet {
 		boolean result = service.Boards(dto);
 
 		if (result) {
-			response.sendRedirect("search.jsp");
+			response.sendRedirect("Admin.jsp");
 		} else {
 			response.sendRedirect("fail.jsp");
 		}

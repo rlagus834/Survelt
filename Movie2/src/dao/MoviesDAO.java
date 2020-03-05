@@ -32,29 +32,8 @@ public class MoviesDAO {
 		this.con = con;
 	}
 
-	public int Board(MoviesDTO dto) {
-		String sql = "INSERT INTO BOARDS VALUES(BOARD_SEQ.NEXTVAL,?,?,SYSDATE,0)";
-		int result = 0;
-		try {
-			pstmt = con.prepareStatement(sql);
-			pstmt.setString(1, dto.getBoardtitle());
-
-			pstmt.setString(3, dto.getText());
-			result = pstmt.executeUpdate();
-
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} finally {
-			close(pstmt); // 다쓴 기능들을 close하여 꺼버림 @안끄면 에러나는경우가 가끔있어서그럼
-
-		}
-		return result;
-
-	}
-
 	public int Boards(MoviesDTO dto) {
-		String sql = "INSERT INTO MOVIES VALUES((SELECT COUNT(*) FROM MOVIES),?,?,?,?)";
+		String sql = "INSERT INTO MOVIES VALUES((SELECT MAX(MNUM) FROM MOVIES)+1,?,?,?,?)";
 		int result = 0;
 		try {
 			pstmt = con.prepareStatement(sql);
@@ -72,33 +51,6 @@ public class MoviesDAO {
 
 		}
 		return result;
-
-	}
-
-	public List<MoviesDTO> updateSelectService() {
-		String sql = "SELECT * FROM BOARDS";
-		List<MoviesDTO> list = new ArrayList<MoviesDTO>();
-		try {
-			pstmt = con.prepareStatement(sql);
-			rs = pstmt.executeQuery();
-			while (rs.next()) {
-				MoviesDTO dto = new MoviesDTO();
-				dto.setBoardnumber(rs.getInt("boardnumber"));
-				dto.setBoardtitle(rs.getString("boardtitle"));
-				dto.setDateofissue(rs.getString("dateofissue"));
-				dto.setCount(rs.getInt("count"));
-				dto.setbFile(rs.getString("files"));
-				list.add(dto);
-			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} finally {
-			close(pstmt); // 다쓴 기능들을 close하여 꺼버림 @안끄면 에러나는경우가 가끔있어서그럼
-			close(rs);
-
-		}
-		return list;
 
 	}
 
@@ -125,64 +77,6 @@ public class MoviesDAO {
 
 	}
 
-	public List<MoviesDTO> updateSelectServiceAsc(int startRow, int endRow) {
-		String sql = "SELECT * FROM BOARDLISTS WHERE RN BETWEEN ? AND ? ORDER BY COUNT DESC";
-		List<MoviesDTO> list = new ArrayList<MoviesDTO>();
-		try {
-			pstmt = con.prepareStatement(sql);
-			pstmt.setInt(1, startRow);
-			pstmt.setInt(2, endRow);
-			rs = pstmt.executeQuery();
-			while (rs.next()) {
-				MoviesDTO dto = new MoviesDTO();
-				dto.setBoardnumber(rs.getInt("boardnumber"));
-				dto.setBoardtitle(rs.getString("boardtitle"));
-				dto.setDateofissue(rs.getString("dateofissue"));
-				dto.setCount(rs.getInt("count"));
-				list.add(dto);
-			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} finally {
-			close(pstmt); // 다쓴 기능들을 close하여 꺼버림 @안끄면 에러나는경우가 가끔있어서그럼
-			close(rs);
-
-		}
-		return list;
-
-	}
-
-	public List<MoviesDTO> MemberWritingSelect(String id) {
-		String sql = "SELECT * FROM BOARDS WHERE ID=?";
-		List<MoviesDTO> list = null;
-		try {
-			pstmt = con.prepareStatement(sql);
-			pstmt.setString(1, id);
-			rs = pstmt.executeQuery();
-			list = new ArrayList<MoviesDTO>();
-			while (rs.next()) {
-				MoviesDTO dto = new MoviesDTO();
-				dto.setBoardnumber(rs.getInt("boardnumber"));
-				dto.setBoardtitle(rs.getString("boardtitle"));
-				dto.setDateofissue(rs.getString("dateofissue"));
-
-				dto.setCount(rs.getInt("count"));
-				dto.setText(rs.getString("text"));
-				list.add(dto);
-			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} finally {
-			close(pstmt); // 다쓴 기능들을 close하여 꺼버림 @안끄면 에러나는경우가 가끔있어서그럼
-			close(rs);
-
-		}
-		return list;
-
-	}
-
 	public String MemberWriting(String id) {
 		String sql = "SELECT * FROM USERS WHERE ID=?";
 		String result = null;
@@ -202,41 +96,6 @@ public class MoviesDAO {
 
 		}
 		return result;
-
-	}
-
-	public List<MoviesDTO> writeOpen(int boardnumber) {
-		String sql = "SELECT * FROM BOARDS WHERE BOARDNUMBER=?";
-		List<MoviesDTO> list = new ArrayList<MoviesDTO>();
-		try {
-			pstmt = con.prepareStatement(sql);
-			pstmt.setInt(1, boardnumber);
-			rs = pstmt.executeQuery();
-			while (rs.next()) {
-				MoviesDTO dto = new MoviesDTO();
-				dto.setBoardnumber(rs.getInt("boardnumber"));
-				dto.setBoardtitle(rs.getString("boardtitle"));
-				dto.setDateofissue(rs.getString("dateofissue"));
-
-				dto.setCount(rs.getInt("count"));
-				dto.setText(rs.getString("text"));
-				dto.setbFile(rs.getString("files"));
-				list.add(dto);
-			}
-			sql = "UPDATE BOARDS SET COUNT=COUNT+1 WHERE  BOARDNUMBER=?";
-			pstmt = con.prepareStatement(sql);
-			pstmt.setInt(1, boardnumber);
-			pstmt.executeUpdate();
-			commit(con);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} finally {
-			close(pstmt); // 다쓴 기능들을 close하여 꺼버림 @안끄면 에러나는경우가 가끔있어서그럼
-			close(rs);
-
-		}
-		return list;
 
 	}
 
@@ -262,6 +121,33 @@ public class MoviesDAO {
 				dto.setPhoto3(array[3]);
 				dto.setPhoto4(array[4]);
 				dto.setPhoto5(array[5]);
+				list.add(dto);
+			}
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return list;
+
+	}
+
+	public List<MoviesDTO> MovieList(String search) {
+		String sql = "SELECT * FROM MOVIES WHERE MNAME Like ?";
+		List<MoviesDTO> list = new ArrayList<MoviesDTO>();
+		try {
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, "%"+search+"%");
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				MoviesDTO dto = new MoviesDTO();
+				dto.setBoardnumber(rs.getInt("mnum"));
+				dto.setBoardtitle(rs.getString("mname"));
+//				dto.setDateofissue(rs.getString("dateofissue"));
+				dto.setPrice(rs.getInt("price"));
+				dto.setText(rs.getString("text"));
+				dto.setPhoto(rs.getString("photo"));
+
 				list.add(dto);
 			}
 
@@ -305,27 +191,6 @@ public class MoviesDAO {
 			e.printStackTrace();
 		}
 		return result;
-
-	}
-
-	public int CountSelectService() {
-		String sql = "SELECT COUNT(*) FROM BOARDS"; //
-		int count = 0;
-		try {
-			pstmt = con.prepareStatement(sql);
-			rs = pstmt.executeQuery();
-			while (rs.next()) {
-				count = rs.getInt(1);
-			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} finally {
-			close(pstmt); // 다쓴 기능들을 close하여 꺼버림 @안끄면 에러나는경우가 가끔있어서그럼
-			close(rs);
-
-		}
-		return count;
 
 	}
 
@@ -387,57 +252,35 @@ public class MoviesDAO {
 
 	}
 
-	public List<MoviesDTO> CountSelectService2(int startRow, int endRow) {
-		String sql = "SELECT * FROM BOARDLISTS WHERE RN BETWEEN ? AND ?"; // 뷰 조회
-		List<MoviesDTO> list = new ArrayList<MoviesDTO>();
-
-		try {
-			pstmt = con.prepareStatement(sql);
-			pstmt.setInt(1, startRow);
-			pstmt.setInt(2, endRow);
-			rs = pstmt.executeQuery();
-			while (rs.next()) {
-				MoviesDTO dto = new MoviesDTO();
-				dto.setBoardnumber(rs.getInt("boardnumber"));
-				dto.setBoardtitle(rs.getString("boardtitle"));
-				dto.setDateofissue(rs.getString("dateofissue"));
-				dto.setCount(rs.getInt("count"));
-				dto.setText(rs.getString("text"));
-				list.add(dto);
-			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} finally {
-			close(pstmt); // 다쓴 기능들을 close하여 꺼버림 @안끄면 에러나는경우가 가끔있어서그럼
-			close(rs);
-
-		}
-		return list;
-
-	}
-
 	public List<CommentDTO> CountSelectServiceSearch(int startRow, int endRow, String search, String filters,
 			int mnum) {
 		String sql = null;
 		if (filters.equals("베댓순")) {
-			sql = "SELECT * FROM SYMPATHYVIEWGOODS WHERE MNUM=? AND RN BETWEEN ? AND ?"; // 뷰 조회
+			sql = "SELECT * FROM (SELECT ROWNUM AS NUMROW,S.* FROM SYMPATHYVIEWGOODS S WHERE S.MNUM=? ORDER BY RN ASC) WHERE NUMROW BETWEEN ? AND ?"; // 뷰
+																																						// 조회
 		} else if (filters.equals("최신순")) {
-			sql = "SELECT * FROM SYMPATHYVIEW WHERE MNUM=? AND RN BETWEEN ? AND ? "; // 뷰 조회
+			sql = "SELECT * FROM (SELECT ROWNUM AS NUMROW,S.* FROM SYMPATHYVIEW S WHERE S.MNUM=? ORDER BY RN ASC) WHERE NUMROW BETWEEN ? AND ?"; // 뷰
+																																					// 조회
 		} else if (filters.equals("작성자")) {
-			sql = "SELECT * FROM SYMPATHYVIEW WHERE MNUM=? AND RN BETWEEN ? AND ? AND ID LIKE ?"; // 뷰 조회
+			sql = "SELECT * FROM (SELECT ROWNUM AS NUMROW,S.* FROM SYMPATHYVIEW S WHERE S.ID LIKE ? AND S.MNUM=? ORDER BY RN ASC) WHERE NUMROW BETWEEN ? AND ? "; // 뷰
+																																									// 조회
 		} else if (filters.equals("글내용")) {
-			sql = "SELECT * FROM SYMPATHYVIEW WHERE MNUM=? AND RN BETWEEN ? AND ? AND TEXT LIKE ?"; // 뷰 조회
+			sql = "SELECT * FROM (SELECT ROWNUM AS NUMROW,S.* FROM SYMPATHYVIEW S WHERE S.TEXT LIKE ? AND S.MNUM=? ORDER BY RN ASC) WHERE NUMROW BETWEEN ? AND ? "; // 뷰
+																																									// 조회
 		}
 		List<CommentDTO> list = new ArrayList<CommentDTO>();
 
 		try {
 			pstmt = con.prepareStatement(sql);
-			pstmt.setInt(1, mnum);		
-			pstmt.setInt(2, startRow);
-			pstmt.setInt(3, endRow);
 			if (filters.equals("작성자") || filters.equals("글내용")) {
-				pstmt.setString(4, "%" + search + "%");
+				pstmt.setString(1, "%" + search + "%");
+				pstmt.setInt(2, mnum);
+				pstmt.setInt(3, startRow);
+				pstmt.setInt(4, endRow);
+			} else {
+				pstmt.setInt(1, mnum);
+				pstmt.setInt(2, startRow);
+				pstmt.setInt(3, endRow);
 			}
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
@@ -457,40 +300,6 @@ public class MoviesDAO {
 		} finally {
 			close(pstmt); // 다쓴 기능들을 close하여 꺼버림 @안끄면 에러나는경우가 가끔있어서그럼
 			close(rs);
-		}
-		return list;
-
-	}
-
-	public List<MoviesDTO> CountSelectServiceid(int startRow, int endRow, String id) {
-		String sql = "SELECT * FROM BOARDLISTS WHERE ID=? AND RN BETWEEN ? AND ?"; // 뷰 조회
-		List<MoviesDTO> list = new ArrayList<MoviesDTO>();
-
-		try {
-			pstmt = con.prepareStatement(sql);
-			pstmt.setString(1, id);
-			pstmt.setInt(2, startRow);
-			pstmt.setInt(3, endRow);
-
-			rs = pstmt.executeQuery();
-			while (rs.next()) {
-
-				MoviesDTO dto = new MoviesDTO();
-				dto.setBoardnumber(rs.getInt("boardnumber"));
-				dto.setBoardtitle(rs.getString("boardtitle"));
-				dto.setDateofissue(rs.getString("dateofissue"));
-//				dto.setId(rs.getString("id"));
-				dto.setCount(rs.getInt("count"));
-				dto.setText(rs.getString("text"));
-				list.add(dto);
-			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} finally {
-			close(pstmt); // 다쓴 기능들을 close하여 꺼버림 @안끄면 에러나는경우가 가끔있어서그럼
-			close(rs);
-
 		}
 		return list;
 
@@ -574,7 +383,7 @@ public class MoviesDAO {
 			e.printStackTrace();
 		} finally {
 			close(pstmt); // 다쓴 기능들을 close하여 꺼버림 @안끄면 에러나는경우가 가끔있어서그럼
-
+			close(rs);
 		}
 		return result;
 

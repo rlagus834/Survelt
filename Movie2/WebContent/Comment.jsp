@@ -66,16 +66,29 @@ tr:nth-child(even) {
 	</td>			
 <br>
 <p id="ComChecks"></p>
-
+</tr>
+</table>
+	</c:if>	
 <table>
 <tr>
 <td>
+	<form action="boardListPaging">
+		<input type="hidden" value="${requestScope.mnum}" name="mnum">
+		<input type="hidden" value="베댓순" name="filters">
+		<input type="submit" value="베댓">
+	</form>
+
 </td>
 <td>
+	<form action="boardListPaging">
+		<input type="hidden" value="${requestScope.mnum}" name="mnum">
+		<input type="hidden" value="최신순" name="filters">
+		<input type="submit" value="최신순">
+	</form>
 </td>
 </tr>
 </table>
-	</c:if>
+
 	<table table id="id1">
 		<c:forEach var="member" items="${select}">
 			<tr>
