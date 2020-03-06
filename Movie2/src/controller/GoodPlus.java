@@ -41,7 +41,7 @@ public class GoodPlus extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		CommentDTO dto = new CommentDTO();
 		int bnum = Integer.parseInt(request.getParameter("bnum"));
-	
+	System.out.println(bnum);
 		HttpSession session = request.getSession();
 		String id = (String) session.getAttribute("id");
 		int mnum = Integer.parseInt(request.getParameter("mnum"));
@@ -49,13 +49,17 @@ public class GoodPlus extends HttpServlet {
 		System.out.println(id+"해당아이디");
 		int page = Integer.parseInt(request.getParameter("page"));
 		dto.setId(id);
-
+//String goodAuthority=null;
 		GoodService service = new GoodService();
 		boolean result = service.GoodSelect(bnum, id);
 		if (result) {
 			service.GoodMinus(id,bnum);
+//			goodAuthority="minus";
+			
 		} else {
 			service.GoodPlus(id,bnum);
+//			goodAuthority="plus";
+			
 		}
 
 		RequestDispatcher dispatcher = request

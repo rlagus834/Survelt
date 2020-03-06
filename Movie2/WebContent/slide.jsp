@@ -32,15 +32,13 @@ body {
 	display: none;
 }
 
-.mySlides img{
-height:300px;
-
-}
-.column img{
-height:100px;
-
+.mySlides img {
+	height: 300px;
 }
 
+.column img {
+	height: 100px;
+}
 
 /* Add a pointer when hovering over the thumbnail images */
 .cursor {
@@ -116,84 +114,86 @@ height:100px;
 <body>
 	<c:forEach var="best" items="${select}">
 
-	<div class="container">
-  <div class="mySlides">
-    <div class="numbertext">1 / 6</div>
-    <img src="fileUpload/${best.photo}" style="width:100%">
-  </div>
+		<div class="container">
+			<div class="mySlides">
+				<div class="numbertext">1 / 6</div>
+				<img src="fileUpload/${best.photo}" style="width: 100%">
+			</div>
 
-  <div class="mySlides">
-    <div class="numbertext">2 / 6</div>
-    <img src="fileUpload/${best.photo1}" style="width:100%">
-  </div>
+			<div class="mySlides">
+				<div class="numbertext">2 / 6</div>
+				<img src="fileUpload/${best.photo1}" style="width: 100%">
+			</div>
 
-  <div class="mySlides">
-    <div class="numbertext">3 / 6</div>
-    <img src="fileUpload/${best.photo2}" style="width:100%">
-  </div>
-    
-  <div class="mySlides">
-    <div class="numbertext">4 / 6</div>
-    <img src="fileUpload/${best.photo3}" style="width:100%">
-  </div>
+			<div class="mySlides">
+				<div class="numbertext">3 / 6</div>
+				<img src="fileUpload/${best.photo2}" style="width: 100%">
+			</div>
 
-  <div class="mySlides">
-    <div class="numbertext">5 / 6</div>
-    <img src="fileUpload/${best.photo4}" style="width:100%">
-  </div>
-    
-  <div class="mySlides">
-    <div class="numbertext">6 / 6</div>
-    <img src="fileUpload/${best.photo5}" style="width:100%">
-  </div>
-    
-  <a class="prev" onclick="plusSlides(-1)">❮</a>
-  <a class="next" onclick="plusSlides(1)">❯</a>
+			<div class="mySlides">
+				<div class="numbertext">4 / 6</div>
+				<img src="fileUpload/${best.photo3}" style="width: 100%">
+			</div>
 
-  <div class="caption-container">
-    <p id="caption"></p>
-  </div>
+			<div class="mySlides">
+				<div class="numbertext">5 / 6</div>
+				<img src="fileUpload/${best.photo4}" style="width: 100%">
+			</div>
 
-  <div class="row">
-    <div class="column">
-      <img class="demo cursor" src="fileUpload/${best.photo}" style="width:100%" onclick="currentSlide(1)" >
-    </div>
-    <div class="column">
-      <img class="demo cursor" src="fileUpload/${best.photo1}" style="width:100%" onclick="currentSlide(2)" >
-    </div>
-    <div class="column">
-      <img class="demo cursor" src="fileUpload/${best.photo2}" style="width:100%" onclick="currentSlide(3)" >
-    </div>
-    <div class="column">
-      <img class="demo cursor" src="fileUpload/${best.photo3}" style="width:100%" onclick="currentSlide(4)" >
-    </div>
-    <div class="column">
-      <img class="demo cursor" src="fileUpload/${best.photo4}" style="width:100%" onclick="currentSlide(5)" >
-    </div>    
-    <div class="column">
-      <img class="demo cursor" src="fileUpload/${best.photo5}" style="width:100%" onclick="currentSlide(6)" >
-    </div>
-  </div>
-</div>
-	
-		
+			<div class="mySlides">
+				<div class="numbertext">6 / 6</div>
+				<img src="fileUpload/${best.photo5}" style="width: 100%">
+			</div>
+
+			<a class="prev" onclick="plusSlides(-1)">❮</a> <a class="next"
+				onclick="plusSlides(1)">❯</a>
+
+			<div class="caption-container">
+				<p id="caption"></p>
+			</div>
+
+			<div class="row">
+				<div class="column">
+					<img class="demo cursor" src="fileUpload/${best.photo}"
+						style="width: 100%" onclick="currentSlide(1)">
+				</div>
+				<div class="column">
+					<img class="demo cursor" src="fileUpload/${best.photo1}"
+						style="width: 100%" onclick="currentSlide(2)">
+				</div>
+				<div class="column">
+					<img class="demo cursor" src="fileUpload/${best.photo2}"
+						style="width: 100%" onclick="currentSlide(3)">
+				</div>
+				<div class="column">
+					<img class="demo cursor" src="fileUpload/${best.photo3}"
+						style="width: 100%" onclick="currentSlide(4)">
+				</div>
+				<div class="column">
+					<img class="demo cursor" src="fileUpload/${best.photo4}"
+						style="width: 100%" onclick="currentSlide(5)">
+				</div>
+				<div class="column">
+					<img class="demo cursor" src="fileUpload/${best.photo5}"
+						style="width: 100%" onclick="currentSlide(6)">
+				</div>
+			</div>
+		</div>
+
+
 	</c:forEach>
-<br>
-<h1>평점:${requestScope.score}</h1>
-		<c:if test="${requestScope.Chance eq 'no'}">
-				<i class="far fa-heart" 
-					onclick="location.href='SympathyPlus?mnum=${requestScope.mnum}&mname=${requestScope.mname}'">${requestScope.Sympathy}</i>
-			</c:if>
-			<c:if test="${requestScope.Chance eq 'yes'}">
-				<i class="fas fa-heart"
-					onclick="location.href='SympathyMinus?mnum=${requestScope.mnum}&mname=${requestScope.mname}'">${requestScope.Sympathy}</i>
-			</c:if>
+	<br>
+	<h1>평점:${requestScope.score}</h1>
+	<c:if test="${requestScope.Chance eq 'no'}">
+		<i class="far fa-heart" onclick="symplus()">${requestScope.Sympathy}</i>
+	</c:if>
+	<c:if test="${requestScope.Chance eq 'yes'}">
+		<i class="fas fa-heart" onclick="symminus()">${requestScope.Sympathy}</i>
+	</c:if>
 
 
 
 	<script>
-
-
 var slideIndex = 1;
 showSlides(slideIndex);
 
@@ -223,13 +223,30 @@ function showSlides(n) {
   captionText.innerHTML = dots[slideIndex-1].alt;
 }
 
+function symplus(){
+	if(!'${sessionScope.id}'){
+		alert('로그인후 이용하세요');
 
+	}else{
+		location.href="SympathyPlus?mnum=${requestScope.mnum}&mname=${requestScope.mname}";	
 		
+	}
+}
+function symminus(){
+	
+if(!'${sessionScope.id}'){
+	alert('로그인후 이용하세요');
 
-
-
+}else{
+		location.href="SympathyMinus?mnum=${requestScope.mnum}&mname=${requestScope.mname}";	
+		
+	}
+	
+}		
 
 </script>
+
+
 
 </body>
 </html>

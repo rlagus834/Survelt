@@ -6,7 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link href="css/freelancer.min.css" rel="stylesheet">
+<link href="css/freelancer.min.css?ver=1" rel="stylesheet">
 
 <style>
 * {
@@ -83,8 +83,8 @@ input[type=submit] {
 		class="navbar navbar-expand-lg bg-secondary text-uppercase fixed-top"
 		id="mainNav">
 		<div class="container">
-			<a class="navbar-brand js-scroll-trigger" href="#page-top">Start
-				Bootstrap</a>
+			<a class="navbar-brand js-scroll-trigger" href="#page-top">Movie 
+grade</a>
 			<button
 				class="navbar-toggler navbar-toggler-right text-uppercase font-weight-bold bg-primary text-white rounded"
 				type="button" data-toggle="collapse" data-target="#navbarResponsive"
@@ -138,7 +138,7 @@ input[type=submit] {
 		<div class="container d-flex align-items-center flex-column">
 
 			<!-- Masthead Avatar Image -->
-			<img class="masthead-avatar mb-5" src="img/avataaars.svg" alt="">
+			<img class="masthead-avatar mb-5" src="" alt="">
 
 			<!-- Masthead Heading -->
 			<h1 class="masthead-heading text-uppercase mb-0">

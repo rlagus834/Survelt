@@ -14,10 +14,45 @@ public class CommentDTO {
 	private String mchance;
 	private int gcnum;
 	private int mcnum;
-	
+	private String search;
+	private String filter;
+	private int endrow;
+	private int startrow;
 
 	public int getGcnum() {
 		return gcnum;
+	}
+
+	public String getSearch() {
+		return search;
+	}
+
+	public void setSearch(String search) {
+		this.search = search;
+	}
+
+	public String getFilter() {
+		return filter;
+	}
+
+	public void setFilter(String filter) {
+		this.filter = filter;
+	}
+
+	public int getEndrow() {
+		return endrow;
+	}
+
+	public void setEndrow(int endrow) {
+		this.endrow = endrow;
+	}
+
+	public int getStartrow() {
+		return startrow;
+	}
+
+	public void setStartrow(int startrow) {
+		this.startrow = startrow;
 	}
 
 	public void setGcnum(int gcnum) {

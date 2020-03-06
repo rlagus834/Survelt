@@ -49,12 +49,14 @@ public class MinusPlus extends HttpServlet {
 		System.out.println(id + "해당아이디");
 
 		GoodService service = new GoodService();
-
+//String minusAuthority=null;
 		boolean result = service.MinusSelect(bnum, id);
 		if (result) {
 			service.MinusMinus(id, bnum);
+//			minusAuthority="minus";
 		} else {
 			service.MinusPlus(id, bnum);
+		
 		}
 
 		RequestDispatcher dispatcher = request

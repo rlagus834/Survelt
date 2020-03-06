@@ -38,6 +38,7 @@ public class boardListPaging extends HttpServlet {
 		int page = 1; // 처음 시작할때 1페이지로 시작하니까 응용해서 쓰려고
 		int limit = 3; // 보여줄 페이지당 글갯수
 		// page파라미터값검사 왜 사용하나?어느페이지로 갈지 알기위해
+
 		if (request.getParameter("page") != null) {// 클릭을 안해서 가져온값이 null이면 작동안하고 page는 1그대로 누르면 그 페이지순번값을 가져와서 대입
 			page = Integer.parseInt(request.getParameter("page"));
 		}
@@ -67,7 +68,7 @@ public class boardListPaging extends HttpServlet {
 		listCount = boardListPagingService.SelectCountService(search, filters, mnum);
 
 		List<CommentDTO> boardList = boardListPagingService.boardListPagingServiceSearch(startRow, endRow, search,
-				filters, mnum);// 범위에맞는
+				filters, mnum,id);// 범위에맞는
 
 		// 데이터
 		// list가져오기

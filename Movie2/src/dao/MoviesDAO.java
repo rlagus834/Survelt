@@ -7,6 +7,7 @@ import java.util.*;
 
 import dto.CommentDTO;
 import dto.MoviesDTO;
+import service.GoodService;
 
 //import javax.sql.*;
 //import javax.xml.ws.Response;
@@ -55,6 +56,29 @@ public class MoviesDAO {
 	}
 
 	public String PasswordCheck(String id) {
+		String sql = "SELECT * FROM USERS WHERE ID=?";
+		List<MoviesDTO> list = new ArrayList<MoviesDTO>();
+		String result = null;
+		try {
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, id);
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				result = rs.getString("pw");
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(pstmt); // 다쓴 기능들을 close하여 꺼버림 @안끄면 에러나는경우가 가끔있어서그럼
+			close(rs);
+
+		}
+		return result;
+
+	}
+
+	public String goodA(String id) {
 		String sql = "SELECT * FROM USERS WHERE ID=?";
 		List<MoviesDTO> list = new ArrayList<MoviesDTO>();
 		String result = null;
@@ -137,7 +161,7 @@ public class MoviesDAO {
 		List<MoviesDTO> list = new ArrayList<MoviesDTO>();
 		try {
 			pstmt = con.prepareStatement(sql);
-			pstmt.setString(1, "%"+search+"%");
+			pstmt.setString(1, "%" + search + "%");
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
 				MoviesDTO dto = new MoviesDTO();
@@ -252,21 +276,26 @@ public class MoviesDAO {
 
 	}
 
-	public List<CommentDTO> CountSelectServiceSearch(int startRow, int endRow, String search, String filters,
-			int mnum) {
+	public List<CommentDTO> CountSelectServiceSearch(int startRow, int endRow, String search, String filters, int mnum,String id) {
 		String sql = null;
+		boolean result=true;
 		if (filters.equals("베댓순")) {
 			sql = "SELECT * FROM (SELECT ROWNUM AS NUMROW,S.* FROM SYMPATHYVIEWGOODS S WHERE S.MNUM=? ORDER BY RN ASC) WHERE NUMROW BETWEEN ? AND ?"; // 뷰
-																																						// 조회
+//			sql = "select * from(SELECT * FROM (SELECT ROWNUM AS NUMROW,S.* FROM SYMPATHYVIEWGOODS S WHERE S.MNUM=? ORDER BY RN ASC)  WHERE NUMROW BETWEEN ? AND ?)b,(SELECT UPCHANCE,BNUM FROM GOODLIMIT WHERE BNUM IN(SELECT BNUM FROM (SELECT ROWNUM AS NUMROW,S.* FROM SYMPATHYVIEW S WHERE  S.MNUM=? ORDER BY RN ASC) WHERE NUMROW BETWEEN ? AND ? AND ID=?))c where c.bnum(+)=b.bnum";
+			// 조회
 		} else if (filters.equals("최신순")) {
 			sql = "SELECT * FROM (SELECT ROWNUM AS NUMROW,S.* FROM SYMPATHYVIEW S WHERE S.MNUM=? ORDER BY RN ASC) WHERE NUMROW BETWEEN ? AND ?"; // 뷰
-																																					// 조회
+//			sql = "select * from (SELECT * FROM (SELECT ROWNUM AS NUMROW,S.* FROM SYMPATHYVIEW S WHERE S.ID LIKE ? AND S.MNUM=? ORDER BY RN ASC)  WHERE NUMROW BETWEEN ? AND ?)b,(SELECT UPCHANCE,BNUM FROM GOODLIMIT WHERE BNUM IN(SELECT BNUM FROM (SELECT ROWNUM AS NUMROW,S.* FROM SYMPATHYVIEW S WHERE S.ID LIKE ? AND S.MNUM=?) WHERE NUMROW BETWEEN ? AND ? AND ID=?))c,(SELECT DWCHANCE,BNUM FROM MINUSLIMIT WHERE BNUM IN(SELECT BNUM FROM (SELECT ROWNUM AS NUMROW,S.* FROM SYMPATHYVIEW S WHERE S.ID LIKE ? AND S.MNUM=?) WHERE NUMROW BETWEEN ? AND ? AND ID=?))e where c.bnum(+)=b.bnum AND c.bnum=e.bnum(+) order by numrow asc";
+			// 조회
 		} else if (filters.equals("작성자")) {
 			sql = "SELECT * FROM (SELECT ROWNUM AS NUMROW,S.* FROM SYMPATHYVIEW S WHERE S.ID LIKE ? AND S.MNUM=? ORDER BY RN ASC) WHERE NUMROW BETWEEN ? AND ? "; // 뷰
-																																									// 조회
+//			sql = "select * from (SELECT * FROM (SELECT ROWNUM AS NUMROW,S.* FROM SYMPATHYVIEW S WHERE S.ID LIKE ? AND S.MNUM=? ORDER BY RN ASC)  WHERE NUMROW BETWEEN ? AND ?)b,(SELECT UPCHANCE,BNUM FROM GOODLIMIT WHERE BNUM IN(SELECT BNUM FROM (SELECT ROWNUM AS NUMROW,S.* FROM SYMPATHYVIEW S WHERE S.ID LIKE ? AND S.MNUM=?) WHERE NUMROW BETWEEN ? AND ? AND ID=?))c,(SELECT DWCHANCE,BNUM FROM MINUSLIMIT WHERE BNUM IN(SELECT BNUM FROM (SELECT ROWNUM AS NUMROW,S.* FROM SYMPATHYVIEW S WHERE S.ID LIKE ? AND S.MNUM=?) WHERE NUMROW BETWEEN ? AND ? AND ID=?))e where c.bnum(+)=b.bnum AND c.bnum=e.bnum(+) order by numrow asc";
+			// 조회
 		} else if (filters.equals("글내용")) {
-			sql = "SELECT * FROM (SELECT ROWNUM AS NUMROW,S.* FROM SYMPATHYVIEW S WHERE S.TEXT LIKE ? AND S.MNUM=? ORDER BY RN ASC) WHERE NUMROW BETWEEN ? AND ? "; // 뷰
-																																									// 조회
+			sql = "SELECT * FROM (SELECT ROWNUM AS NUMROW,S.* FROM SYMPATHYVIEW S WHERE S.TEXT LIKE ? AND S.MNUM=? ORDER BY RN ASC) WHERE NUMROW BETWEEN ? AND ? "; 
+//						sql="select * from(SELECT * FROM (SELECT ROWNUM AS NUMROW,S.* FROM SYMPATHYVIEW S WHERE S.TEXT LIKE ? AND S.MNUM=? ORDER BY RN ASC)  WHERE NUMROW BETWEEN ? AND ?)b,(SELECT UPCHANCE,BNUM FROM GOODLIMIT WHERE BNUM IN(SELECT BNUM FROM (SELECT ROWNUM AS NUMROW,S.* FROM SYMPATHYVIEW S WHERE S.TEXT LIKE ? AND S.MNUM=? ORDER BY RN ASC) WHERE NUMROW BETWEEN ? AND ? AND ID=?))c where c.bnum(+)=b.bnum" ; 
+//			sql = "select * from (SELECT * FROM (SELECT ROWNUM AS NUMROW,S.* FROM SYMPATHYVIEW S WHERE S.TEXT LIKE ? AND S.MNUM=? ORDER BY RN ASC)  WHERE NUMROW BETWEEN ? AND ?)b,(SELECT UPCHANCE,BNUM FROM GOODLIMIT WHERE BNUM IN(SELECT BNUM FROM (SELECT ROWNUM AS NUMROW,S.* FROM SYMPATHYVIEW S WHERE S.TEXT LIKE ? AND S.MNUM=?) WHERE NUMROW BETWEEN ? AND ? AND ID=?))c,(SELECT DWCHANCE,BNUM FROM MINUSLIMIT WHERE BNUM IN(SELECT BNUM FROM (SELECT ROWNUM AS NUMROW,S.* FROM SYMPATHYVIEW S WHERE S.TEXT LIKE ? AND S.MNUM=?) WHERE NUMROW BETWEEN ? AND ? AND ID=?))e where c.bnum(+)=b.bnum AND c.bnum=e.bnum(+) order by numrow asc";
+			// 조회
 		}
 		List<CommentDTO> list = new ArrayList<CommentDTO>();
 
@@ -277,6 +306,11 @@ public class MoviesDAO {
 				pstmt.setInt(2, mnum);
 				pstmt.setInt(3, startRow);
 				pstmt.setInt(4, endRow);
+//				pstmt.setString(5, "%" + search + "%");
+//				pstmt.setInt(6, mnum);
+//				pstmt.setInt(7, startRow);
+//				pstmt.setInt(8, endRow);
+//				pstmt.setString(9, id);
 			} else {
 				pstmt.setInt(1, mnum);
 				pstmt.setInt(2, startRow);
@@ -284,9 +318,26 @@ public class MoviesDAO {
 			}
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
-
+				String save="";
 				CommentDTO dto = new CommentDTO();
-
+GoodService service=new GoodService();
+System.out.println(rs.getInt("bnum"));
+result=service.GoodSelect(rs.getInt("bnum"), id);
+if(result) {
+	save="YES";
+	dto.setGchance(save);
+}else {
+	save="NO";	
+	dto.setGchance(save);
+}
+result=service.MinusSelect(rs.getInt("bnum"), id);
+if(result) {
+	save="YES";
+	dto.setMchance(save);
+}else {
+	save="NO";	
+	dto.setMchance(save);
+}
 				dto.setBnum(rs.getInt("bnum"));
 				dto.setCdate(rs.getString("cdate"));
 				dto.setId(rs.getString("id"));

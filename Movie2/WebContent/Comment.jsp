@@ -19,7 +19,7 @@ table {
 	width: 100%;
 }
 
-#id1 td,th {
+#id1 td, th {
 	border: 1px solid #dddddd;
 	text-align: left;
 	padding: 8px;
@@ -57,37 +57,34 @@ tr:nth-child(even) {
 								onclick="stars('5')">★</a>
 						</p>
 				</td>
-				<td>
-						<textarea minlength="5" style="resize:none" name="text" cols="65" rows="3" value="${member.text}"></textarea>
-</td>
-<td>					
-						<input type="button" onclick="CommentCheck()">
-					</form>
-	</td>			
-<br>
-<p id="ComChecks"></p>
-</tr>
-</table>
-	</c:if>	
-<table>
-<tr>
-<td>
-	<form action="boardListPaging">
-		<input type="hidden" value="${requestScope.mnum}" name="mnum">
-		<input type="hidden" value="베댓순" name="filters">
-		<input type="submit" value="베댓">
-	</form>
+				<td><textarea minlength="5" style="resize: none" name="text"
+						cols="65" rows="3" value="${member.text}"></textarea></td>
+				<td><input type="button" onclick="CommentCheck()">
+					</form></td>
+				<br>
+				<p id="ComChecks"></p>
+			</tr>
+		</table>
+	</c:if>
+	<table>
+		<tr>
+			<td>
+				<form action="boardListPaging">
+					<input type="hidden" value="${requestScope.mnum}" name="mnum">
+					<input type="hidden" value="베댓순" name="filters"> <input
+						type="submit" value="베댓">
+				</form>
 
-</td>
-<td>
-	<form action="boardListPaging">
-		<input type="hidden" value="${requestScope.mnum}" name="mnum">
-		<input type="hidden" value="최신순" name="filters">
-		<input type="submit" value="최신순">
-	</form>
-</td>
-</tr>
-</table>
+			</td>
+			<td>
+				<form action="boardListPaging">
+					<input type="hidden" value="${requestScope.mnum}" name="mnum">
+					<input type="hidden" value="최신순" name="filters"> <input
+						type="submit" value="최신순">
+				</form>
+			</td>
+		</tr>
+	</table>
 
 	<table table id="id1">
 		<c:forEach var="member" items="${select}">
@@ -95,12 +92,35 @@ tr:nth-child(even) {
 				<td>${member.id}<br> ${member.text}
 				</td>
 				<td>${member.score}</td>
-				<td>${member.cdate}</td>
-				<td><a
-					href="GoodPlus?bnum=${member.bnum}&page=${paging.page}&mnum=${requestScope.mnum}">좋아요${member.gcnum}</a>
-					<a
-					href="MinusPlus?bnum=${member.bnum}&page=${paging.page}&mnum=${requestScope.mnum}">싫어요${member.mcnum}</a>
+				<td>${member.cdate}${member.gchance}</td>
 
+
+
+
+				<td>
+<c:choose>
+    <c:when test="${member.gchance eq 'NO'}">
+						<i class="far fa-thumbs-up"
+							onclick="good('${member.bnum}')">${member.gcnum}</i>
+	</c:when>
+    <c:otherwise>
+        					<i class="fas fa-thumbs-up"
+							onclick="good('${member.bnum}')">${member.gcnum}</i>
+    </c:otherwise>
+</c:choose>
+</td>
+<td>
+<c:choose>
+    <c:when test="${member.mchance eq 'NO'}">
+		<i class="far fa-thumbs-up"
+							onclick="Minus('${member.bnum}')">${member.mcnum}</i>
+					</c:when>
+    <c:otherwise>
+    	<i class="fas fa-thumbs-up"
+							onclick="Minus('${member.bnum}')">${member.mcnum}</i>
+					 </c:otherwise>
+</c:choose>
+				
 				</td>
 				<c:if test="${sessionScope.id eq member.id}">
 					<td><a
@@ -156,6 +176,36 @@ tr:nth-child(even) {
 
 		<script>
 			var save = 0;
+			function good(result){
+console.log(result);
+var retry=result;
+				if(!'${sessionScope.id}'){
+					alert('로그인후 이용하세요');
+				}else{
+					
+					location.href="GoodPlus?bnum="+retry+"&page=${paging.page}&mnum=${requestScope.mnum}";					
+				}
+				
+				
+			}
+			
+			
+			function Minus(result){
+				console.log(result);				
+				var retry=result;
+				if(!'${sessionScope.id}'){
+					alert('로그인후 이용하세요');
+				}else{					
+					location.href="MinusPlus?bnum="+retry+"&page=${paging.page}&mnum=${requestScope.mnum}";					
+				}
+				
+				
+			}
+			
+			
+				
+			
+			
 			function stars(s) {
 				save = s;
 				document.getElementById("id1").value = save;

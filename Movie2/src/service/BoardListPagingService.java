@@ -26,12 +26,12 @@ public class BoardListPagingService {
 	}
 
 
-	public List<CommentDTO> boardListPagingServiceSearch(int startRow, int endRow, String search,String filters,int mnum) {
+	public List<CommentDTO> boardListPagingServiceSearch(int startRow, int endRow, String search,String filters,int mnum,String id) {
 		MoviesDAO dao = MoviesDAO.getInstance();
 		Connection con = getConnection();
 		dao.setConnection(con);
 		List<CommentDTO> list = new ArrayList<CommentDTO>();
-		list = dao.CountSelectServiceSearch(startRow, endRow, search,filters,mnum);
+		list = dao.CountSelectServiceSearch(startRow, endRow, search,filters,mnum,id);
 		close(con);
 		return list;
 
@@ -47,7 +47,18 @@ public class BoardListPagingService {
 
 	}
 
-
-
+//	public int goodAndMinusChanceService(String id,int bnum) {
+//		MoviesDAO dao = MoviesDAO.getInstance();
+//		Connection con = getConnection();
+//		dao.setConnection(con);
+//		int count = dao.goodAndMinusChance(id,bnum);
+//		close(con);
+//		return count;
+//
+//	}
+//
+//	
+	
+	
 
 }
