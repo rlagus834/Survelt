@@ -61,9 +61,9 @@ public class GoodPlus extends HttpServlet {
 //			goodAuthority="plus";
 			
 		}
-
+		String mname=request.getParameter("mname");
 		RequestDispatcher dispatcher = request
-				.getRequestDispatcher("boardListPaging?bnum=" + bnum + "&mnum=" + mnum + "&page=" + page);
+				.getRequestDispatcher("boardListPaging?bnum=" + bnum + "&mnum=" + mnum + "&page=" + page+"&mname="+mname);
 		dispatcher.forward(request, response);
 
 	}

@@ -45,7 +45,7 @@ public class SympathyPlus extends HttpServlet {
 		SympathyService service = new SympathyService();
 		service.SympathyPlus(dto);
 
-		RequestDispatcher dispatcher = request.getRequestDispatcher("MovieSelect?mname"+mname);
+		RequestDispatcher dispatcher = request.getRequestDispatcher("boardListPaging?mname="+mname);
 		dispatcher.forward(request, response);
 
 	}

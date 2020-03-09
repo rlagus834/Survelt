@@ -61,7 +61,7 @@ public class MovieSelect extends HttpServlet {
 		request.setAttribute("mnum", dto.getBoardnumber());
 		request.setAttribute("Chance", chance);
 		request.setAttribute("score", score);
-		RequestDispatcher dispatcher = request.getRequestDispatcher("slide.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("Movie.jsp");
 		dispatcher.forward(request, response);
 
 	}

@@ -266,7 +266,7 @@ public class UsersDAO {
 	}
 
 	public List<MoviesDTO> MovieBest() {
-		String sql = "select * from(select count(*),mnum from sympathy group by mnum order by count(*) desc) where rownum<=2";
+		String sql = "select * from(select count(*),mnum from sympathy group by mnum order by count(*) desc) where rownum<=3";
 		List<MoviesDTO> list = new ArrayList<MoviesDTO>();
 		List<Integer> save = new ArrayList<Integer>();
 		int count = 1;
@@ -278,11 +278,11 @@ public class UsersDAO {
 				System.out.println(rs.getInt("mnum"));
 			}
 
-			sql = "SELECT * FROM MOVIES WHERE MNUM IN(?,?)";
+			sql = "SELECT * FROM MOVIES WHERE MNUM IN(?,?,?)";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, save.get(0));
 			pstmt.setInt(2, save.get(1));
-//			pstmt.setInt(3, save.get(2));
+			pstmt.setInt(3, save.get(2));
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
 				MoviesDTO dto = new MoviesDTO();

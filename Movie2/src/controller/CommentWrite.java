@@ -50,7 +50,7 @@ public class CommentWrite extends HttpServlet {
 	dto.setMnum(mnum);
 	boolean result=service.CommentWrite(dto);
  
-	RequestDispatcher dispatcher = request.getRequestDispatcher("boardListPaging?mnum="+mnum);
+	RequestDispatcher dispatcher = request.getRequestDispatcher("boardListPaging?mnum="+mnum+"&mname="+request.getParameter("mname"));
 			dispatcher.forward(request, response);
 		
 

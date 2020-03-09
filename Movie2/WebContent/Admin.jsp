@@ -8,6 +8,7 @@
 </head>
 <body>
 <h1>관리자</h1>
+<button onclick="location.href='search.jsp'">메인으로</button>
 <br>
 <br>
 <h2>회원관리</h2>

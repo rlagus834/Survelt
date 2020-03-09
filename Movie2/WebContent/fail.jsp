@@ -8,7 +8,7 @@
 <script src="https://kit.fontawesome.com/bad24df0ae.js"
 	crossorigin="anonymous"></script>
 <script>
-
+alert
 </script>
 
 

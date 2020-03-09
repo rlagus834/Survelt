@@ -47,7 +47,7 @@ public class MinusPlus extends HttpServlet {
 		int page = Integer.parseInt(request.getParameter("page"));
 		System.out.println(bnum + "댓글번호");
 		System.out.println(id + "해당아이디");
-
+String mname=request.getParameter("mname");
 		GoodService service = new GoodService();
 //String minusAuthority=null;
 		boolean result = service.MinusSelect(bnum, id);
@@ -60,7 +60,7 @@ public class MinusPlus extends HttpServlet {
 		}
 
 		RequestDispatcher dispatcher = request
-				.getRequestDispatcher("boardListPaging?bnum=" + bnum + "&mnum=" + mnum + "&page=" + page);
+				.getRequestDispatcher("boardListPaging?bnum=" + bnum + "&mnum=" + mnum + "&page=" + page+"&mname="+mname );
 		dispatcher.forward(request, response);
 
 	}

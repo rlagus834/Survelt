@@ -23,14 +23,14 @@ import java.util.*;
 /**
  * Servlet implementation class boardListPaging
  */
-@WebServlet("/boardListPaging")
-public class boardListPaging extends HttpServlet {
+@WebServlet("/Movies")
+public class Movies extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public boardListPaging() {
+	public Movies() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
@@ -39,31 +39,7 @@ public class boardListPaging extends HttpServlet {
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		BoardListPagingService boardListPagingService = new BoardListPagingService();
-		
-		MoviesDTO dto = new MoviesDTO();
-		dto.setBoardtitle((String) request.getParameter("mname"));
-		MovieSelectService service = new MovieSelectService();
-		List<MoviesDTO> list = service.MovieSelect(dto);
-		int mnum = dto.getBoardnumber();
-		HttpSession session = request.getSession();
-		String id = (String) session.getAttribute("id");
-		request.setAttribute("select", list);
-		SympathyService SymService = new SympathyService();
-		int Sympathy = SymService.SympathySelect(mnum);
-		String chance = SymService.SympathyCheck(id,mnum);
-		ScoreService ScoService = new ScoreService();
-		int score = ScoService.ScoreService(mnum);
-		if (chance == null) {
-			chance = "no";
-		} else {
-			chance = "yes";
-		}
-		request.setAttribute("Sympathy", Sympathy);
-		request.setAttribute("mname", dto.getBoardtitle());
-		request.setAttribute("mnum", dto.getBoardnumber());
-		request.setAttribute("Chance", chance);
-		request.setAttribute("score", score);
-		
+
 		int page = 1; // 처음 시작할때 1페이지로 시작하니까 응용해서 쓰려고
 		int limit = 3; // 보여줄 페이지당 글갯수
 		// page파라미터값검사 왜 사용하나?어느페이지로 갈지 알기위해
@@ -80,25 +56,17 @@ public class boardListPaging extends HttpServlet {
 		int listCount = 0;
 		// 한페이지에 3개씩 보여줄때 1페이지에 보여줘야하는글번호(RN기준)
 		// 시작글은 1번글 마지막글은 3번글
-		String filters = "최신순";
-		String search = "";
-		if (request.getParameter("filters") != null) {// 클릭을 안해서 가져온값이 null이면 작동안하고 page는 1그대로 누르면 그 페이지순번값을 가져와서 대입
-			filters = request.getParameter("filters");
-		}
+		MoviesDTO dto = new MoviesDTO();
+		String mname = request.getParameter("mname");
+		MovieSelectService service = new MovieSelectService();
 
-		if (request.getParameter("search") != null) {// 클릭을 안해서 가져온값이 null이면 작동안하고 page는 1그대로 누르면 그 페이지순번값을 가져와서 대입
-			search = request.getParameter("search");
-		}
-
-	
-		listCount = boardListPagingService.SelectCountService(search, filters, mnum);
-
-		List<CommentDTO> boardList = boardListPagingService.boardListPagingServiceSearch(startRow, endRow, search,
-				filters, mnum,id);// 범위에맞는
+		List<MoviesDTO> list = boardListPagingService.MovieListService(mname, startRow, endRow);
+		ScoreService ScoService = new ScoreService();
+		listCount = boardListPagingService.MovieListCountService(mname);
 
 		// 데이터
 		// list가져오기
-		request.setAttribute("selectComment", boardList);
+		request.setAttribute("selectMovie", list);
 
 //페이지 계산을 위한 부분
 		// 최대로 필요한 페이지 갯수 계산
@@ -118,16 +86,8 @@ public class boardListPaging extends HttpServlet {
 		paging.setMaxPage(maxPage);
 		paging.setListCount(listCount);
 		request.setAttribute("paging", paging);
-		request.setAttribute("filters", filters);
-		request.setAttribute("search", search);
-		request.setAttribute("mnum", mnum);
 
-		
-		
-		
-		
-		
-		RequestDispatcher dispatcher = request.getRequestDispatcher("Movie.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("MovieList.jsp");
 		dispatcher.forward(request, response);
 
 	}

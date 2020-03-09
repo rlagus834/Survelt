@@ -26,6 +26,27 @@ public class BoardListPagingService {
 	}
 
 
+	public int MovieListCountService(String select) {
+		MoviesDAO dao = MoviesDAO.getInstance();
+		Connection con = getConnection();
+		dao.setConnection(con);
+		int count = dao.SelectCount(select);
+		close(con);
+		return count;
+
+	}
+	
+	public List<MoviesDTO> MovieListService(String mname,int startRow,int endRow) {
+		MoviesDAO dao = MoviesDAO.getInstance();
+		Connection con = getConnection();
+		dao.setConnection(con);
+		List<MoviesDTO> list  = dao.MovieList(mname,startRow,endRow);
+		close(con);
+		return list;
+
+	}
+
+	
 	public List<CommentDTO> boardListPagingServiceSearch(int startRow, int endRow, String search,String filters,int mnum,String id) {
 		MoviesDAO dao = MoviesDAO.getInstance();
 		Connection con = getConnection();

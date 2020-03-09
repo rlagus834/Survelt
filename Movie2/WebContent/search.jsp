@@ -124,10 +124,7 @@ grade</a>
 						href="#portfolio">best</a></li>
 					<li class="nav-item mx-0 mx-lg-1"><a
 						class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
-						href="#about">About</a></li>
-					<li class="nav-item mx-0 mx-lg-1"><a
-						class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
-						href="#contact">Contact</a></li>
+						href="#about">New Movie</a></li>
 				</ul>
 			</div>
 		</div>
@@ -142,7 +139,7 @@ grade</a>
 
 			<!-- Masthead Heading -->
 			<h1 class="masthead-heading text-uppercase mb-0">
-				<form autocomplete="off" action="MovieSelect">
+				<form autocomplete="off" action="Movies">
 					<div class="autocomplete" style="width: 300px;">
 						<input id="myInput" type="text" name="mname" placeholder="search">
 					</div>
@@ -160,8 +157,7 @@ grade</a>
 			</div>
 
 			<!-- Masthead Subheading -->
-			<p class="masthead-subheading font-weight-light mb-0">Graphic
-				Artist - Web Designer - Illustrator</p>
+			<p class="masthead-subheading font-weight-light mb-0"></p>
 
 		</div>
 	</header>
@@ -190,8 +186,8 @@ grade</a>
 
 					<!-- Portfolio Item 1 -->
 					<div class="col-md-6 col-lg-4">
-						<div class="portfolio-item mx-auto" data-toggle="modal"
-							data-target="#portfolioModal${best.count}">
+						<div class="portfolio-item mx-auto" onclick="location.href='boardListPaging?mname=${best.boardtitle}'">
+						
 							<div
 								class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
 								<div
@@ -199,7 +195,7 @@ grade</a>
 									<i class="fas fa-plus fa-3x"></i>
 								</div>
 							</div>
-							<img class="img-fluid" src="fileUpload/${best.photo1}" alt="">
+							<img class="img-fluid" src="fileUpload/${best.photo1}" alt="" width="350px" height="300px" max-height="300px">
 						</div>
 					</div>
 				</c:forEach>
@@ -227,54 +223,6 @@ grade</a>
 	</div>
 
 	<!-- Portfolio Modals -->
-
-	<c:forEach var="best" items="${best}">
-		<!-- Portfolio Modal 1 -->
-		<div class="portfolio-modal modal fade"
-			id="portfolioModal${best.count}" tabindex="-1" role="dialog"
-			aria-labelledby="portfolioModal1Label" aria-hidden="true">
-			<div class="modal-dialog modal-xl" role="document">
-				<div class="modal-content">
-					<button type="button" class="close" data-dismiss="modal"
-						aria-label="Close">
-						<span aria-hidden="true"> <i class="fas fa-times"></i>
-						</span>
-					</button>
-					<div class="modal-body text-center">
-						<div class="container">
-							<div class="row justify-content-center">
-								<div class="col-lg-8">
-									<!-- Portfolio Modal - Title -->
-									<h2
-										class="portfolio-modal-title text-secondary text-uppercase mb-0">${best.boardtitle}</h2>
-									<!-- Icon Divider -->
-									<div class="divider-custom">
-										<div class="divider-custom-line"></div>
-										<div class="divider-custom-icon">
-											<i class="fas fa-star"></i>
-										</div>
-										<div class="divider-custom-line"></div>
-									</div>
-									<!-- Portfolio Modal - Image -->
-
-									<!-- Portfolio Modal - Text -->
-									<iframe src="MovieSelect?mname=${best.boardtitle}" width=100%
-										height="500px"></iframe>
-									<p class="mb-5">${best.text}</p>
-
-									<iframe src="boardListPaging?mnum=${best.boardnumber}"
-										width=100% height="500px"></iframe>
-									<button class="btn btn-primary" href="#" data-dismiss="modal">
-										<i class="fas fa-times fa-fw"></i> 취소
-									</button>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</c:forEach>
 
 
 
