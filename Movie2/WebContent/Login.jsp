@@ -24,11 +24,11 @@
     <c:if test="${requestScope.fail eq 'fail'}">
 		<h4>아이디또는 비밀번호가 불일치합니다.</h4>
 	</c:if>
-    
+      </form>
     <br>
     <button onclick="location.href='Join.jsp'">회원가입</button>
 
-  </form>
+
 </div>
 <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
 

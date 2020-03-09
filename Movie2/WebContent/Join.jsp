@@ -103,9 +103,13 @@
  <td>
 </td>
 </tr>
-</table>
 </form>
+<tr>
+<td>
 <input type="button" onclick="checkSign()" id="join" value="가입하기">
+</td>
+</tr>
+</table>
 
 </body>
 </html>
