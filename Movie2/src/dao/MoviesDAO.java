@@ -194,7 +194,7 @@ public class MoviesDAO {
 	}
 
 	public List<MoviesDTO> MovieList(String search) {
-		String sql = "SELECT * from where mname LIKE ?";
+		String sql = "SELECT * FROM MOVIES where MNAME LIKE ?";
 		List<MoviesDTO> list = new ArrayList<MoviesDTO>();
 		try {
 			pstmt = con.prepareStatement(sql);
@@ -205,7 +205,7 @@ public class MoviesDAO {
 				MoviesDTO dto = new MoviesDTO();
 				dto.setBoardnumber(rs.getInt("mnum"));
 				dto.setBoardtitle(rs.getString("mname"));
-				dto.setDateofissue(rs.getString("dateofissue"));
+//				dto.setDateofissue(rs.getString("dateofissue"));
 				dto.setPrice(rs.getInt("price"));
 				dto.setText(rs.getString("text"));
 				String save = rs.getString("photo");
