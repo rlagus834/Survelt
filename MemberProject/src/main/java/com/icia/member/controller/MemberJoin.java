@@ -1,5 +1,7 @@
 package com.icia.member.controller;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -15,7 +17,9 @@ import com.icia.member.service.MemberService;
 public class MemberJoin {
 
 	ModelAndView mav;
-
+@Autowired
+HttpSession session;
+	
 	@Autowired
 	MemberService service;
 
@@ -37,22 +41,22 @@ public class MemberJoin {
 		return "LoginForm";
 	}
 
-	@RequestMapping(value = "/memberUpdateSelect", method = RequestMethod.GET) // RequestParam("파라미터이름") 값을담을타입 변수명																				// request.getParameter("")같은것 특정 값만																				// 가져올수있음
+	@RequestMapping(value = "/memberUpdateSelect", method = RequestMethod.GET) // RequestParam("파라미터이름") 값을담을타입 변수명 //
+																				// request.getParameter("")같은것 특정 값만 //
+																				// 가져올수있음
 	public ModelAndView memberUpdateSelect(@RequestParam("id") String id) {
 		mav = new ModelAndView();
 		mav = service.memberUpdateSelect(id);
 		return mav;
 	}
-	
-	
-	@RequestMapping(value="/memberUpdate",method=RequestMethod.POST)
-	public ModelAndView memberUpdate(@ModelAttribute MemberDTO dto) {
-		mav=new ModelAndView();
-		mav=service.memberUpdate(dto);
-		return mav;
-		
-	}
 
+	@RequestMapping(value = "/memberUpdate", method = RequestMethod.POST)
+	public ModelAndView memberUpdate(@ModelAttribute MemberDTO dto) {
+		mav = new ModelAndView();
+		mav = service.memberUpdate(dto);
+		return mav;
+
+	}
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public ModelAndView login(@ModelAttribute MemberDTO dto) {
@@ -77,12 +81,17 @@ public class MemberJoin {
 
 	}
 
-	@RequestMapping(value="/memberDelete",method=RequestMethod.GET)
-	public ModelAndView MemberDelete(@RequestParam("id") String id) {//@RequestParam("가져올파라미터") 파라미터 타입 파라미터값넣을변수명
-		mav=new ModelAndView();
-		return mav=service.memberDelete(id);
-		
+	@RequestMapping(value = "/memberDelete", method = RequestMethod.GET)
+	public ModelAndView MemberDelete(@RequestParam("id") String id) {// @RequestParam("가져올파라미터") 파라미터 타입 파라미터값넣을변수명
+		mav = new ModelAndView();
+		return mav = service.memberDelete(id);
+
 	}
-	
-	
+
+	@RequestMapping(value = "/logout", method = RequestMethod.GET)
+	public String logout() {
+		session.invalidate(); //로그아웃가능
+		return "home";
+	}
+
 }

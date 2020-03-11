@@ -100,4 +100,10 @@ public class MemberService {
 		return mav;
 	}
 
+	public void logout() {
+		// TODO Auto-generated method stub
+		session.removeAttribute("id");
+		
+	}
+
 }
