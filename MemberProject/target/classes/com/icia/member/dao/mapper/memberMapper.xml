@@ -5,30 +5,65 @@
 <mapper namespace="Member">
 	<insert id="join" parameterType="member">
 		INSERT INTO MEMBERTABLE
-		VALUES(#{id},#{password},#{gender},#{phone},#{email})
+		VALUES(#{id},#{password},#{gender},#{phone},#{email},'','')
 	</insert>
+	<insert id="kakaojoin" parameterType="member">
+		INSERT INTO MEMBERTABLE
+		VALUES(#{id},'',#{gender},#{phone},#{email},#{kakaoId},'')
+	</insert>
+	<insert id="naverjoin" parameterType="member">
+		INSERT INTO MEMBERTABLE
+		VALUES(#{id},'',#{gender},#{phone},#{email},'',#{kakaoId})
+	</insert>
+
+
 
 	<select id="login" parameterType="member" resultType="String">
 
-		SELECT * FROM MEMBERTABLE WHERE ID=#{id} AND PASSWORD=#{password}
+		SELECT *
+		FROM MEMBERTABLE WHERE ID=#{id} AND PASSWORD=#{password}
 
 	</select>
 
 	<select id="memberList" resultType="member">
-		SELECT * FROM MEMBERTABLE 
+		SELECT * FROM MEMBERTABLE
 	</select>
-	<select id="memberUpdateSelect" parameterType="String" resultType="member">
+	<select id="memberUpdateSelect" parameterType="String"
+		resultType="member">
 		SELECT * FROM MEMBERTABLE WHERE ID=#{id}
 	</select>
-	
-<update id="memberUpdate" parameterType="member">
-UPDATE MEMBERTABLE SET ID=#{id},PASSWORD=#{password},GENDER=#{gender},PHONE=#{gender},EMAIL=#{email} WHERE ID=#{id}
-</update>
 
-<delete id="memberDelete">
+	<update id="memberUpdate" parameterType="member">
+		UPDATE MEMBERTABLE SET
+		ID=#{id},PASSWORD=#{password},GENDER=#{gender},PHONE=#{gender},EMAIL=#{email}
+		WHERE ID=#{id}
+	</update>
 
-DELETE FROM MEMBERTABLE WHERE ID=#{id}
-</delete>
+	<delete id="memberDelete">
+
+		DELETE FROM MEMBERTABLE WHERE ID=#{id}
+	</delete>
+
+
+	<select id="idOverlap" parameterType="String"
+		resultType="String">
+		SELECT ID FROM MEMBERTABLE WHERE ID=#{id}
+	</select>
+
+
+
+	<select id="viewId" parameterType="member" resultType="member">
+		SELECT *
+		FROM MEMBERTABLE WHERE ID=#{id}
+	</select>
+
+
+
+	<select id="kakaoLogin" parameterType="String"
+		resultType="member">
+		SELECT * FROM MEMBERTABLE WHERE KAKAOID=#{kakaoId}
+	</select>
+
 
 
 </mapper>

@@ -18,8 +18,14 @@
 <a href="logout">로그아웃</a>   
     </c:otherwise>
 </c:choose>
-
-
+<h3>카카오로 회원가입</h3>
+<a href="KakaoJoin">
+<img src="${pageContext.request.contextPath}/resources/img/kakao_account_login_btn_large_narrow.png">
+</a>
+<h3>카카오로 로그인</h3>
+<a href="Kakaologin">
+<img src="${pageContext.request.contextPath}/resources/img/kakao_account_login_btn_large_narrow.png">
+</a>
 
 <a href="joinform">회원가입</a>
 

@@ -10,6 +10,7 @@
 </head>
 <body>
 ${sessionScope.id}님 환영
+
 <c:if test="${sessionScope.id eq 'admin'}">
    
    <a href="memberList">회원목록</a>

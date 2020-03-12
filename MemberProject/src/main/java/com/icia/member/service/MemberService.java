@@ -24,7 +24,7 @@ public class MemberService {
 
 		int result = dao.memberJoin(dto);
 		if (result > 0) {
-			mav.setViewName("LoginForm");
+			mav.setViewName("home");
 		} else {
 			mav.setViewName("fail");
 		}
@@ -104,6 +104,27 @@ public class MemberService {
 		// TODO Auto-generated method stub
 		session.removeAttribute("id");
 		
+	}
+
+	public String idOverlap(String id) {
+		// TODO Auto-g
+		
+		String checkResult=dao.idOverlap(id);
+String resultMsg=null;
+if(checkResult==null) {
+	resultMsg="OK";
+}else {
+
+	resultMsg="NO";
+}
+	return resultMsg;
+	}
+
+	public MemberDTO viewId(String id) {
+		// TODO Auto-generated method stub
+		MemberDTO cost=dao.viewId(id);
+		return cost;
+
 	}
 
 }

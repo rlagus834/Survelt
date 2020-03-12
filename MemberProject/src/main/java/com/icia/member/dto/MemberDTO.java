@@ -7,6 +7,22 @@ public class MemberDTO {
 	private String gender;
 	private String phone;
 	private String email;
+	private String kakaoId;
+	private String naverId;
+	
+	
+	public String getKakaoId() {
+		return kakaoId;
+	}
+	public void setKakaoId(String kakaoId) {
+		this.kakaoId = kakaoId;
+	}
+	public String getNaverId() {
+		return naverId;
+	}
+	public void setNaverId(String naverId) {
+		this.naverId = naverId;
+	}
 	public String getId() {
 		return id;
 	}

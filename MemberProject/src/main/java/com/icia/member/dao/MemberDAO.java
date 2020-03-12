@@ -17,9 +17,13 @@ public class MemberDAO {
 	
 	
 	public int memberJoin(MemberDTO dto) {
-		
-		return sql.insert("Member.join", dto);
-		
+if(dto.getKakaoId() !=null) {		
+		return sql.insert("Member.kakaojoin", dto);
+}else if(dto.getNaverId() !=null) {
+	return sql.insert("Member.naverjoin", dto);
+}else {	return sql.insert("Member.join", dto);
+	
+}
 		
 	}
 
@@ -53,6 +57,22 @@ public class MemberDAO {
 	public int memberDelete(String id) {
 		// TODO Auto-generated method stub
 		return sql.delete("Member.memberDelete", id);
+	}
+
+	public String idOverlap(String id) {
+		// TODO Auto-generated method stub
+		return sql.selectOne("Member.idOverlap", id);
+		
+	}
+
+	public MemberDTO viewId(String id) {
+		// TODO Auto-generated method stub
+		return sql.selectOne("Member.viewId", id);
+	}
+
+	public MemberDTO kakakoLogin(String kakaoId) {
+		// TODO Auto-generated method stub
+		return sql.selectOne("Member.kakaoLogin", kakaoId);
 	}
 	
 	
