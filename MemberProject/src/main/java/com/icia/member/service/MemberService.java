@@ -2,6 +2,10 @@ package com.icia.member.service;
 
 import javax.servlet.http.HttpSession;
 import java.util.*;
+
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
@@ -125,6 +129,27 @@ if(checkResult==null) {
 		MemberDTO cost=dao.viewId(id);
 		return cost;
 
+	}
+
+	public ModelAndView naverLogin(String profile) throws ParseException {
+		// TODO Auto-generated method stub
+		mav=new ModelAndView();
+		JSONParser parser = new JSONParser(); //JSON형태의 변수
+		Object obj = parser.parse(profile); 
+        JSONObject naverUser=(JSONObject) obj;
+        JSONObject userInfo=(JSONObject)naverUser.get("response");
+        String naverId=(String) userInfo.get("id");
+//        String email=(String) userInfo.get("email");
+//        String name=(String) userInfo.get("name");
+//        String gender=(String) userInfo.get("gender");
+//        String birthday=(String) userInfo.get("birthday");
+        System.out.println("값:"+naverId);
+        MemberDTO naverMember=dao.naverLogin(naverId);
+        session.setAttribute("id", naverMember.getId());
+       
+        mav.addObject("naverId", naverId);
+        mav.setViewName("MemberMain");
+		return mav;
 	}
 
 }

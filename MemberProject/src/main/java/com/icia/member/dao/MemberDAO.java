@@ -74,6 +74,12 @@ if(dto.getKakaoId() !=null) {
 		// TODO Auto-generated method stub
 		return sql.selectOne("Member.kakaoLogin", kakaoId);
 	}
+
+	public MemberDTO naverLogin(String naverId) {
+		// TODO Auto-generated method stub
+		return sql.selectOne("Member.naverLogin", naverId);
+
+	}
 	
 	
 	

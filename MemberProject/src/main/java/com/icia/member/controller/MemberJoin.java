@@ -3,6 +3,9 @@ package com.icia.member.controller;
 import javax.servlet.http.HttpSession;
 
 import org.codehaus.jackson.JsonNode;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -12,12 +15,17 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.github.scribejava.core.model.OAuth2AccessToken;
 import com.icia.member.api.KakaoJoinApi;
 import com.icia.member.api.KakaoLoginApi;
+import com.icia.member.api.NaverJoinApi;
+import com.icia.member.api.NaverLoginApi;
 import com.icia.member.dto.MemberDTO;
 import com.icia.member.service.MemberService;
 import com.icia.member.service.kakaoService;
 
+
+import java.io.IOException;
 import java.util.*;
 
 @Controller
@@ -33,6 +41,13 @@ public class MemberJoin {
 	@Autowired
 	kakaoService kakaoService;
 
+	@Autowired
+	NaverJoinApi naverJoinApi;
+
+
+	@Autowired
+	NaverLoginApi naverLoginApi;
+	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home() {
 
@@ -121,10 +136,10 @@ public class MemberJoin {
 
 	// 카카오서버로그인
 	@RequestMapping(value = "/KakaoJoin", method = RequestMethod.GET)
-	public  ModelAndView kakaojoin(HttpSession session) { // 리턴값을 주소가아닌 ajax로 인식하게 만드는기능 @ResponseBody
-		String kakaoUrl = KakaoJoinApi.getAuthorizationUrl(session); //프리패스권한 받아옴
+	public ModelAndView kakaojoin(HttpSession session) { // 리턴값을 주소가아닌 ajax로 인식하게 만드는기능 @ResponseBody
+		String kakaoUrl = KakaoJoinApi.getAuthorizationUrl(session); // 프리패스권한 받아옴
 		mav = new ModelAndView();
-		mav.addObject("kakaoUrl", kakaoUrl); 
+		mav.addObject("kakaoUrl", kakaoUrl);
 		System.out.println(kakaoUrl);
 		mav.setViewName("kakaoLogin");
 		return mav;
@@ -135,10 +150,10 @@ public class MemberJoin {
 
 	@RequestMapping(value = "/hnkakaoJoinOK", method = RequestMethod.GET)
 	public ModelAndView kakaojoin(@RequestParam("code") String code, HttpSession session) { // 리턴값을 주소가아닌
-																											// ajax로
-																											// 인식하게
-																											// 만드는기능
-																											// @ResponseBody
+																							// ajax로
+																							// 인식하게
+																							// 만드는기능
+																							// @ResponseBody
 		String kakaoUrl = KakaoJoinApi.getAuthorizationUrl(session);
 		mav = new ModelAndView();
 		JsonNode token = KakaoJoinApi.getAccessToken(code);
@@ -149,7 +164,6 @@ public class MemberJoin {
 		return mav;
 	}
 
-	
 	@RequestMapping(value = "/Kakaologin", method = RequestMethod.GET)
 	public @ResponseBody ModelAndView Kakaologin(HttpSession session) { // 리턴값을 주소가아닌 ajax로 인식하게 만드는기능 @ResponseBody
 		String kakaoUrl = KakaoLoginApi.getAuthorizationUrl(session);
@@ -161,13 +175,12 @@ public class MemberJoin {
 
 	}
 
-	
 	@RequestMapping(value = "/hnkakaoLoginOK", method = RequestMethod.GET)
 	public ModelAndView kakaoLoginOK(@RequestParam("code") String code, HttpSession session) { // 리턴값을 주소가아닌
-																											// ajax로
-																											// 인식하게
-																											// 만드는기능
-																											// @ResponseBody
+																								// ajax로
+																								// 인식하게
+																								// 만드는기능
+																								// @ResponseBody
 		String kakaoUrl = KakaoLoginApi.getAuthorizationUrl(session);
 		mav = new ModelAndView();
 		JsonNode token = KakaoLoginApi.getAccessToken(code);
@@ -178,5 +191,68 @@ public class MemberJoin {
 		return mav;
 	}
 
+	@RequestMapping(value = "/naverJoin")
+	public ModelAndView naverJoin(HttpSession session) {
+		String naverUrl = naverJoinApi.getAuthorizationUrl(session);// 토큰받아옴
+		mav = new ModelAndView();
+		mav.addObject("naverUrl",naverUrl);
+		mav.setViewName("naverUrl");
+		return mav;
+
+	}
+
+	@RequestMapping(value = "/hnnaverJoinOK", method = RequestMethod.GET)
+	public ModelAndView NaverJoinOK(@RequestParam("code") String code, @RequestParam("state") String state,
+			HttpSession session) throws IOException, ParseException { // 리턴값을 주소가아닌
+		// ajax로
+		// 만드는기능
+		mav = new ModelAndView();
+
+		OAuth2AccessToken oauthToken = naverJoinApi.getAccessToken(session, code, state); // @ResponseBody
+		String profile = naverJoinApi.getUserProfile(oauthToken);
+		JSONParser parser = new JSONParser(); //JSON형태의 변수
+		Object obj = parser.parse(profile); 
+        JSONObject naverUser=(JSONObject) obj;
+        JSONObject userInfo=(JSONObject)naverUser.get("response");
+        String naverId=(String) userInfo.get("id");
+        String email=(String) userInfo.get("email");
+        String name=(String) userInfo.get("name");
+        String gender=(String) userInfo.get("gender");
+        String birthday=(String) userInfo.get("birthday");
+        
+        mav.addObject("naverId", naverId);
+        mav.setViewName("join");
+		return mav;
+	}
+	@RequestMapping(value = "/Naverlogin", method = RequestMethod.GET)
+	public @ResponseBody ModelAndView Naverlogin(HttpSession session) { // 리턴값을 주소가아닌 ajax로 인식하게 만드는기능 @ResponseBody
+		String naverUrl = naverLoginApi.getAuthorizationUrl(session);
+		mav = new ModelAndView();
+		mav.addObject("naverUrl", naverUrl);
+		mav.setViewName("naverUrl");
+		return mav;
+
+	}
+
+	@RequestMapping(value = "/hnnaverLoginOK", method = RequestMethod.GET)
+	public ModelAndView NaverLoginOK(@RequestParam("code") String code, @RequestParam("state") String state,
+			HttpSession session) throws IOException, ParseException { // 리턴값을 주소가아닌
+		// ajax로
+		// 만드는기능
+		mav = new ModelAndView();
+
+		OAuth2AccessToken oauthToken = naverLoginApi.getAccessToken(session, code, state); // @ResponseBody
+		String profile = naverLoginApi.getUserProfile(oauthToken);
+		
+		mav=service.naverLogin(profile);
+		
+		
+		return mav;
+	}
 	
+	@RequestMapping(value = "/memberMain", method = RequestMethod.GET)
+	public String memberMain() {
+
+		return "memberMain";
+	}
 }

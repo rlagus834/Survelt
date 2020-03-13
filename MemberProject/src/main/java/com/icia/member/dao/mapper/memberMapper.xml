@@ -13,7 +13,7 @@
 	</insert>
 	<insert id="naverjoin" parameterType="member">
 		INSERT INTO MEMBERTABLE
-		VALUES(#{id},'',#{gender},#{phone},#{email},'',#{kakaoId})
+		VALUES(#{id},'',#{gender},#{phone},#{email},'',#{naverId})
 	</insert>
 
 
@@ -64,6 +64,10 @@
 		SELECT * FROM MEMBERTABLE WHERE KAKAOID=#{kakaoId}
 	</select>
 
+	<select id="naverLogin" parameterType="String"
+		resultType="member">
+		SELECT * FROM MEMBERTABLE WHERE NAVERID=#{naverId}
+	</select>
 
 
 </mapper>

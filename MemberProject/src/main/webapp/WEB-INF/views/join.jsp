@@ -51,9 +51,10 @@
 </head>
 <body>
 	<form action="memberJoin" method="post">
-		카카오 아이디: ${kakaoId}
+		
 		<c:choose>
 			<c:when test="${kakaoId ne null}">
+카카오 아이디: ${kakaoId}
     아이디:<input type="text" name="id" id="id" onkeyup="idOverlap()">
 				<span id="idcheck"></span>
 				<input type="hidden" name="kakaoId" id="kakaoId" value="${kakaoId}">
@@ -66,8 +67,9 @@
 			<c:when test="${naverId ne null}">
     
      아이디: <input type="text" name="id" id="id" onkeyup="idOverlap()">
+     네이버 아이디: ${naverId}
 				<span id="idcheck"></span>
-				<input type="hidden" name="naverId" id="naverId" value="${naverId} ">
+				<input type="hidden" name="naverId" id="naverId" value="${naverId}">
 				<br> 성별:<input type="text" name="gender">
 				<br> 핸드폰:<input type="text" name="phone">
 				<br> 이메일:<input type="text" name="email">
