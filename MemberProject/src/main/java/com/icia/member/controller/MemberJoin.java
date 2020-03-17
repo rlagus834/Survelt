@@ -152,8 +152,7 @@ public class MemberJoin {
 	public ModelAndView kakaojoin(@RequestParam("code") String code, HttpSession session) { // 리턴값을 주소가아닌
 																							// ajax로
 																							// 인식하게
-																							// 만드는기능
-																							// @ResponseBody
+																							// 만드																							// @ResponseBody
 		String kakaoUrl = KakaoJoinApi.getAuthorizationUrl(session);
 		mav = new ModelAndView();
 		JsonNode token = KakaoJoinApi.getAccessToken(code);
