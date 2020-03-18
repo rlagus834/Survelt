@@ -9,21 +9,57 @@
 	integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
 	crossorigin="anonymous"></script>
 <script>
-var page=1;
-$(document).ready(function(){
+$(document).ready(function() {
+	 getBoardList('1');
+})
+function getBoardList(page){
 $.ajax({
 	type:"get",
 	url:"BoardList",
-	data:"page"+page,
-	dataType:"page="+page,
+	data:"page="+page,
+	dataType:"json",
 	success:function(result){
-		
+	var save="";
+	var pageSave="";
+	save+="<table>";
+	for(var i=0;i<result.list.length;i++){
+		save+="<tr>";
+		save+="<td>"+result.list[i].id+"</td>";
+		save+="<td><a href='BoardView?bnum="+result.list[i].bnum+"'>"+result.list[i].title+"</a></td>";
+		save+="<td>"+result.list[i].text+"</td>";	
+		save+="</tr>";		
+	}
+	save+="</table>";
+	var prevPage=result.paging.page-1;
+	var nextPage=result.paging.page+1;
+	$("#BoardList").html(save);
+	if(result.paging.page<=1){
+		pageSave+="[이전]&nbsp;";
+	}
+	if(result.paging.page>1){
+		pageSave+="<a href='javascript:getBoardList("+prevPage+")'>[이전]</a>&nbsp;";
+	}
+	for(var i=result.paging.startPage;i<=result.paging.endPage;i++){
+		if(i == result.paging.page){
+			pageSave+="<a href='javascript:getBoardList("+i+")'>"+i+"</a>&nbsp;";					
+		}else{
+			pageSave+="<a href='javascript:getBoardList("+i+")'>"+i+"</a>&nbsp;";										
+		}
+	}
+	if(result.paging.page>=result.paging.maxPage){
+		pageSave+="[다음]";			
+	}
+	if(result.paging.page<result.paging.maxPage){
+		pageSave+="<a href='javascript:getBoardList("+nextPage+")'>[다음]</a>&nbsp;";			
+	}
+	$("#pageOrder").html(pageSave);
 	},error:function(){
 		
 	}
 });	
 	
-});
+}
+
 </script>
 </head>
 <body>

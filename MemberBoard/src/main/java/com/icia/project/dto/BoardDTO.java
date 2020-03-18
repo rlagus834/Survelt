@@ -8,6 +8,20 @@ private String id;
 private String title;
 private String text;
 private String files;
+private String filesRealName;
+private int mkey;
+public int getMkey() {
+	return mkey;
+}
+public void setMkey(int mkey) {
+	this.mkey = mkey;
+}
+public String getFilesRealName() {
+	return filesRealName;
+}
+public void setFilesRealName(String filesRealName) {
+	this.filesRealName = filesRealName;
+}
 private MultipartFile bfile;  //파일 업로드용
 public int getBnum() {
 	return bnum;

@@ -3,11 +3,6 @@ package com.icia.project.dto;
 public class PageDTO {
 	private int page;
 	private int startPage;
-	@Override
-	public String toString() {
-		return "PageDTO [page=" + page + ", startPage=" + startPage + ", endPage=" + endPage + ", maxPage=" + maxPage
-				+ ", listCount=" + listCount + ", startRow=" + startRow + ", endRow=" + endRow + "]";
-	}
 	private int endPage;
 	private int maxPage;
 	private int listCount;

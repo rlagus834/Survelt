@@ -14,7 +14,8 @@
 	<c:choose>
     <c:when test="${!empty sessionScope}">
     <button onclick="location.href='LogOut'">로그아웃</button>
-    <button onclick="location.href='BoardList'">게시글로가기</button>
+    <button onclick="location.href='BoardListForm'">게시글로가기</button>
+    <button onclick="location.href='BoardWriteForm'">글쓰기</button>
 
 	</c:when>
 	

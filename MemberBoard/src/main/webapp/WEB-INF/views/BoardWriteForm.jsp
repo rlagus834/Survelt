@@ -7,11 +7,11 @@
 <title>Insert title here</title>
 </head>
 <body>
-<form name="fileForm" action="" method="post" enctype="multipart/form-data">
+<form name="fileForm" action="BoardWrite" method="post" enctype="multipart/form-data">
         <input type="hidden" name="id" value="${sessionScope.id}">
         <input type="text" name="title">
         <input type="text" name="text">
-<input type="file" name="file" multiple="true">
+<input type="file" multiple="multiple" name="bfile">
      
         <input type="submit" value="전송" >
     </form>
