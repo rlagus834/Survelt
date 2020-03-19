@@ -69,13 +69,16 @@ public class BoardController {
 	
 	@ResponseBody
 	@RequestMapping(value="/BoardList",method=RequestMethod.GET)
-	public Map<String,Object> BoardList(@RequestParam("page") int page) {
+	public Map<String,Object> BoardList(@RequestParam("page") int page,@RequestParam("search") String search,@RequestParam("select") String select) {
 	
 		 map=new HashMap<String,Object>();
-		map=service.BoardList(page);
+		map=service.BoardList(page,search,select);
 		return map;
 	}
 		
+	
+	
+	
 	
 	@RequestMapping(value="/BoardUpdateForm",method=RequestMethod.GET)
 	public ModelAndView BoardUpdateForm(@RequestParam("bnum") int bnum) {
@@ -84,6 +87,22 @@ public class BoardController {
 		return mav;
 	}
 	
+	
+	@RequestMapping(value="/BoardUpdate",method=RequestMethod.GET)
+	public ModelAndView BoardUpdate(@ModelAttribute BoardDTO dto,MultipartHttpServletRequest mtfRequest) throws IOException {
+		mav=new ModelAndView();
+		mav=service.BoardUpdate(dto,mtfRequest);
+		return mav;
+	}
+	
+	
+	
+	@RequestMapping(value="/BoardDelete",method=RequestMethod.GET)
+	public ModelAndView BoardDelete(@RequestParam("bnum") int bnum) {
+		mav=new ModelAndView();
+		mav=service.BoardDelete(bnum);
+		return mav;
+	}
 	
 	
 	

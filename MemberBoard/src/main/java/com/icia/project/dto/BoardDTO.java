@@ -10,6 +10,14 @@ private String text;
 private String files;
 private String filesRealName;
 private int mkey;
+private int fnum;
+
+public int getFnum() {
+	return fnum;
+}
+public void setFnum(int fnum) {
+	this.fnum = fnum;
+}
 public int getMkey() {
 	return mkey;
 }

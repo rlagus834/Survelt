@@ -17,18 +17,37 @@
 	<insert id="BoardWrite" parameterType="board">
 		INSERT INTO BOARDTAB VALUES(BOARD_SEQ.NEXTVAL,#{id},#{title},#{text})
 	</insert>
+
 	<select id="BoardList" parameterType="page" resultType="board">
 	SELECT * FROM (SELECT ROWNUM NUMROW,B.* FROM BOARDTABVIEW B) WHERE NUMROW BETWEEN #{startRow} AND #{endRow}
 	</select>
-	<select id="BoardListCount"  resultType="int">
-		SELECT COUNT(*) FROM BOARDTAB
+	<select id="BoardListCount"  parameterType="page" resultType="int">
+		SELECT COUNT(*) FROM BOARDTAB   
 	</select>
+
+
+	
+	<select id="BoardListId" parameterType="page" resultType="board">
+	SELECT * FROM (SELECT ROWNUM NUMROW,B.* FROM BOARDTABVIEW B) WHERE ID LIKE '%'||#{id}||'%' AND NUMROW BETWEEN #{startRow} AND #{endRow}
+	</select>
+	<select id="BoardListCountId"  parameterType="page" resultType="int">
+		SELECT COUNT(*) FROM BOARDTAB WHERE ID LIKE '%'||#{id}||'%'  
+	</select>
+
+	<select id="BoardListText" parameterType="page" resultType="board">
+	SELECT * FROM (SELECT ROWNUM NUMROW,B.* FROM BOARDTABVIEW B) WHERE TEXT LIKE '%'||#{text}||'%' AND NUMROW BETWEEN #{startRow} AND #{endRow}
+	</select>
+	<select id="BoardListCountText"  parameterType="page" resultType="int">
+		SELECT COUNT(*) FROM BOARDTAB WHERE TEXT LIKE '%'||#{text}||'%'
+	</select>
+
+
 	<insert id="FileWrite" parameterType="board">
 		<selectKey resultType="int" keyProperty="mkey"
 			order="BEFORE">
 			SELECT MAX(BNUM) FROM BOARDTAB
 		</selectKey>
-		INSERT INTO FILETAB VALUES(#{mkey},#{files},#{filesRealName})
+		INSERT INTO FILETAB VALUES(FILE_SEQ.NEXTVAL,#{mkey},#{files},#{filesRealName})
 	</insert>
 	
 	<select id="BoardView" parameterType="int"  resultType="board">
@@ -38,6 +57,23 @@
 	<select id="FilesView" parameterType="int"  resultType="board">
 		SELECT * FROM FILETAB WHERE BNUM=#{bnum}
 	</select>	
+	<delete id="BoardDelete" parameterType="int">
+	DELETE * FROM BOARDTAB WHERE BNUM=#{bnum}
+	</delete>
+		<insert id="CommentWrite" parameterType="comment">
+		INSERT INTO COMMENTTAB VALUES(COMMENT_SEQ.NEXTVAL,#{bnum},#{id},#{text})
+	</insert>
+	<select id="CommentListCount" parameterType="int"  resultType="int">
+		SELECT COUNT(*) FROM BOARDTAB WHERE BNUM=#{bnum}
+	</select>
+	
+	<select id="CommentList" parameterType="page" resultType="board">
+	SELECT * FROM (SELECT ROWNUM NUMROW,B.* FROM COMMENTTABVIEW B) WHERE BNUM=#{bnum} AND NUMROW BETWEEN #{startRow} AND #{endRow}
+	</select>
+	
+	<delete id="CommentDelete" parameterType="int">
+		DELETE * FROM BOARDTAB WHERE CNUM=#{cnum}		
+	</delete>
 	
 	
 </mapper>

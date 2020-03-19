@@ -37,7 +37,8 @@
 				</c:forEach>
 			</tr>
 		</c:forEach>
-		<button onclick="location.href='BoardUpdateForm?bnum=${bnum}'"></button>
+		<button onclick="location.href='BoardUpdateForm?bnum=${bnum}'">수정</button>
+		<button onclick="location.href='BoardDelete?bnum=${bnum}'">삭제</button>
 	</table>
 </body>
 </html>

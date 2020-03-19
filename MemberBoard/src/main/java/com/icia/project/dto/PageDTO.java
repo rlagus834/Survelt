@@ -8,6 +8,28 @@ public class PageDTO {
 	private int listCount;
 	private int startRow;
 	private int endRow;
+	private int bnum;
+	private String id;
+	public int getBnum() {
+		return bnum;
+	}
+	public void setBnum(int bnum) {
+		this.bnum = bnum;
+	}
+	public String getId() {
+		return id;
+	}
+	public void setId(String id) {
+		this.id = id;
+	}
+	public String getText() {
+		return text;
+	}
+	public void setText(String text) {
+		this.text = text;
+	}
+	private String text;
+	
 	public int getPage() {
 		return page;
 	}

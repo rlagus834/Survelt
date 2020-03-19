@@ -9,18 +9,31 @@
 	integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
 	crossorigin="anonymous"></script>
 <script>
+var search="작성자";
+var selects="";   
+
 $(document).ready(function() {
 	 getBoardList('1');
 })
+
+function ListSearch(){
+	 search=$("#search").val();	
+ selects=$("#selects").val();
+console.log(search);
+console.log(selects);
+getBoardList('1');
+}
+
 function getBoardList(page){
 $.ajax({
 	type:"get",
 	url:"BoardList",
-	data:"page="+page,
+	data:"page="+page+"&search="+search+"&select="+selects,
 	dataType:"json",
 	success:function(result){
 	var save="";
 	var pageSave="";
+	var searchSave="";
 	save+="<table>";
 	for(var i=0;i<result.list.length;i++){
 		save+="<tr>";
@@ -65,7 +78,14 @@ $.ajax({
 <body>
 <div id="BoardList"></div>
 <div id="pageOrder"></div>
-
+<div>
+	<select  id="search" >
+						<option value="작성자">작성자</option>
+						<option value="내용">내용</option>
+				</select>
+				<input type="text" id="selects">
+				<button onclick="ListSearch()">검색</button>
+</div>
 
 </body>
 </html>

@@ -17,8 +17,6 @@ import java.util.*;
 
 import javax.servlet.http.HttpSession;
 
-
-
 @Service
 public class BoardService {
 
@@ -30,18 +28,32 @@ public class BoardService {
 
 	private ModelAndView mav;
 
-	
-	public Map<String, Object> BoardList(int page) {
+	public Map<String, Object> BoardList(int page, String search, String select) {
+		int listCount = 0;
+		List<BoardDTO> list = null;
 		int limit = 3;
-
 		int startRow = (page - 1) * limit + 1;
 		int endRow = page * limit;
-		PageDTO dto=new PageDTO();
+		PageDTO dto = new PageDTO();
 		dto.setStartRow(startRow);
 		dto.setEndRow(endRow);
-		
-		int listCount = dao.BoardListCount();
-		List<BoardDTO> list = dao.BoardList(dto);
+		System.out.println(select);
+		System.out.println(search);
+		System.out.println(startRow);
+		System.out.println(endRow);
+
+		if (select == "") {
+			listCount = dao.BoardListCount();
+			list = dao.BoardList(dto);
+		} else if (search.equals("작성자")) {
+			dto.setId(select);
+			listCount = dao.BoardListCountId(dto);
+			list = dao.BoardListId(dto);
+		} else {
+			dto.setText(select);
+			listCount = dao.BoardListCountText(dto);
+			list = dao.BoardListText(dto);
+		}
 		int maxPage = (int) ((double) listCount / limit + 0.9);
 		// 현재 페이지에 보여줄 시작 페이지 번호(1,11,21,31~~)
 		int startPage = (((int) ((double) page / 10 + 0.9)) - 1) * 10 + 1;
@@ -100,26 +112,75 @@ public class BoardService {
 
 	public ModelAndView BoardView(int bnum) {
 		// TODO Auto-generated method stub
-		 mav=new ModelAndView();
-		 List<BoardDTO> list=dao.BoardView(bnum);
-		 List<BoardDTO> fileList=dao.FilesView(bnum);
-		 mav.addObject("list", list);
-		 mav.addObject("fileList", fileList);
-		 mav.addObject("bnum", bnum);
-		 mav.setViewName("BoardView");
-		 return mav;
+		mav = new ModelAndView();
+		List<BoardDTO> list = dao.BoardView(bnum);
+		List<BoardDTO> fileList = dao.FilesView(bnum);
+		mav.addObject("list", list);
+		mav.addObject("fileList", fileList);
+		mav.addObject("bnum", bnum);
+		mav.setViewName("BoardView");
+		return mav;
 	}
 
 	public ModelAndView BoardUpdateForm(int bnum) {
 		// TODO Auto-generated method stub
-		 mav=new ModelAndView();
-		 List<BoardDTO> list=dao.BoardView(bnum);
-		 List<BoardDTO> fileList=dao.FilesView(bnum);
-		 mav.addObject("list", list);
-		 mav.addObject("fileList", fileList);
-		 mav.addObject("bnum", bnum);
-		 mav.setViewName("BoardUpdateForm");
-		 return mav;
+		mav = new ModelAndView();
+		List<BoardDTO> list = dao.BoardView(bnum);
+		List<BoardDTO> fileList = dao.FilesView(bnum);
+		mav.addObject("list", list);
+		mav.addObject("fileList", fileList);
+		mav.addObject("bnum", bnum);
+		mav.setViewName("BoardUpdateForm");
+		return mav;
 	}
-	
+
+	public ModelAndView BoardDelete(int bnum) {
+		// TODO Auto-generated method stub
+		mav = new ModelAndView();
+		dao.BoardDelete(bnum);
+		mav.setViewName("BoardList");
+		return mav;
+	}
+
+	public ModelAndView BoardUpdate(BoardDTO dto, MultipartHttpServletRequest mtfRequest) throws IOException {
+		// TODO Auto-generated method stub
+		List<MultipartFile> filelist = mtfRequest.getFiles("bfile");
+		String[] array = mtfRequest.getParameterValues("deleteFiles");
+		mav = new ModelAndView();
+		String id = (String) session.getAttribute("id");
+		dto.setId(id);
+		dao.BoardWrite(dto);
+		// MultipartHttpServletRequest타입변수를 가져와 업로드할 파일의 정보를가져옴
+		// 정보가담긴mtfRequest변수에담긴 파일이아닌 파일들의 정보를 가져와야하므로 getFiles("여러파일의 정보가담긴 파일태그
+		// name")을 사용
+		if (filelist.get(0).getSize() != 0) {// 파일리스트에 저장된값이 있으면 파일사이즈가 있으니 0보다크니까 반응하게함
+			for (int i = 0; i < filelist.size(); i++) {// filelist에 담긴 파일들의 갯수(size)만큼for문을 돌림
+				dto.setFilesRealName(filelist.get(i).getOriginalFilename());// filelist에담긴파일중.i번째인 파일의정보를get해서 파일의 오리지널
+																			// 이름만.getOriginalFilename()으로 가져와서
+				// 업로드할 파일이 중복되면 덮어쓰기되므로 중복안되게 파일명을 랜덤하게 하기위한 메소드에 세팅하여 저장할값을 리턴받는다
+				String uploadFileName = uploadFile(filelist.get(i).getOriginalFilename(), filelist.get(i).getBytes());
+				dto.setFiles(uploadFileName);// 나중에 jsp에서 띄울때 필요한 저장된 파일의 이름 저장
+				dao.FileWrite(dto);
+
+			}
+			if (mtfRequest.getParameterValues("deleteFiles") != null) {
+				for (int s = 0; s < array.length; s++) {
+
+				}
+
+			} else {
+
+			}
+		} else {
+			if (mtfRequest.getParameterValues("deleteFiles") != null) {
+
+			} else {
+
+			}
+
+		}
+		mav.setViewName("BoardList");
+		return mav;
+	}
+
 }
