@@ -113,6 +113,7 @@ public class BoardService {
 	public ModelAndView BoardView(int bnum) {
 		// TODO Auto-generated method stub
 		mav = new ModelAndView();
+		System.out.println(bnum);
 		dao.BoardCount(bnum);
 		List<BoardDTO> list = dao.BoardView(bnum);
 		List<BoardDTO> fileList = dao.FilesView(bnum);
