@@ -37,16 +37,17 @@ public class CommentService {
 
 	public Map<String, Object> CommentList(int page, int bnum) {
 		// TODO Auto-generated method stub
+		PageDTO dto=new PageDTO();
+		dto.setBnum(bnum);
+		int listCount = dao.CommentListCount(dto.getBnum());
+		System.out.println(listCount);
 		int limit = 3;
 		int startRow = (page - 1) * limit + 1;
 		int endRow = page * limit;
-		PageDTO dto=new PageDTO();
 		dto.setStartRow(startRow);
 		dto.setEndRow(endRow);
-		dto.setBnum(bnum);
 		dto.setPage(page);
-		int listCount = dao.CommentListCount(dto.getBnum());
-		List<BoardDTO> list = dao.CommentList(dto);
+		List<CommentDTO> list = dao.CommentList(dto);
 		int maxPage = (int) ((double) listCount / limit + 0.9);
 		// 현재 페이지에 보여줄 시작 페이지 번호(1,11,21,31~~)
 		int startPage = (((int) ((double) page / 10 + 0.9)) - 1) * 10 + 1;
@@ -56,7 +57,6 @@ public class CommentService {
 			endPage = maxPage;
 		}
 
-		dto.setPage(page);
 		dto.setMaxPage(maxPage);
 		dto.setStartPage(startPage);
 		dto.setEndPage(endPage);

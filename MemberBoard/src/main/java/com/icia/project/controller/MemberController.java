@@ -15,7 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.icia.project.dto.MemberDTO;
 import com.icia.project.service.MemberService;
-
+import java.util.*;
 @Controller
 public class MemberController {
 @Autowired
@@ -52,7 +52,22 @@ HttpSession session;
 String result=service.LoginCheck(id,password);
 	return result;
 	}
-	
+
+@ResponseBody
+@RequestMapping(value="/selectMember",method=RequestMethod.GET)
+public List<MemberDTO> selectMember(@RequestParam("id") String id) {
+	List<MemberDTO> result=service.selectMember(id);
+return result;
+}
+
+@ResponseBody
+@RequestMapping(value="/MemberDelete",method=RequestMethod.GET)
+public int MemberDelete(@RequestParam("id") String id) {
+	int result=service.MemberDelete(id);
+return result;
+}
+
+
 	@RequestMapping(value="/LoginForm",method=RequestMethod.GET)
 	public String LoginForm() {
 				return "LoginForm";

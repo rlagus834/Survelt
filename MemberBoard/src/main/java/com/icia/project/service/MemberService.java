@@ -42,7 +42,7 @@ public class MemberService {
 		MultipartFile bfile = dto.getBfile();// MultipartFile 타입의 변수에 업로드할파일 대입
 	
 		String bfileName = bfile.getOriginalFilename();// 파일의 이름을 get해서 변수에대입
-		String savePath = "C:\\Users\\6\\Desktop\\develoment\\source\\SERVLET\\MemberBoard\\src\\main\\webapp\\resources\\fileUpload\\"
+		String savePath = "C:\\Users\\6\\git\\repository\\MemberBoard\\src\\main\\webapp\\resources\\fileUpload\\"
 				+ bfileName;
 		if (!bfile.isEmpty()) {
 			bfile.transferTo(new File(savePath));
@@ -68,6 +68,18 @@ public class MemberService {
 			result = "NO";
 		}
 		System.out.println(result);
+		return result;
+	}
+
+	public List<MemberDTO> selectMember(String id) {
+		// TODO Auto-generated method stub
+		List<MemberDTO> list=dao.selectMember(id);
+				return list;
+	}
+
+	public int MemberDelete(String id) {
+		// TODO Auto-generated method stub
+ int result=dao.MemberDelete(id);
 		return result;
 	}
 

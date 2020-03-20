@@ -113,6 +113,7 @@ public class BoardService {
 	public ModelAndView BoardView(int bnum) {
 		// TODO Auto-generated method stub
 		mav = new ModelAndView();
+		dao.BoardCount(bnum);
 		List<BoardDTO> list = dao.BoardView(bnum);
 		List<BoardDTO> fileList = dao.FilesView(bnum);
 		mav.addObject("list", list);
@@ -137,19 +138,36 @@ public class BoardService {
 	public ModelAndView BoardDelete(int bnum) {
 		// TODO Auto-generated method stub
 		mav = new ModelAndView();
+		List<String> list=dao.FileList(bnum);
 		dao.BoardDelete(bnum);
+			for (int s = 0; s < list.size(); s++) {// 삭제파일이 담긴 배열의 length만큼 for문 돌림
+				System.out.println(list.get(s));
+				String savePath = "C:\\Users\\6\\git\\repository\\MemberBoard\\src\\main\\webapp\\resources\\fileUpload\\"
+						+list.get(s);// 저장경로
+				File f = new File(savePath); // 파일타입으로 만들기위해 파일을 선언하여 삭제할파일 세팅한다
+				if (f.exists()) {// 경로에 해당파일 존재시 반응
+					f.delete(); // 파일삭제
+				}
+			}
+
+			
+		
 		mav.setViewName("BoardList");
+		
 		return mav;
+		
+		
 	}
 
 	public ModelAndView BoardUpdate(BoardDTO dto, MultipartHttpServletRequest mtfRequest) throws IOException {
 		// TODO Auto-generated method stub
 		List<MultipartFile> filelist = mtfRequest.getFiles("bfile");
 		String[] array = mtfRequest.getParameterValues("deleteFiles");
+		System.out.println(array[0]);
 		mav = new ModelAndView();
 		String id = (String) session.getAttribute("id");
 		dto.setId(id);
-		dao.BoardWrite(dto);
+		dao.BoardUpdate(dto);
 		// MultipartHttpServletRequest타입변수를 가져와 업로드할 파일의 정보를가져옴
 		// 정보가담긴mtfRequest변수에담긴 파일이아닌 파일들의 정보를 가져와야하므로 getFiles("여러파일의 정보가담긴 파일태그
 		// name")을 사용
@@ -163,24 +181,42 @@ public class BoardService {
 				dao.FileWrite(dto);
 
 			}
-			if (mtfRequest.getParameterValues("deleteFiles") != null) {
-				for (int s = 0; s < array.length; s++) {
+			if (mtfRequest.getParameterValues("deleteFiles") != null) {// 삭제할파일이 담겨있을경우 반응
+				for (int s = 0; s < array.length; s++) {// 삭제파일이 담긴 배열의 length만큼 for문 돌림
+					System.out.println(array[s]);
+					dao.FileDelete(array[s]); // db에서삭제
+					String savePath = "C:\\Users\\6\\git\\repository\\MemberBoard\\src\\main\\webapp\\resources\\fileUpload\\"
+							+ array[s];// 저장경로
+					File f = new File(savePath); // 파일타입으로 만들기위해 파일을 선언하여 삭제할파일 세팅한다
+					if (f.exists()) {// 경로에 해당파일 존재시 반응
+						f.delete(); // 파일삭제
 
+					}
 				}
 
 			} else {
 
 			}
 		} else {
-			if (mtfRequest.getParameterValues("deleteFiles") != null) {
+			if (mtfRequest.getParameterValues("deleteFiles") != null) {// 삭제할파일이 담겨있을경우 반응
+				for (int s = 0; s < array.length; s++) {// 삭제파일이 담긴 배열의 length만큼 for문 돌림
+					System.out.println(array[s]);
 
+					dao.FileDelete(array[s]); // db에서삭제
+					String savePath = "C:\\Users\\6\\git\\repository\\MemberBoard\\src\\main\\webapp\\resources\\fileUpload\\"
+							+ array[s];// 저장경로
+					File f = new File(savePath); // 파일타입으로 만들기위해 파일을 선언하여 삭제할파일 세팅한다
+					if (f.exists()) {// 경로에 해당파일 존재시 반응
+						f.delete(); // 파일삭제
+					}
+				}
 			} else {
 
 			}
-
 		}
 		mav.setViewName("BoardList");
 		return mav;
 	}
+
 
 }

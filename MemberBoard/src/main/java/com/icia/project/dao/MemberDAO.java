@@ -1,5 +1,6 @@
 package com.icia.project.dao;
 
+import java.util.List;
 import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -26,6 +27,16 @@ public class MemberDAO {
 	public String LoginCheck(Map<String, Object> map) {
 		// TODO Auto-generated method stub
 		return sql.selectOne("Project.LoginCheck", map);
+	}
+
+	public List<MemberDTO> selectMember(String id) {
+		// TODO Auto-generated method stub
+		return sql.selectList("Project.selectMember",id);
+	}
+
+	public int MemberDelete(String id) {
+		// TODO Auto-generated method stub
+		return sql.delete("Project.MemberDelete", id);
 	}
 	
 	

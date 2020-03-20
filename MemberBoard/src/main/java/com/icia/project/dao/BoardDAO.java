@@ -69,6 +69,26 @@ public class BoardDAO {
 		// TODO Auto-generated method stub
 		return sql.selectList("Project.BoardList",dto);
 	}
+
+	public void FileDelete(String files) {
+		// TODO Auto-generated method stub
+		sql.delete("Project.FileDelete", files);
+	}
+
+	public void BoardUpdate(BoardDTO dto) {
+		// TODO Auto-generated method stub
+		sql.update("Project.BoardUpdate", dto);
+	}
+
+	public List<String> FileList(int bnum) {
+		// TODO Auto-generated method stub
+	return	sql.selectList("Project.FileList", bnum);
+	}
+
+	public void BoardCount(int bnum) {
+		// TODO Auto-generated method stub
+		sql.update("Project.BoardCount", bnum);
+	}
 	
 	
 }

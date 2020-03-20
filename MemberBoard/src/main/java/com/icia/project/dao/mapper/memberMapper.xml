@@ -6,6 +6,13 @@
 	<select id="idCheck" parameterType="String" resultType="String">
 		SELECT ID FROM CLIENTTAB WHERE ID=#{id}
 	</select>
+	
+	<delete id="MemberDelete" parameterType="String" >
+		DELETE FROM CLIENTTAB WHERE ID=#{id}		
+	</delete>
+	<select id="selectMember" parameterType="String" resultType="member">
+		SELECT * FROM CLIENTTAB WHERE ID LIKE '%'||#{id}||'%'
+	</select>
 	<insert id="MemberJoin" parameterType="member">
 		INSERT INTO CLIENTTAB
 		VALUES(#{id},#{password},#{name},#{birth},#{email},#{address},#{phone},#{files})
@@ -15,9 +22,14 @@
 		SELECT ID FROM CLIENTTAB WHERE ID=#{id} AND PASSWORD=#{password}
 	</select>
 	<insert id="BoardWrite" parameterType="board">
-		INSERT INTO BOARDTAB VALUES(BOARD_SEQ.NEXTVAL,#{id},#{title},#{text})
+		INSERT INTO BOARDTAB VALUES(BOARD_SEQ.NEXTVAL,#{id},#{title},#{text},0)
 	</insert>
-
+<update id="BoardUpdate" parameterType="board">
+UPDATE BOARDTAB SET TITLE=#{title}, TEXT=#{text} WHERE BNUM=#{bnum}
+</update>
+<update id="BoardCount" parameterType="int">
+UPDATE BOARDTAB SET COUNTS=COUNTS+1 WHERE BNUM=#{bnum}
+</update>
 	<select id="BoardList" parameterType="page" resultType="board">
 	SELECT * FROM (SELECT ROWNUM NUMROW,B.* FROM BOARDTABVIEW B) WHERE NUMROW BETWEEN #{startRow} AND #{endRow}
 	</select>
@@ -53,29 +65,35 @@
 	<select id="BoardView" parameterType="int"  resultType="board">
 		SELECT * FROM BOARDTAB WHERE BNUM=#{bnum}
 	</select>	
+	<delete id="FileDelete" parameterType="String">
+	DELETE FROM FILETAB WHERE FILES=#{files}
+	</delete>
 	
 	<select id="FilesView" parameterType="int"  resultType="board">
 		SELECT * FROM FILETAB WHERE BNUM=#{bnum}
 	</select>	
 	<delete id="BoardDelete" parameterType="int">
-	DELETE * FROM BOARDTAB WHERE BNUM=#{bnum}
+	DELETE FROM BOARDTAB WHERE BNUM=#{bnum}
 	</delete>
 		<insert id="CommentWrite" parameterType="comment">
 		INSERT INTO COMMENTTAB VALUES(COMMENT_SEQ.NEXTVAL,#{bnum},#{id},#{text})
 	</insert>
 	<select id="CommentListCount" parameterType="int"  resultType="int">
-		SELECT COUNT(*) FROM BOARDTAB WHERE BNUM=#{bnum}
+		SELECT COUNT(*) FROM COMMENTTAB WHERE BNUM=#{bnum}
 	</select>
 	
-	<select id="CommentList" parameterType="page" resultType="board">
+	<select id="CommentList" parameterType="page" resultType="comment">
 	SELECT * FROM (SELECT ROWNUM NUMROW,B.* FROM COMMENTTABVIEW B) WHERE BNUM=#{bnum} AND NUMROW BETWEEN #{startRow} AND #{endRow}
 	</select>
 	
 	<delete id="CommentDelete" parameterType="int">
-		DELETE * FROM BOARDTAB WHERE CNUM=#{cnum}		
+		DELETE FROM COMMENTTAB WHERE CNUM=#{cnum}		
 	</delete>
-	
-	
+	<select id="FileList" parameterType="int" resultType="String">
+	SELECT FILES FROM FILETAB WHERE BNUM=#{bnum}
+	</select>
+
+		
 </mapper>
  
  

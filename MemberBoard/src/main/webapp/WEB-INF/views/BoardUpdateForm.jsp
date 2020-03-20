@@ -25,7 +25,7 @@
 
 </head>
 <body>
-<form action="BoardUpdate">
+<form action="BoardUpdate" method="post"  enctype="multipart/form-data">
 	<table id="table">
 		<c:forEach var="list" items="${list}" >
 			<input name="bnum" type="hidden" value="${list.bnum}">
@@ -36,7 +36,7 @@
 				<td><input name="text" type="text" value="${list.text}"></td>
 			</tr>
 			<tr>
-				<td><input name="bfile" type="file" multiple="multiple" name="bfile">
+				<td><input type="file" multiple="multiple" name="bfile">
 				</td>
 			</tr>
 			<tr>

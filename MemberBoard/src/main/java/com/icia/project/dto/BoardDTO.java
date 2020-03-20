@@ -1,6 +1,5 @@
 package com.icia.project.dto;
 
-import org.springframework.web.multipart.MultipartFile;
 
 public class BoardDTO {
 private int bnum;
@@ -11,7 +10,14 @@ private String files;
 private String filesRealName;
 private int mkey;
 private int fnum;
+private int counts;
 
+public int getCounts() {
+	return counts;
+}
+public void setCounts(int counts) {
+	this.counts = counts;
+}
 public int getFnum() {
 	return fnum;
 }
@@ -30,7 +36,7 @@ public String getFilesRealName() {
 public void setFilesRealName(String filesRealName) {
 	this.filesRealName = filesRealName;
 }
-private MultipartFile bfile;  //파일 업로드용
+ //파일 업로드용
 public int getBnum() {
 	return bnum;
 }
@@ -61,15 +67,10 @@ public String getFiles() {
 public void setFiles(String files) {
 	this.files = files;
 }
-public MultipartFile getBfile() {
-	return bfile;
-}
-public void setBfile(MultipartFile bfile) {
-	this.bfile = bfile;
-}
 @Override
 public String toString() {
-	return "BoardDTO [bnum=" + bnum + ", id=" + id + ", title=" + title + ", text=" + text + ", files=" + files + "]";
+	return "BoardDTO [bnum=" + bnum + ", id=" + id + ", title=" + title + ", text=" + text + ", files=" + files
+			+ ", filesRealName=" + filesRealName + ", mkey=" + mkey + ", fnum=" + fnum + ", counts=" + counts + "]";
 }
 
 

@@ -39,7 +39,7 @@ $.ajax({
 		save+="<tr>";
 		save+="<td>"+result.list[i].id+"</td>";
 		save+="<td><a href='BoardView?bnum="+result.list[i].bnum+"'>"+result.list[i].title+"</a></td>";
-		save+="<td>"+result.list[i].text+"</td>";	
+		save+="<td>"+result.list[i].counts+"</td>";	
 		save+="</tr>";		
 	}
 	save+="</table>";

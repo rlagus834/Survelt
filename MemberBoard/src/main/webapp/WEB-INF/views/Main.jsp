@@ -16,9 +16,11 @@
     <button onclick="location.href='LogOut'">로그아웃</button>
     <button onclick="location.href='BoardListForm'">게시글로가기</button>
     <button onclick="location.href='BoardWriteForm'">글쓰기</button>
-
+    <c:if test="${sessionScope.id eq 'rlagus2259'}">
+    <button onclick="location.href='Admin'">관리자기능</button> 
+	</c:if>
 	</c:when>
-	
+		
 	      
     <c:otherwise>
     	<button onclick="location.href='LoginForm'">로그인</button>   

@@ -27,7 +27,7 @@ public class CommentDAO {
 		return sql.selectOne("Project.CommentListCount",bnum);
 	}
 
-	public List<BoardDTO> CommentList(PageDTO dto) {
+	public List<CommentDTO> CommentList(PageDTO dto) {
 		// TODO Auto-generated method stub
 		return sql.selectList("Project.CommentList",dto);
 	}
