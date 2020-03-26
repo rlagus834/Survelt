@@ -9,6 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.icia.project.dao.MemberDAO;
+import com.icia.project.dto.BoardDTO;
 import com.icia.project.dto.MemberDTO;
 import java.util.*;
 
@@ -81,6 +82,37 @@ public class MemberService {
 		// TODO Auto-generated method stub
  int result=dao.MemberDelete(id);
 		return result;
+	}
+
+	public ModelAndView WriteCount(String id) {
+		// TODO Auto-generated method stub
+		mav=new ModelAndView();
+		int count=dao.WriteCount(id);
+		List<BoardDTO> list=dao.MyWrite(id);
+		mav.addObject("list", list);
+		mav.addObject("count", count);		
+		mav.setViewName("MyPage");
+		return mav;
+	}
+
+	public ModelAndView MemberUpdateSelect(String id) {
+		// TODO Auto-generated method stub
+		mav=new ModelAndView();
+		MemberDTO list=dao.MemberUpdateSelect(id);
+		mav.addObject("list", list);
+		mav.setViewName("MemberUpdateSelect");
+		return mav;
+	}
+
+	public ModelAndView MemberUpdate(MemberDTO dto) {
+		// TODO Auto-generated method stub
+	
+		mav=new ModelAndView();
+		dto.setId((String)session.getAttribute("id"));
+		dao.MemberUpdate(dto);
+		mav.setViewName("MyPage");
+		return mav;
+	
 	}
 
 }

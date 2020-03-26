@@ -41,7 +41,8 @@ HttpSession session;
 	
 	
 	@RequestMapping(value="/MemberJoin",method=RequestMethod.POST)
-	public ModelAndView MemberJoin(@ModelAttribute MemberDTO dto) throws IllegalStateException, IOException {
+	public ModelAndView MemberJoin(@ModelAttribute MemberDTO dto) 
+			throws IllegalStateException, IOException {
 				mav=new ModelAndView();
 				mav=service.MemberJoin(dto);
 				return mav;
@@ -77,7 +78,36 @@ return result;
 		session.invalidate();
 				return "Main";
 	}
+	@RequestMapping(value="/MyPage",method=RequestMethod.GET)
+	public ModelAndView MyPage() {
+		mav=new ModelAndView();
+		String id=(String)session.getAttribute("id");
+		mav=service.WriteCount(id);
+				return mav;
+				
+	}	
 	
 	
-	
+	@RequestMapping(value="/MemberUpdateSelect",method=RequestMethod.GET)
+	public ModelAndView MemberUpdateSelect() {
+		mav=new ModelAndView();
+		String id=(String)session.getAttribute("id");
+		mav=service.MemberUpdateSelect(id);
+				return mav;
+				
+	}
+
+	@RequestMapping(value="/MemberUpdate",method=RequestMethod.GET)
+	public ModelAndView MemberUpdate(@ModelAttribute MemberDTO dto) {
+		mav=new ModelAndView();
+		dto.setEmail(dto.getEmailSecond()+dto.getEmail());
+		dto.setAddress(dto.getAddress()+"@"+dto.getAddressSecond());
+		dto.setId((String)session.getAttribute("id"));
+		mav=service.MemberUpdate(dto);
+				return mav;
+				
+	}
+
+
+
 }

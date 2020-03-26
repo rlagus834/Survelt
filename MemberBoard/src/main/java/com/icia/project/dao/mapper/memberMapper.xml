@@ -83,7 +83,7 @@ UPDATE BOARDTAB SET COUNTS=COUNTS+1 WHERE BNUM=#{bnum}
 	</select>
 	
 	<select id="CommentList" parameterType="page" resultType="comment">
-	SELECT * FROM (SELECT ROWNUM NUMROW,B.* FROM COMMENTTABVIEW B) WHERE BNUM=#{bnum} AND NUMROW BETWEEN #{startRow} AND #{endRow}
+	SELECT * FROM (SELECT ROWNUM NUMROW,B.* FROM COMMENTTABVIEW B WHERE BNUM=#{bnum})WHERE NUMROW BETWEEN #{startRow} AND #{endRow}
 	</select>
 	
 	<delete id="CommentDelete" parameterType="int">
@@ -92,8 +92,21 @@ UPDATE BOARDTAB SET COUNTS=COUNTS+1 WHERE BNUM=#{bnum}
 	<select id="FileList" parameterType="int" resultType="String">
 	SELECT FILES FROM FILETAB WHERE BNUM=#{bnum}
 	</select>
+	<select id="WriteCount" parameterType="String" resultType="int">
+	SELECT COUNT(*) FROM BOARDTAB WHERE ID=#{id}
+	</select>
+	<select id="MyWrite" parameterType="String" resultType="board">
+	SELECT * FROM BOARDTAB WHERE ID=#{id}
+	</select>
 
-		
+	<select id="MemberUpdateSelect" parameterType="String" resultType="member">
+	SELECT * FROM CLIENTTAB WHERE ID=#{id}
+	</select>	
+	
+	<update id="MemberUpdate" parameterType="member" >
+	UPDATE CLIENTTAB SET EMAIL=#{email},ADDRESS=#{address},PHONE=#{phone},EMAIL=#{email} WHERE=#{id}
+	
+	</update>	
 </mapper>
  
  

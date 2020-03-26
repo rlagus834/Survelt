@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+	
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,40 +10,10 @@
 <script src="https://code.jquery.com/jquery-3.4.1.js"
 	integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
 	crossorigin="anonymous"></script>
-	    <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-	
+<script
+	src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+
 <script>
-	function idSe() {
-		var idCh = document.getElementById("idCh");
-		var saveId = document.getElementById("mId");
-		var exp = /^(?=.*[a-z])(?=.*\d)[a-z\d]{6,10}$/;
-
-		if (saveId.value.match(exp)) {
-			$.ajax({
-				type : "get",
-				url : "idCheck",
-				data : "id=" + $("#mId").val(),
-				dataType : "text",
-				success : function(result) {
-					if (result != null) {
-						idCh.style.color = "green";
-						idCh.innerHTML = "이미 다른 회원이 사용중입니다.";
-						
-					} else {
-						idCh.style.color = "red";
-						idCh.innerHTML = "사용가능한아이디입니다.";
-					}
-				},
-				error : function() {
-				}
-			});
-		} else {
-			idCh.style.color = "red";
-			idCh.innerHTML = "소문자와 숫자만을이용하여 작성하세요.";
-		}
-
-	}
-
 	function pwSe() {
 		var passwordCh = document.getElementById("passwordCh");
 		var savePw = document.getElementById("mPw");
@@ -56,9 +28,9 @@
 	}
 
 	function pwCh() {
-		
+
 		var passwordChSecond = document.getElementById("passwordChSecond");
-		if ($("#mPw").val()==$("#mPwSecond").val()) {
+		if ($("#mPw").val() == $("#mPwSecond").val()) {
 			passwordChSecond.style.color = "green";
 			passwordChSecond.innerHTML = "일치합니다."
 		} else {
@@ -101,15 +73,16 @@
 						var guideTextBox = document.getElementById("guide");
 						// 사용자가 '선택 안함'을 클릭한 경우, 예상 주소라는 표시를 해준다.
 						if (data.autoRoadAddress) {
-							var expRoadAddr = data.autoRoadAddress + extraRoadAddr;
-							guideTextBox.innerHTML = '(예상 도로명 주소 : ' + expRoadAddr
-									+ ')';
+							var expRoadAddr = data.autoRoadAddress
+									+ extraRoadAddr;
+							guideTextBox.innerHTML = '(예상 도로명 주소 : '
+									+ expRoadAddr + ')';
 							guideTextBox.style.display = 'block';
 
 						} else if (data.autoJibunAddress) {
 							var expJibunAddr = data.autoJibunAddress;
-							guideTextBox.innerHTML = '(예상 지번 주소 : ' + expJibunAddr
-									+ ')';
+							guideTextBox.innerHTML = '(예상 지번 주소 : '
+									+ expJibunAddr + ')';
 							guideTextBox.style.display = 'block';
 						} else {
 							guideTextBox.innerHTML = '';
@@ -133,10 +106,6 @@
 
 	}
 	function joinCh() {
-		var idcheck=$("#idCh").text();
-		console.log(idcheck);
-		var saveId = document.getElementById("mId");
-		var expId = /^(?=.*[a-z])(?=.*\d)[a-z\d]{6,10}$/;
 
 		var passwordCh = document.getElementById("passwordCh");
 		var savePw = document.getElementById("mPw");
@@ -144,62 +113,44 @@
 
 		var passwordChSecond = document.getElementById("passwordChSecond");
 		var savePwSecond = document.getElementById("mPwSecond");
-		var saveName = document.getElementById("mName");
 		var saveAddress = document.getElementById("address");
 		var saveAddressSecond = document.getElementById("addressSecond");
 
 		var phoneCh = document.getElementById("phoneCh");
 		var savePhone = document.getElementById("mPhone");
 		var expPhone = /^\d{11}$/;
-
-		if (saveId.value.match(expId)) {
-			if (savePw.value.match(expPw)) {
-				if ($("#mPw").val()==$("#mPwSecond").val()) {
-					if (savePhone.value.match(expPhone)) {
-						if ($("#mName").val()!=null) {
-							if ($("#sample4_roadAddress").val()!=null&&$("#addressSecond").val()!=null) {
-								if (idcheck== "사용가능한아이디입니다.") {
-									
-									document.getElementById("joinForm").submit();
-										
-								}else{
-									alert('s아이디 중복입니다');
-								}
-							}else{
-								alert('빈칸을 형식에맞게ss 작성하세요');
-							}
-						}else{
-							alert('빈칸을 형식에맞게1 작성하세요');
-						}
-					}else{
-						alert('1111빈칸을 형식에맞게 작성하세요');
+		if (savePw.value.match(expPw)) {
+			if ($("#mPw").val() == $("#mPwSecond").val()) {
+				if (savePhone.value.match(expPhone)) {
+					if ($("#sample4_roadAddress").val() != null
+							&& $("#addressSecond").val() != null) {
+							document.getElementById("joinForm").submit();
+					} else {
+						alert('빈칸을 형식에맞게ss 작성하세요');
 					}
-				}else{
-					alert('빈칸을 형s식에맞게 작성하세요');					
+
+				} else {
+					alert('1111빈칸을 형식에맞게 작성하세요');
 				}
 			} else {
-alert('빈칸을 형식에맞게 작1성하세요');
+				alert('빈칸을 형s식에맞게 작성하세요');
 			}
 		} else {
-			alert('빈칸을 형식에맞1게 작성하세요');
-
+			alert('빈칸을 형식에맞게 작1성하세요');
 		}
 
 	}
 </script>
 </head>
 <body>
-	<form action="MemberJoin" id="joinForm" method="post"  enctype="multipart/form-data">
+
+	<form action="MemberUpdate" id="joinForm" method="post"
+		enctype="multipart/form-data">
 		<table border="1px">
-			<tr>
-				<td>아이디 <br> <input type="text" name="id" id="mId"
-					onkeyup="idSe()" minlength="6" maxlength="10"> <br>
-					<p id="idCh"></p>
-				</td>
-			</tr>
+
 			<tr>
 				<td>비밀번호 <br> <input type="password" name="password"
-					id="mPw" onkeyup="pwSe()" minlength="8" maxlength="16"> <br>
+					id="mPw" onkeyup="pwSe()" minlength="8" maxlength="16" value="${list.password}"> <br>
 					<p id="passwordCh"></p>
 				</td>
 			</tr>
@@ -210,11 +161,7 @@ alert('빈칸을 형식에맞게 작1성하세요');
 				</td>
 			</tr>
 
-			<tr>
-				<td>이름 <br> <input type="text" name="name" id="mName">
 
-				</td>
-			</tr>
 			<tr>
 				<td>생년월일 <br> <input type="date" name="birth" id="mBirth">
 					<br>
@@ -222,8 +169,8 @@ alert('빈칸을 형식에맞게 작1성하세요');
 				</td>
 			</tr>
 			<tr>
-				<td>email <br> <input type="text" name="email" id="mEmail">
-					<select name="emailSecond">
+				<td>email <br> <input type="text" name="email" id="mEmail" value="${list.email}">
+					<select name="emailSecond" >
 						<option value="@naver.com">@naver.com</option>
 						<option value="@nate.com">@nate.com</option>
 						<option value="@gmail.com">@gmail.com</option>
@@ -231,24 +178,19 @@ alert('빈칸을 형식에맞게 작1성하세요');
 				</td>
 			</tr>
 			<tr>
-				<td>address <br> 
-		
-<input type="button" onclick="sample4_execDaumPostcode()" value="우편번호 찾기"><br>
-<input type="text" id="sample4_roadAddress" placeholder="주소" name="address">
-<input type="text" id="addressSecond" name="addressSecond" placeholder="상세주소">
-<span id="guide" style="color:#999;display:none"></span>
+				<td>address <br> <input type="button"
+					onclick="sample4_execDaumPostcode()" value="우편번호 찾기"><br>
+					<input type="text" id="sample4_roadAddress" placeholder="주소"
+					name="address" value="${list.address}"> <input type="text" id="addressSecond"
+					name="addressSecond" value="${list.addressSecond}" placeholder="상세주소"> <span id="guide"
+					style="color: #999; display: none"></span>
 
 				</td>
 			</tr>
 			<tr>
 				<td>phone <br> <input type="text" name="phone" id="mPhone"
-					onkeyup="phSe()"> <br>
+					onkeyup="phSe()" value="${list.phone}"> <br>
 					<p id="phoneCh"></p>
-				</td>
-			</tr>
-			<tr>
-				<td>profiles <br> <input type="file" name="bfile"
-					id="mFile">
 				</td>
 			</tr>
 			<tr>
@@ -258,5 +200,7 @@ alert('빈칸을 형식에맞게 작1성하세요');
 			</tr>
 		</table>
 	</form>
+	
+	
 </body>
 </html>

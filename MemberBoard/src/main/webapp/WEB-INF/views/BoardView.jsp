@@ -77,7 +77,9 @@ function CommentList(page){
 			save+="<td>"+result.list[i].id+"</td>";
 			save+="<td>"+result.list[i].text+"</td>";	
 if(result.list[i].id=='${sessionScope.id}'){
-	save+="<td><p onclick='CommentDelete("+result.list[i].cnum+")'>삭제</p>/td>";	
+	save+="<td>"
+		save+="<p onclick='CommentDelete("+result.list[i].cnum+")'>삭제</p>";
+		save+="</td>";	
 	
 }
 			save+="</tr>";		
