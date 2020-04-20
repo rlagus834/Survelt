@@ -65,6 +65,7 @@ public class BoardController {
 		mav=new ModelAndView();
 		mav=service.BoardView(bnum);
 		return mav;
+		
 	}
 	
 	
