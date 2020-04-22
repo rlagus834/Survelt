@@ -20,9 +20,8 @@
 		<beans:property name="prefix" value="/WEB-INF/views/" />
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
-	
 	<context:component-scan base-package="com.jade.swp" />
 	
-	
-	
+<beans:bean id="messageListener" class="org.springframework.data.redis.listener.adapter.MessageListenerAdapter">
+</beans:bean>
 </beans:beans>

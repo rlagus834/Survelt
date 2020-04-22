@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -40,8 +41,45 @@
  <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.4.0/sockjs.js"></script>
  
     <script>
-
+    if('${sessionScope.id}'!='admin'){
         var vm = new Vue({
+            el: '#app',
+            data: {
+                room_name : '',
+                chatrooms: [
+                ]
+            },
+            created() {
+                this.createRoom();
+                this.enterRoom('${sessionScope.id}');
+            },
+            methods: {
+                findAllRoom: function() {
+                    axios.get('http://localhost:8090/swp/chat/rooms').then(response => { this.chatrooms = response.data; });
+                },
+                createRoom: function() {
+                  
+                        var params = new URLSearchParams();
+                        params.append("name",'${sessionScope.id}');
+                        axios.post('http://localhost:8090/swp/chat/room', params)
+                        .then(
+                            response => {
+                                this.room_name = '';
+                            }
+                        )
+                        .catch( response => { alert("채팅방 개설에 실패하였습니다."); } );
+                  
+                },
+                enterRoom: function(roomId) {                    
+                        localStorage.setItem('wschat.sender',roomId);
+                        localStorage.setItem('wschat.roomId',roomId);
+                        location.href="room/enter/"+roomId;
+                }
+            }
+        });
+        
+    }else{
+    	var vm = new Vue({
             el: '#app',
             data: {
                 room_name : '',
@@ -64,7 +102,6 @@
                         axios.post('http://localhost:8090/swp/chat/room', params)
                         .then(
                             response => {
-                                alert(response.data.name+"방 개설에 성공하였습니다.")
                                 this.room_name = '';
                                 this.findAllRoom();
                             }
@@ -73,15 +110,13 @@
                     }
                 },
                 enterRoom: function(roomId) {
-                    var sender = prompt('대화명을 입력해 주세요.');
-                    if(sender != "") {
-                        localStorage.setItem('wschat.sender',sender);
+                        localStorage.setItem('wschat.sender','${sessionScope.id}');
                         localStorage.setItem('wschat.roomId',roomId);
                         location.href="room/enter/"+roomId;
-                    }
                 }
             }
         });
+    }
     </script>
 </body>
 </html>

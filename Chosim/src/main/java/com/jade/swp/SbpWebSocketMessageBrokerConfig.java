@@ -14,6 +14,7 @@ public class SbpWebSocketMessageBrokerConfig extends AbstractWebSocketMessageBro
     public void configureMessageBroker(MessageBrokerRegistry config) {
         config.enableSimpleBroker("/sub");
         config.setApplicationDestinationPrefixes("/pub");
+        
     }
 
     @Override
