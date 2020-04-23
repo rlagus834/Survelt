@@ -2,6 +2,10 @@ package com.jade.swp;
 
 import javax.annotation.PostConstruct;
 import java.util.*;
+
+import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.data.redis.listener.ChannelTopic;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -23,6 +27,10 @@ public class ChatRoomRepository {
     public ChatRoom createChatRoom(String name) {
         ChatRoom chatRoom = ChatRoom.create(name);
         chatRoomMap.put(chatRoom.getRoomId(), chatRoom);
+        
+    	ConfigurableApplicationContext ctx = new AnnotationConfigApplicationContext(SpringRedisConfig.class);
+    	ChannelTopic topic = (ChannelTopic)ctx.getBean("topic");//구독 값			
+		
         return chatRoom;
     }
 }

@@ -1,5 +1,9 @@
 package com.jade.swp;
 
+import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -40,6 +44,14 @@ public class ChatRoomController {
  // 채팅방 입장 화면
  @GetMapping("/room/enter/{roomId}")
  public String roomDetail(Model model, @PathVariable String roomId) {
+	 ConfigurableApplicationContext ctx = new AnnotationConfigApplicationContext(SpringRedisConfig.class);
+			
+	 @SuppressWarnings("unchecked")
+		RedisTemplate<String, Object> redisTemplate = (RedisTemplate<String, Object>)ctx.getBean("redisTemplate");
+		// value operation
+		ValueOperations<String, Object> values = redisTemplate.opsForValue();
+	model.addAttribute("test", values.get("hyun"));
+	System.out.println(values.get("hyun"));
      model.addAttribute("roomId", roomId);
      return "roomdetail";
  }
